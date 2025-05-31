@@ -28,7 +28,8 @@ export const Header = () => {
         <div className="container flex">
           <div className="logo">
             <Link to="/">
-              <img src={CompanyLogo} alt="Tante Dian's Magic Teas Company Logo" />
+              <h1>Eyang's magic teas</h1>
+              <img src={CompanyLogo} alt="Eyang's Magic Teas Company Logo" />
             </Link>
           </div>
           <div className="search flex">
@@ -43,4 +44,15 @@ export const Header = () => {
       </header>
     </>
   );
+
+  // return (
+  //   <>
+  //     <div style={{ padding: '20px', margin: '20px' }}>
+  //      <h1>Eyang's magic teas</h1>
+  //      <img src={CompanyLogo} alt="Eyang's Magic Teas Company Logo" />
+
+  //   </div>
+  //   </>
+  // );
+
 };

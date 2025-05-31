@@ -69,6 +69,7 @@ export const Offer = () => {
     </>
   );
 };
+
 export const FlaseSales = () => {
   const settings = {
     dots: false,
@@ -89,33 +90,31 @@ export const FlaseSales = () => {
           <h1>Flash Sale</h1>
           <Slider {...settings}>
             {flaseproduct.map((product) => {
-              const available = product.qty - product.sold;
-              const soldPercentage = (product.sold / product.qty) * 100;
+              // Calculate discounted price
+              const discountedPrice = product.price - (product.price * product.discount / 100);
               return (
-                <>
-                  <div className="product" key={product.id}>
+                <div key={product.id}>
+                  <div className="product">
                     <div className="img">
                       <img src={product.cover} alt="cover" />
                     </div>
                     <div className="details">
                       <h3>{product.name}</h3>
-                      <p>{product.desc.slice(0, 35)}...</p>
                       <div className="price">
-                        <h3 className="price-tag">${product.dprice}.00</h3>
-                        <h3 className="underline">${product.price}.00</h3>
+                        <h3 className="price-tag">${discountedPrice.toFixed(2)}</h3>
+                        <h3 className="underline">${product.price.toFixed(2)}</h3>
                       </div>
                     </div>
                   </div>
                   <div className="progress">
                     <div className="flex">
-                      <p>Sold : {product.sold}</p>
-                      <p>Available : {available}</p>
+                      <p>Discount: {product.discount}%</p>
                     </div>
                     <div className="progressBar">
-                      <div className="progressFill" style={{ width: `${soldPercentage}%` }}></div>
+                      <div className="progressFill" style={{ width: `${product.discount}%` }}></div>
                     </div>
                   </div>
-                </>
+                </div>
               );
             })}
           </Slider>

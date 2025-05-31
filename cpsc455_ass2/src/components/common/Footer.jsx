@@ -23,7 +23,7 @@ export const Footer = () => {
           </ul>
           <ul>
             <h3>About</h3>
-            {footer.about.map((item) => (
+            {footer.brand.map((item) => (
               <li key={item.id}>
                 <a href={item.link}>{item.name}</a>
               </li>
@@ -31,7 +31,7 @@ export const Footer = () => {
           </ul>
           <ul>
             <h3>Customer Care</h3>
-            {footer.copyright.map((item) => (
+            {footer.support.map((item) => (
               <li key={item.id}>
                 <a href={item.link}>{item.name}</a>
               </li>
@@ -39,15 +39,7 @@ export const Footer = () => {
           </ul>
           <ul>
             <h3>Our Information</h3>
-            {footer.copyright.map((item) => (
-              <li key={item.id}>
-                <a href={item.link}>{item.name}</a>
-              </li>
-            ))}
-          </ul>
-          <ul>
-            <h3>Top Categories</h3>
-            {footer.topCategories.map((item) => (
+            {footer.shop.map((item) => (
               <li key={item.id}>
                 <a href={item.link}>{item.name}</a>
               </li>

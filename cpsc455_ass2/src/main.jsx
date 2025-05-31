@@ -7,3 +7,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 );
+
+// Tutorial credit: https://www.youtube.com/watch?v=kaquXEOj_qw
