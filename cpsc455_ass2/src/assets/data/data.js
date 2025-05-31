@@ -1,17 +1,20 @@
 // Placeholder data for components
+import hero1 from '../images/heroBanners/hero_1.png';
+import hero2 from '../images/heroBanners/hero_2.png';
 
+// change slide content for the hero header
 export const slide = [
   {
     id: 1,
-    image: "https://via.placeholder.com/1200x400?text=Slide+1",
-    title: "Slide 1",
-    desc: "Description for slide 1"
+    image: hero1,
+    title: "Premium Tea Selection",
+    desc: "Discover our magical collection of hand-picked teas"
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/1200x400?text=Slide+2",
-    title: "Slide 2",
-    desc: "Description for slide 2"
+    image: hero2,
+    title: "Organic Herbal Blends",
+    desc: "Experience the healing power of nature in every cup"
   }
 ];
 

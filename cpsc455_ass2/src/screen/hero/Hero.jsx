@@ -9,16 +9,16 @@ import PropTypes from "prop-types";
 export function SampleNextArrows(props) {
   const { onClick } = props;
   return (
-    <button className="button-arrow next-arrow" onClick={onClick}>
+    <button className="next-arrow" onClick={onClick}>
       <IoIosArrowForward size={25} />
     </button>
   );
-}
+} 
 
 export function SamplePrevArrows(props) {
   const { onClick } = props;
   return (
-    <button className="button-arrow prev-arrow" onClick={onClick}>
+    <button className="prev-arrow" onClick={onClick}>
       <IoIosArrowBack size={25} />
     </button>
   );
@@ -29,9 +29,21 @@ export const Hero = () => {
     dots: false,
     infinite: true,
     slidesToShow: 1,
+    slidesToScroll: 1,
     speed: 500,
     nextArrow: <SampleNextArrows />,
     prevArrow: <SamplePrevArrows />,
+    
+    //aligns the arrows to the middle (I think)
+    appendDots: (dots) => (
+      <div
+        style={{
+          bottom: "-50px",
+        }}
+      >
+        <ul style={{ margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
   };
   return (
     <>

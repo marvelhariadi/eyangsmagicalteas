@@ -6,12 +6,18 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  height: 110vh;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .container {
   max-width: 90%;
   margin: auto;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 button,
 input {
