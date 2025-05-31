@@ -1,10 +1,6 @@
-import { slide } from "../../assets/data/data";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PropTypes from "prop-types";
+import hero1 from "../../assets/images/heroBanners/hero_1.png";
 
 export function SampleNextArrows(props) {
   const { onClick } = props;
@@ -25,42 +21,27 @@ export function SamplePrevArrows(props) {
 }
 
 export const Hero = () => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    speed: 500,
-    nextArrow: <SampleNextArrows />,
-    prevArrow: <SamplePrevArrows />,
-    
-    //aligns the arrows to the middle (I think)
-    appendDots: (dots) => (
-      <div
-        style={{
-          bottom: "-50px",
-        }}
-      >
-        <ul style={{ margin: "0px" }}> {dots} </ul>
-      </div>
-    ),
-  };
   return (
     <>
       <section className="hero">
-        <Slider {...settings}>
-          {slide.map((item, i) => (
-            <div className="box" key={i}>
-              <div className="img">
-                <img src={item.image} alt="" />
-              </div>
-            </div>
-          ))}
-        </Slider>
+        <div className="box">
+          <div className="img">
+            <img src={hero1} alt="Hero Banner" />
+          </div>
+        </div>
+        
+        {/* Custom arrows overlaid on the static image */}
+        {/* <button className="prev-arrow">
+          <IoIosArrowBack size={25} />
+        </button>
+        <button className="next-arrow">
+          <IoIosArrowForward size={25} />
+        </button> */}
       </section>
     </>
   );
 };
+
 SampleNextArrows.propTypes = {
   onClick: PropTypes.any,
 };
