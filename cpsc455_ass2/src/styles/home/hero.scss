@@ -2,11 +2,12 @@
   overflow: hidden;
   position: relative;
   width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  margin: 0;
   padding: 0;
   left: 0;
   right: 0;
   box-sizing: border-box;
+  max-width: 100%;
   
   .box {
     width: 100vw;
@@ -14,18 +15,21 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    position: relative;
   }
   .img {
     height: 90vh;
     width: 100vw;
     margin: 0;
     padding: 0;
+    position: relative;
     img {
       width: 100vw;
       height: 100%;
       object-fit: cover;
       display: block;
       margin: 0;
+      max-width: none;
     }
   }
 

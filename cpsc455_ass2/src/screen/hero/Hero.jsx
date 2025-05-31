@@ -22,23 +22,21 @@ export function SamplePrevArrows(props) {
 
 export const Hero = () => {
   return (
-    <>
-      <section className="hero">
-        <div className="box">
-          <div className="img">
-            <img src={hero1} alt="Hero Banner" />
-          </div>
+    <section className="hero">
+      <div className="box">
+        <div className="img">
+          <img src={hero1} alt="Hero Banner" style={{ width: '100%' }} />
         </div>
-        
-        {/* Custom arrows overlaid on the static image */}
-        {/* <button className="prev-arrow">
-          <IoIosArrowBack size={25} />
-        </button>
-        <button className="next-arrow">
-          <IoIosArrowForward size={25} />
-        </button> */}
-      </section>
-    </>
+      </div>
+      
+      {/* Custom arrows overlaid on the static image */}
+      {/* <button className="prev-arrow">
+        <IoIosArrowBack size={25} />
+      </button>
+      <button className="next-arrow">
+        <IoIosArrowForward size={25} />
+      </button> */}
+    </section>
   );
 };
 
