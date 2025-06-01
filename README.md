@@ -4,6 +4,8 @@ For my grandmother, Pertamaningsih, the most magical woman around.
 
 This was an exercise in web development and design. As a UX-er, this was really fun (and also very painful)! I  liked seeing the design come together slowly and trying to make everything responsive. 
 
+
+<img width="1350" alt="oogabogoa" src="https://github.com/user-attachments/assets/62d93caf-8bde-497f-bbfd-5d5bc3033880" />
 [Web tour YouTube video link](https://youtu.be/hvuWiTS8ehs)
 
 ## About
