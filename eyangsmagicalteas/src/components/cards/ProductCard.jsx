@@ -17,7 +17,7 @@ export const ProductCard = ({ products }) => {
         <div className="text">
           <h3>{products.name}</h3>
           <p>{products.desc.slice(0, 80)}...</p>
-          <h3 className="price-tag">${products.price}</h3>
+          <h3 className="price-tag">${products.basePrice || products.price}</h3>
         </div>
       </div>
     </>

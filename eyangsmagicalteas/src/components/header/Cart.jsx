@@ -1,27 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
 import PropTypes from "prop-types";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { cartEvents } from "../../utils/cartEvents";
 
 export const Cart = () => {
   const [cardOpen, setCardOpen] = useState(false);
-  // We don't need dispatch anymore since we removed the clearCart functionality
   const navigate = useNavigate();
   
   const closeCard = () => {
-    setCardOpen(null);
+    setCardOpen(false);
+  };
+
+  const openCard = (e) => {
+    e.stopPropagation();
+    setCardOpen(true);
   };
 
   const quantity = useSelector((state) => state.cart.totalQuantity);
   const cartItems = useSelector((state) => state.cart.itemsList);
 
-  //total
+  // Calculate total
   let total = 0;
-  const itemsLists = useSelector((state) => state.cart.itemsList);
-  itemsLists.forEach((item) => {
+  cartItems.forEach((item) => {
     total += item.totalPrice;
   });
   
@@ -30,29 +34,74 @@ export const Cart = () => {
     navigate('/cart');
   };
 
+  // Listen for cart show events
+  useEffect(() => {
+    const showCartHandler = () => {
+      setCardOpen(true);
+    };
+    
+    cartEvents.on('showCart', showCartHandler);
+    
+    return () => {
+      cartEvents.off('showCart', showCartHandler);
+    };
+  }, []);
+
+  // Close cart when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Only close if clicking outside the cart and it's open
+      if (cardOpen && !e.target.closest('.cartItem') && !e.target.closest('.card')) {
+        setCardOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [cardOpen]);
+
   return (
     <>
-      <div className="card" onClick={() => setCardOpen(!cardOpen)}>
+      <div className="card" onClick={openCard}>
         <IoBagHandleOutline className="cardIcon" />
         <span className="flexCenter">{quantity}</span>
       </div>
-      <div className={cardOpen ? "overlay" : "nonoverlay"}></div>
+      
+      {cardOpen && <div className="overlay" onClick={closeCard}></div>}
 
-      <div className={cardOpen ? "cartItem" : "cardhide"}>
+      <div className={cardOpen ? "cartItem" : "cardhide"} onClick={(e) => e.stopPropagation()}>
         <div className="title flex">
           <h2>Tea Cart</h2>
           <button onClick={closeCard}>
             <AiOutlineClose className="icon" />
           </button>
         </div>
-        {cartItems.map((item) => (
-          <CartItems key={item.id} id={item.id} cover={item.cover} name={item.name} price={item.price} quantity={item.quantity} totalPrice={item.totalPrice} />
-        ))}
+        
+        <div className="cart-items-container">
+          {cartItems.length > 0 ? cartItems.map((item) => (
+            <CartItems 
+              key={item.id} 
+              id={item.id} 
+              cover={item.cover} 
+              name={item.name} 
+              price={item.price} 
+              quantity={item.quantity} 
+              totalPrice={item.totalPrice} 
+              size={item.size}
+            />
+          )) : (
+            <div className="emptyCart">
+              <p>Your cart is empty</p>
+            </div>
+          )}
+        </div>
 
         <div className="checkOut">
-          <button onClick={goToCartPage}>
+          <button onClick={goToCartPage} disabled={cartItems.length === 0}>
             <span>View Cart</span>
-            <label htmlFor="">${total.toFixed(2)}</label>
+            <label>${total.toFixed(2)}</label>
           </button>
         </div>
       </div>

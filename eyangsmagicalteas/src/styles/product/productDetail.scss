@@ -115,8 +115,14 @@ html, body, #root, main {
           cursor: pointer;
           transition: all 0.3s ease;
           
-          &:hover, &.active {
+          &:hover {
             border-color: #F88B7E;
+          }
+          
+          &.active {
+            border-color: #F88B7E;
+            background-color: #F88B7E;
+            color: white;
           }
         }
       }

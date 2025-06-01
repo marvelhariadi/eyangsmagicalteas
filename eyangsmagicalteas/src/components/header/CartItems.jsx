@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
 import PropTypes from "prop-types";
 
-export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
+export const CartItems = ({ id, cover, name, price, quantity, totalPrice, size }) => {
   const dispatch = useDispatch();
 
   const incCartitems = () => {
-    dispatch(cartActions.addToCart({ id, name, price }));
+    dispatch(cartActions.addToCart({ id, name, price, size }));
   };
   const descCartitems = () => {
-    dispatch(cartActions.removeFromCart(id));
+    dispatch(cartActions.removeFromCart({ id, size }));
   };
   return (
     <>
@@ -24,7 +24,8 @@ export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
           </div>
           <div className="details">
             <h3>{name}</h3>
-            <p>Unit Price ${price}</p>
+            <p>Unit Price ${price.toFixed(2)}</p>
+            <p className="size-info">Size: {size || 'Default'}</p>
 
             <div className="price">
               <div className="qty flexCenter">

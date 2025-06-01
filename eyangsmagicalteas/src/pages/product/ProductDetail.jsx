@@ -7,11 +7,16 @@ import { cartActions } from "../../store/cartSlice";
 import { products } from "../../assets/data/data";
 import "../../styles/product/productDetail.scss";
 
+// Import a custom event emitter for cart visibility
+import { cartEvents } from "../../utils/cartEvents";
+
 export const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [currentPrice, setCurrentPrice] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,6 +36,13 @@ export const ProductDetail = () => {
     
     if (foundProduct) {
       setSelectedProduct(foundProduct);
+      // Set default size to the first size
+      if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+        setSelectedSize(foundProduct.sizes[0].name);
+        setCurrentPrice(foundProduct.sizes[0].price);
+      } else {
+        setCurrentPrice(foundProduct.basePrice);
+      }
     } else {
       // Redirect to home if product not found
       navigate("/");
@@ -45,19 +57,35 @@ export const ProductDetail = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1)); // Don't go below 1
   };
 
+  const handleSizeChange = (sizeName) => {
+    setSelectedSize(sizeName);
+    // Update price based on selected size
+    if (selectedProduct && selectedProduct.sizes) {
+      const sizeObj = selectedProduct.sizes.find(s => s.name === sizeName);
+      if (sizeObj) {
+        setCurrentPrice(sizeObj.price);
+      }
+    }
+  };
+
   const addToCart = () => {
     if (selectedProduct) {
+      // Add product with the selected quantity
       dispatch(
         cartActions.addToCart({
           id: selectedProduct.id,
           name: selectedProduct.name,
-          price: selectedProduct.price,
+          price: currentPrice,
           cover: selectedProduct.cover,
           quantity: quantity,
+          size: selectedSize || (selectedProduct.sizes ? selectedProduct.sizes[0].name : 'Default'),
         })
       );
-      // Silent add to cart without popup
-      // User can check the cart in their own time
+      
+      // Show the cart popup - use setTimeout to ensure it happens after Redux state update
+      setTimeout(() => {
+        cartEvents.emit('showCart');
+      }, 100);
     }
   };
 
@@ -84,14 +112,18 @@ export const ProductDetail = () => {
           <div className="product-info">
             <h1>{selectedProduct.name}</h1>
             <p className="description">{selectedProduct.desc}</p>
-            <h2 className="price">${selectedProduct.price}</h2>
+            <h2 className="price">${currentPrice.toFixed(2)}</h2>
 
             <div className="size-selection">
               <h3>Size</h3>
               <div className="size-buttons">
-                {selectedProduct.size.map((size, index) => (
-                  <button key={index} className="size-btn">
-                    {size}
+                {selectedProduct.sizes && selectedProduct.sizes.map((sizeObj, index) => (
+                  <button 
+                    key={index} 
+                    className={`size-btn ${selectedSize === sizeObj.name ? 'active' : ''}`}
+                    onClick={() => handleSizeChange(sizeObj.name)}
+                  >
+                    {sizeObj.name}
                   </button>
                 ))}
               </div>

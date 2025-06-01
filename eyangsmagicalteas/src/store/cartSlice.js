@@ -9,39 +9,81 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       const newItem = action.payload;
+      const quantity = newItem.quantity || 1; // Default to 1 if quantity not provided
 
-      //check item is already exits
-      const exitsItem = state.itemsList.find((item) => item.id === newItem.id);
+      // Check if item already exists with the same size
+      const existingItem = state.itemsList.find(
+        (item) => item.id === newItem.id && item.size === newItem.size
+      );
 
-      if (exitsItem) {
-        exitsItem.quantity++;
-        exitsItem.totalPrice += newItem.price;
+      if (existingItem) {
+        // Update existing item
+        existingItem.quantity += quantity;
+        existingItem.totalPrice += newItem.price * quantity;
       } else {
+        // Add new item
         state.itemsList.push({
           id: newItem.id,
           price: newItem.price,
-          quantity: 1,
-          totalPrice: newItem.price,
+          quantity: quantity,
+          totalPrice: newItem.price * quantity,
           name: newItem.name,
           cover: newItem.cover,
+          size: newItem.size || 'Default',
         });
-        state.totalQuantity++;
       }
+
+      // Update total quantity - count actual items, not just unique entries
+      state.totalQuantity = state.itemsList.reduce(
+        (total, item) => total + item.quantity, 0
+      );
     },
     removeFromCart(state, action) {
-      const id = action.payload;
-      const exitstingItem = state.itemsList.find((item) => item.id === id);
-      if (exitstingItem.quantity === 1) {
-        state.itemsList = state.itemsList.filter((item) => item.id !== id);
-        state.totalQuantity--;
-      } else {
-        exitstingItem.quantity--;
-        exitstingItem.totalPrice -= exitstingItem.price;
+      const { id, size } = action.payload;
+      const existingItem = state.itemsList.find(
+        (item) => item.id === id && item.size === size
+      );
+      
+      if (existingItem) {
+        if (existingItem.quantity === 1) {
+          // Remove item completely if quantity is 1
+          state.itemsList = state.itemsList.filter(
+            (item) => !(item.id === id && item.size === size)
+          );
+        } else {
+          // Decrease quantity if more than 1
+          existingItem.quantity--;
+          existingItem.totalPrice -= existingItem.price;
+        }
+        
+        // Update total quantity
+        state.totalQuantity = state.itemsList.reduce(
+          (total, item) => total + item.quantity, 0
+        );
       }
     },
     clearCart(state) {
       state.itemsList = [];
       state.totalQuantity = 0;
+    },
+    removeEntireItem(state, action) {
+      const { id, size } = action.payload;
+      // Find the item to remove
+      const itemToRemove = state.itemsList.find(
+        (item) => item.id === id && item.size === size
+      );
+      
+      if (itemToRemove) {
+        // Remove the item from the list
+        state.itemsList = state.itemsList.filter(
+          (item) => !(item.id === id && item.size === size)
+        );
+        
+        // Update total quantity
+        state.totalQuantity = state.itemsList.reduce(
+          (total, item) => total + item.quantity, 0
+        );
+      }
     },
   },
 });

@@ -23,18 +23,22 @@ export const ShoppingCart = () => {
     }));
   };
   
-  const handleDecreaseQuantity = (id) => {
-    dispatch(cartActions.removeFromCart(id));
+  const handleDecreaseQuantity = (item) => {
+    dispatch(cartActions.removeFromCart({
+      id: item.id,
+      size: item.size
+    }));
   };
   
-  const handleRemoveItem = (id) => {
-    // Remove item by repeatedly calling removeFromCart until quantity is 0
-    const item = cartItems.find(item => item.id === id);
-    if (item) {
-      for (let i = 0; i < item.quantity; i++) {
-        dispatch(cartActions.removeFromCart(id));
+  const handleRemoveItem = (item) => {
+    // Create a custom action to remove all quantities of an item at once
+    dispatch({
+      type: 'cart/removeEntireItem',
+      payload: {
+        id: item.id,
+        size: item.size
       }
-    }
+    });
   };
   
   const handleContinueShopping = () => {
@@ -87,7 +91,7 @@ export const ShoppingCart = () => {
                     <div className="quantity-selector">
                       <button 
                         className="decrease" 
-                        onClick={() => handleDecreaseQuantity(item.id)}
+                        onClick={() => handleDecreaseQuantity(item)}
                         disabled={item.quantity <= 1}
                       >
                         <AiOutlineMinus size={20} />
@@ -107,7 +111,7 @@ export const ShoppingCart = () => {
                   <div className="actions">
                     <button 
                       className="remove-item" 
-                      onClick={() => handleRemoveItem(item.id)}
+                      onClick={() => handleRemoveItem(item)}
                     >
                       <AiOutlineDelete size={20} />
                       Remove

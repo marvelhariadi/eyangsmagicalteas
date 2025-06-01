@@ -5,6 +5,8 @@ import { products } from '../../assets/data/data';
 import { ProductCard } from '../../components/cards/ProductCard';
 import '../../styles/search/searchResults.scss';
 
+// I used this tutorial to help me make this cursed ass page: https://www.youtube.com/watch?v=ZF73dpgRrWI
+
 export const SearchResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
