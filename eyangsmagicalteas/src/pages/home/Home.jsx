@@ -5,8 +5,9 @@ export const Home = () => {
   return (
     <>
       <Hero />
-      <Offer />
-      {/* <Category /> */}
+      {/* Flash sale section commented out due to styling issues */}
+      {/* <Offer /> */}
+      <Category />
       <Product />
       {/* <Support /> */}
     </>

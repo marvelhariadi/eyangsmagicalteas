@@ -23,7 +23,11 @@ export function SamplePrevArrows(props) {
 
 export const Hero = () => {
   const handleShopNow = () => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    // Find the product section and scroll to it
+    const productSection = document.querySelector('.product');
+    if (productSection) {
+      productSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

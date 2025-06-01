@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Header } from "./utils/Route";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home, Header, ProductDetail, TeaLeaves, TeaPots, TeaBags, ShoppingCart } from "./utils/Route";
 import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -11,8 +11,7 @@ function App() {
     // <Provider> provides redux store access
     <div>
       <Provider store={store}> 
-        <BrowserRouter>
-          {/* ScrollToTop is removed to prevent automatic scrolling */}
+        <Router>
           <Routes>
             <Route
               path="/"
@@ -22,8 +21,49 @@ function App() {
                 </Layout>
               }
             />
+            <Route
+              path="/product/:productId"
+              element={
+                <Layout>
+                  <ProductDetail />
+                </Layout>
+              }
+            />
+            <Route
+              path="/category/tea-leaves"
+              element={
+                <Layout>
+                  <TeaLeaves />
+                </Layout>
+              }
+            />
+            <Route
+              path="/category/tea-pots"
+              element={
+                <Layout>
+                  <TeaPots />
+                </Layout>
+              }
+            />
+            <Route
+              path="/category/tea-bags"
+              element={
+                <Layout>
+                  <TeaBags />
+                </Layout>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <Layout>
+                  <ShoppingCart />
+                </Layout>
+              }
+            />
+
           </Routes>
-        </BrowserRouter>
+        </Router>
       </Provider>
      
     </div>

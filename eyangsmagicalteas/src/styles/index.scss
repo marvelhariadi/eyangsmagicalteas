@@ -1,7 +1,11 @@
 @use "reset";
+@use "common";
 @use "header";
 @use "footer";
 @use "home/hero";
 @use "home/category";
 @use "home/product";
 @use "home/support";
+@use "product/productDetail";
+@use "category/categoryPage";
+@use "cart/shoppingCart";

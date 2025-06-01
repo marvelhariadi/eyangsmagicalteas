@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
 import PropTypes from "prop-types";
 import { IoBagHandleOutline } from "react-icons/io5";
-import { IoMdHeartEmpty } from "react-icons/io";
-import StripeCheckout from "react-stripe-checkout";
-import { clearCart } from "../../store/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
   const [cardOpen, setCardOpen] = useState(false);
-  const dispatch = useDispatch();
+  // We don't need dispatch anymore since we removed the clearCart functionality
+  const navigate = useNavigate();
+  
   const closeCard = () => {
     setCardOpen(null);
   };
@@ -24,10 +24,10 @@ export const Cart = () => {
   itemsLists.forEach((item) => {
     total += item.totalPrice;
   });
-
-  const handleToken = (token) => {
-    console.log(token);
-    dispatch(clearCart());
+  
+  const goToCartPage = () => {
+    closeCard();
+    navigate('/cart');
   };
 
   return (
@@ -36,15 +36,11 @@ export const Cart = () => {
         <IoBagHandleOutline className="cardIcon" />
         <span className="flexCenter">{quantity}</span>
       </div>
-      <div className="card wishlist">
-        <IoMdHeartEmpty className="cardIcon" />
-        <span className="flexCenter">0</span>
-      </div>
       <div className={cardOpen ? "overlay" : "nonoverlay"}></div>
 
       <div className={cardOpen ? "cartItem" : "cardhide"}>
         <div className="title flex">
-          <h2>Shopping Cart</h2>
+          <h2>Tea Cart</h2>
           <button onClick={closeCard}>
             <AiOutlineClose className="icon" />
           </button>
@@ -54,19 +50,10 @@ export const Cart = () => {
         ))}
 
         <div className="checkOut">
-          <StripeCheckout
-            token={handleToken}
-            stripeKey="pk_test_51Lojp7H4KPatTXixZvuBbyW0Ff28QXnV64xM0HFOw4uTFmfyDZlFkdVZXeo0TY5v0T5GBKw1VnjsmSFtGWQzmh3700vbDn2kSH"
-            amount={total * 100} // this is beacuse in stripe amount will be in cents so multiple by 100
-            name="E-commerce Store"
-            email="gorkcoder@gmail.com"
-            description="Payment test using stripe checkout"
-          >
-            <button>
-              <span>Process To Checkout</span>
-              <label htmlFor="">${total.toFixed(2)}</label>
-            </button>
-          </StripeCheckout>
+          <button onClick={goToCartPage}>
+            <span>View Cart</span>
+            <label htmlFor="">${total.toFixed(2)}</label>
+          </button>
         </div>
       </div>
     </>

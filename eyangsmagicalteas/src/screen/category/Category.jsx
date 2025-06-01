@@ -1,57 +1,45 @@
-import Slider from "react-slick";
-import { SampleNextArrows, SamplePrevArrows } from "../hero/Hero";
 import { categories } from "../../assets/data/data";
+import { useNavigate } from "react-router-dom";
+import "../../styles/home/category.scss";
 
 export const Category = () => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 5,
-    speed: 500,
-    nextArrow: <SampleNextArrows />,
-    prevArrow: <SamplePrevArrows />,
-    responsive: [
-      {
-        breakpoint: 800,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 500,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1,
-        },
-      },
-    ],
+  const navigate = useNavigate();
+  
+  const handleCategoryClick = (sectionId) => {
+    // Map section IDs to route paths
+    const routeMap = {
+      "magic-tea-leaves": "/category/tea-leaves",
+      "tea-pots": "/category/tea-pots",
+      "magic-tea-bags": "/category/tea-bags"
+    };
+    
+    // Navigate to the appropriate category page
+    if (routeMap[sectionId]) {
+      navigate(routeMap[sectionId]);
+    }
   };
-  return (
-    <>
-      <section className="catgeory">
-        <div className="container">
-          <h1>Browse Categories</h1>
 
-          <div className="content">
-            <Slider {...settings}>
-              {categories.map((product) => (
-                <div className="item" key={product}>
-                  <div className="img">
-                    <img src={product.image} alt="banner" />
-                  </div>
-                  <div className="text">
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          </div>
+  return (
+    <section className="category">
+      <div className="container">
+        <h1 className="cinzel-title">Browse Categories</h1>
+        
+        <div className="category-container">
+          {categories.map((category) => (
+            <div 
+              key={category.id} 
+              className="category-item" 
+              onClick={() => handleCategoryClick(category.sectionId)}
+              role="button"
+            >
+              <div className="category-content">
+                <h3>{category.name}</h3>
+                <p>{category.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };

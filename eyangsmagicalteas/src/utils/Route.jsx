@@ -12,3 +12,8 @@ export { Home } from "../pages/home/Home";
 export { Header } from "../components/header/Header";
 export { Footer } from "../components/common/Footer";
 export { Layout } from "../components/common/Layout";
+export { ProductDetail } from "../pages/product/ProductDetail";
+export { TeaLeaves } from "../pages/category/TeaLeaves";
+export { TeaPots } from "../pages/category/TeaPots";
+export { TeaBags } from "../pages/category/TeaBags";
+export { ShoppingCart } from "../pages/cart/ShoppingCart";

@@ -3,9 +3,27 @@
     
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       font-family: "Cinzel Decorative", cursive;
       color: #333;
+    }
+    
+    .product-category-section {
+      margin-bottom: 60px;
+      padding-top: 40px; // Space for scrolling to anchor
+      scroll-margin-top: 100px; // Adjust for fixed header if needed
+      
+      h2 {
+        font-family: "Cinzel Decorative", cursive;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.8rem;
+      }
+      
+      p {
+        color: #666;
+        margin-bottom: 30px;
+      }
     }
     
     .content {

@@ -1,18 +1,20 @@
-// Placeholder data for components
-import hero1 from '../images/heroBanners/hero_1.png';
-// import hero2 from '../images/heroBanners/hero_2.png';
-// import offer_AttractWealth from '../images/offer/offer_AttractWealth.png';
-// import offer_CalmTheSeas from '../images/offer/offer_CalmTheSeas.png';
-// import offer_TalkToAnimals from '../images/offer/offer_TalkToAnimals.png';
-// import offer_TruthReveal from '../images/offer/offer_TruthReveal.png';
-import flash_CalmTheSeas from '../images/offer/flash_CalmTheSeas.png';
-import flash_TruthReveal from '../images/offer/flash_TruthReveal.png';
-import attractWealth from '../images/product_teas/attractWealth.png';
-import beauty from '../images/product_teas/beauty.png';
-import protection from '../images/product_teas/protection.png';
-import talktoanimals from '../images/product_teas/talktoanimals.png';
-import universalantidote from '../images/product_teas/universalantidote.png';
-import summonspirits from '../images/product_teas/summonspirits.png';
+// Import all images from the images index file
+import {
+  hero1,
+  attractWealth,
+  beauty,
+  protection,
+  talktoanimals,
+  universalantidote,
+  summonspirits,
+  // placeholder,
+  copperPot,
+  silverpot,
+  claypot,
+  protectBag,
+  spiritBag
+
+} from '../images';
 
 
 // change slide content for the hero header
@@ -31,168 +33,188 @@ export const slide = [
   // }
 ];
 
-//delete this
+// Categories for the shop
 export const categories = [
   {
     id: 1,
-    name: "Category 1",
-    description: "Description for category 1",
-    image: "https://via.placeholder.com/200x200?text=Category+1"
+    name: "Magic Tea Leaves",
+    description: "Our finest selection of enchanted tea leaves",
+    sectionId: "magic-tea-leaves"
   },
   {
     id: 2,
-    name: "Category 2",
-    description: "Description for category 2",
-    image: "https://via.placeholder.com/200x200?text=Category+2"
+    name: "Enchanted Tea Pots",
+    description: "Magical tea pots for brewing your enchanted teas",
+    sectionId: "tea-pots"
   },
   {
     id: 3,
-    name: "Category 3",
-    description: "Description for category 3",
-    image: "https://via.placeholder.com/200x200?text=Category+3"
-  },
-  {
-    id: 4,
-    name: "Category 4",
-    description: "Description for category 4",
-    image: "https://via.placeholder.com/200x200?text=Category+4"
-  },
-  {
-    id: 5,
-    name: "Category 5",
-    description: "Description for category 5",
-    image: "https://via.placeholder.com/200x200?text=Category+5"
-  },
-  {
-    id: 6,
-    name: "Category 6",
-    description: "Description for category 6",
-    image: "https://via.placeholder.com/200x200?text=Category+6"
+    name: "Magic Tea Bags",
+    description: "Convenient pre-packaged magical tea bags",
+    sectionId: "magic-tea-bags"
   }
 ];
 
-export const product = [
-  {
-    id: 1,
-    name: "Animal Communication Tea",
-    price: 19.98,
-    desc: "A tea that lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
-    cover: talktoanimals,
-    size: ["50mg", "100mg", "200mg"]
-  },
-  {
-    id: 2,
-    name: "Universal Poison Antidote",
-    price: 29.99,
-    desc: "A tea that neutralizes any poison in your body. Do not brew under a blood moon",
-    cover: universalantidote,
-    size: ["50mg", "100mg", "200mg"]
- },
- {
-  id: 3,
-  name: "Wealth Attraction Tea",
-  price: 15.99,
-  desc: "A tea that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
-  cover: attractWealth,
-  size: ["50mg", "100mg", "200mg"]
-},
-{
-  id: 4,
-  name: "Beauty Glamour Tea",
-  price: 22.14,
-  desc: "A tea that enhances your natural beauty for a day. Brew for 2 minutes and 22 seconds under a full moon for best results",
-  cover: beauty,
-  size: ["50mg", "100mg", "200mg"]
-},
-{
-  id: 5,
-  name: "Protection Tea",
-  price: 42.10,
-  desc: "A tea that protects you from harm. Brew for 10 minutes for best results.",
-  cover: protection,
-  size: ["50mg", "100mg", "200mg"]
-},
-{
-  id: 5,
-  name: "Summon Spirits",
-  price: 62.00,
-  desc: "A tea that provides you necromantic powers to summons spirits of the dead. Best consumed under a full moon.",
-  cover: summonspirits,
-  size: ["50mg", "100mg", "200mg"]
-}
-];
+// Products organized by category
+export const products = {
+  "magic-tea-leaves": [
+    {
+      id: 1,
+      name: "Animal Communication Tea",
+      price: 19.98,
+      desc: "An Dayaknese tea blend that lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
+      cover: talktoanimals,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    },
+    {
+      id: 2,
+      name: "Wealth Attraction Tea",
+      price: 15.99,
+      desc: "A Chinese tea that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
+      cover: attractWealth,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    },
+    {
+      id: 3,
+      name: "Glamour Spell Tea",
+      price: 69.69,
+      desc: "A rose and jasmine-based tea that enhances your natural beauty. Drink in the morning before 9am.",
+      cover: beauty,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    },
+    {
+      id: 2,
+      name: "Divine Protection Tea",
+      price: 15.99,
+      desc: "Infused with iron will of the Black Toirtoise God, this tea will protect you from all physical, psychological, or spiritual harm. Boil for 10 minutes for best results",
+      cover: protection,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    },
+    {
+      id: 2,
+      name: "Universal Antidote Tea",
+      price: 15.99,
+      desc: "A tea that cures any poison or disease. Boil for 4 minutes for best results",
+      cover: universalantidote,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    },
+    {
+      id: 2,
+      name: "Summon Spirits Tea",
+      price: 15.99,
+      desc: "A tea that summons spirits of the dead. Drink in the night before 12am",
+      cover: summonspirits,
+      size: ["50mg", "100mg", "200mg"],
+      category: "magic-tea-leaves"
+    }
+  ],
+  "tea-pots": [
+    {
+      id: 3,
+      name: "Enchanted Copper Teapot",
+      price: 89.99,
+      desc: "A copper teapot that enhances the magical properties of any tea brewed within it.",
+      cover: copperPot, // Reusing image for now
+      size: ["100ml", "250ml", "500ml"],
+      category: "tea-pots"
+    },
+    {
+      id: 4,
+      name: "Moonlight Silver Teapot",
+      price: 129.99,
+      desc: "A silver teapot that absorbs moonlight energy to enhance your magical brews.",
+      cover: silverpot, // Reusing image for now
+      size: ["100ml", "250ml", "500ml"],
+      category: "tea-pots"
+    },
+    {
+      id: 4,
+      name: "Volcanic Clay Teapot",
+      price: 69.99,
+      desc: "A clay teapot made from volcanic ash clay from the sacred Mt. Agung in Bali, Indonesia. Infuses your tea with the power of the Gods.",
+      cover: claypot, // Reusing image for now
+      size: ["100ml", "250ml", "500ml"],
+      category: "tea-pots"
+    }
+  ],
+  "magic-tea-bags": [
+    {
+      id: 5,
+      name: "Protection Tea Bags",
+      price: 12.10,
+      desc: "Pre-packaged tea bags that protect you from harm. Brew for 10 minutes for best results.",
+      cover: protectBag,
+      size: ["Box of 10", "Box of 20", "Box of 30"],
+      category: "magic-tea-bags"
+    },
+    {
+      id: 6,
+      name: "Spirit Summoning Tea Bags",
+      price: 14.00,
+      desc: "Pre-packaged tea bags that provide necromantic powers to summon spirits of the dead. Best consumed under a full moon.",
+      cover: spiritBag,
+      size: ["Box of 5", "Box of 10", "Box of 15"],
+      category: "magic-tea-bags"
+    }
+  ]
+};
 
-export const flashproduct = [
-  {
-    id: 1,
-    name: "Calm The Seas",
-    price: 34.88,
-    discount: 30,
-    cover: flash_CalmTheSeas
-  },
-  {
-    id: 2,
-    name: "Truth Reveal Tea",
-    price: 24.99,
-    discount: 20,
-    cover: flash_TruthReveal
-  }
-];
+// DONT NEED THIS SHIT ANYMORE I TRIED TOO HARD TO MAKE IT FANCY
+// export const product = [
+//   ...products["magic-tea-leaves"],
+//   ...products["tea-pots"],
+//   ...products["magic-tea-bags"]
+// ];
 
-export const offerImgproduct = [
-  {
-    id: 1,
-    name: "AttractWealth",
-    price: 14.88,
-    cover: "https://via.placeholder.com/200x200?text=Category+6"
-  },
-  {
-    id: 2,
-    name: "CalmTheSeas",
-    price: 11.11,
-    cover: "https://via.placeholder.com/200x200?text=Category+6"
-  },
-  {
-    id: 3,
-    name: "TalkToAnimals",
-    price: 50.69,
-    cover: "https://via.placeholder.com/200x200?text=Category+6"
-  },
-  {
-    id: 4,
-    name: "TruthReveal",
-    price: 42.91,
-    cover: "https://via.placeholder.com/200x200?text=Category+6"
-  }
-];
+// export const flashproduct = [
+//   {
+//     id: 1,
+//     name: "Calm The Seas",
+//     price: 34.88,
+//     discount: 30,
+//     cover: flash_CalmTheSeas
+//   },
+//   {
+//     id: 2,
+//     name: "Truth Reveal Tea",
+//     price: 24.99,
+//     discount: 20,
+//     cover: flash_TruthReveal
+//   }
+// ];
+
+// export const offerImgproduct = [
+//   {
+//     id: 1,
+//     name: "AttractWealth",
+//     price: 14.88,
+//     cover: "https://via.placeholder.com/200x200?text=Category+6"
+//   },
+//   {
+//     id: 2,
+//     name: "CalmTheSeas",
+//     price: 11.11,
+//     cover: "https://via.placeholder.com/200x200?text=Category+6"
+//   },
+//   {
+//     id: 3,
+//     name: "TalkToAnimals",
+//     price: 50.69,
+//     cover: "https://via.placeholder.com/200x200?text=Category+6"
+//   },
+//   {
+//     id: 4,
+//     name: "TruthReveal",
+//     price: 42.91,
+//     cover: "https://via.placeholder.com/200x200?text=Category+6"
+//   }
+// ];
 
 export const footer = {
-  social: [
-    { id: 1, name: "Facebook", link: "#" },
-    { id: 2, name: "Instagram", link: "#" },
-    { id: 3, name: "Twitter", link: "#" },
-    { id: 4, name: "YouTube", link: "#" }
-  ],
-  contact: [
-    { id: 1, value: "Email: support@example.com", link: "mailto:support@example.com" },
-    { id: 2, value: "Phone: +1 (123) 456-7890", link: "tel:+11234567890" },
-    { id: 3, value: "Address: 123 Main St, City", link: "#" }
-  ],
-  brand: [
-    { id: 1, name: "About Us", link: "#" },
-    { id: 2, name: "Careers", link: "#" },
-    { id: 3, name: "Store Locations", link: "#" }
-  ],
-  shop: [
-    { id: 1, name: "Tea Collections", link: "#" },
-    { id: 2, name: "Accessories", link: "#" },
-    { id: 3, name: "Gift Cards", link: "#" },
-    { id: 4, name: "Sale", link: "#" }
-  ],
-  support: [
-    { id: 1, name: "Contact Us", link: "#" },
-    { id: 2, name: "FAQs", link: "#" },
-    { id: 3, name: "Shipping & Returns", link: "#" },
-    { id: 4, name: "Order Tracking", link: "#" }
-  ]
+// TO FILL IN SOME DAY LOL
 };

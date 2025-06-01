@@ -1,11 +1,18 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-export const ProductCard = ({ products, handlePopup }) => {
+export const ProductCard = ({ products }) => {
+  const navigate = useNavigate();
+  
+  const handleProductClick = () => {
+    navigate(`/product/${products.id}`);
+  };
+  
   return (
     <>
-      <div className="item" onClick={() => handlePopup(products)}>
+      <div className="item" onClick={handleProductClick}>
         <div className="img">
-          <img src={products.cover} alt="" />
+          <img src={products.cover} alt={products.name} />
         </div>
         <div className="text">
           <h3>{products.name}</h3>
@@ -16,7 +23,7 @@ export const ProductCard = ({ products, handlePopup }) => {
     </>
   );
 };
+
 ProductCard.propTypes = {
-  products: PropTypes.any,
-  handlePopup: PropTypes.any,
+  products: PropTypes.object.isRequired
 };
