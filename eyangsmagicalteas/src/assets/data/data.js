@@ -38,19 +38,19 @@ export const categories = [
   {
     id: 1,
     name: "Magic Tea Leaves",
-    description: "Our finest selection of tea blends for every magical purpose",
+    description: "Our finest selection of tea blends for every magical purpose.",
     sectionId: "magic-tea-leaves"
   },
   {
     id: 2,
     name: "Enchanted Tea Pots",
-    description: "Magical tea pots for enhancing the brewing experience",
+    description: "Magical tea pots for enhancing the brewing experience.",
     sectionId: "tea-pots"
   },
   {
     id: 3,
     name: "Magic Tea Bags",
-    description: "Convenient pre-packaged magical tea bags",
+    description: "Convenient pre-packaged magical tea bags.",
     sectionId: "magic-tea-bags"
   }
 ];
@@ -75,7 +75,7 @@ export const products = {
       id: 2,
       name: "Wealth Attraction Tea",
       basePrice: 12.29,
-      desc: "A Han Chinese tea blend that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
+      desc: "A Han Chinese tea blend that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results.",
       cover: attractWealth,
       sizes: [
         { name: "50mg", price: 12.29 },
@@ -101,7 +101,7 @@ export const products = {
       id: 4,
       name: "Divine Protection Tea",
       basePrice: 15.99,
-      desc: "Infused with the iron will of the Black Toirtoise God, this tea will protect you from all physical, psychological, or spiritual harm. Boil for 10 minutes for best results",
+      desc: "Infused with the iron will of the Black Toirtoise God, this tea will protect you from all physical, psychological, or spiritual harm. Boil for 10 minutes for best results.",
       cover: protection,
       sizes: [
         { name: "50mg", price: 15.99 },
@@ -114,7 +114,7 @@ export const products = {
       id: 5,
       name: "Grandmother's Universal Antidote",
       basePrice: 81.23,
-      desc: "A <i>Eyang's Magical Teas</i> exclusive tea that cures any poison or disease. Boil for 4 minutes for best results",
+      desc: "A Eyang's Magical Teas exclusive tea that cures any poison or disease. Boil for 4 minutes for best results.",
       cover: universalantidote,
       sizes: [
         { name: "50mg", price: 81.23 },
@@ -127,7 +127,7 @@ export const products = {
       id: 6,
       name: "Spirit Summoning Tea",
       basePrice: 10.11,
-      desc: "A Eyang's Magical Teas exclusive tea that lets you summon spirits of the dead. Steep for 30 minutes for best results",
+      desc: "A Eyang's Magical Teas exclusive tea that lets you summon spirits of the dead. Steep for 30 minutes for best results.",
       cover: summonspirits,
       sizes: [
         { name: "50mg", price: 10.11 },
