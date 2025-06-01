@@ -48,9 +48,14 @@ header {
     outline: none; /* Removes default outline */
     flex: 1; /* Takes up remaining space in the flex container */
     background-color: transparent; /* Matches parent background */
-    font-size: 15px;
+    font-size: 16px;
     padding: 10px;
     font-family: "Plus Jakarta Sans", sans-serif;
+    
+    &::placeholder {
+      font-size: 16px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
   }
   
   .search input:focus {
@@ -63,12 +68,12 @@ header {
   }
   
   .searchIcon {
-    font-size: 22px;
+    font-size: 16px;
   }
   .search input {
     padding: 15px;
     width: 100%;
-    font-size: 17px;
+    font-size: 16px;
   }
   
   /* Profile button styling */

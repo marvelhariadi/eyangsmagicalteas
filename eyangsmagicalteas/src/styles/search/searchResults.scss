@@ -7,8 +7,8 @@
     margin: 0 auto;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; 
+    align-items: center; //this changes lives btw
   }
   
   h1 {
@@ -75,6 +75,16 @@
         margin: 0 0 15px 0;
       }
     }
+  }
+  
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    width: 100%;
+    margin-top: 20px;
+    padding-left: calc(2vw + 12px);
+    padding-right: calc(2vw + 12px);
   }
   
   .no-results {

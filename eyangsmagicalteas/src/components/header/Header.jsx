@@ -43,8 +43,8 @@ export const Header = () => {
   
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Navigate to search page when form is submitted
-    navigate('/search');
+    // Navigate to search page with search term as query parameter
+    navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
     setMobileMenuOpen(false);
   };
   
