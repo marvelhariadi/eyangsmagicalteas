@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ScrollToTop, Home, Header } from "./utils/Route";
+import { Home, Header } from "./utils/Route";
 import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -12,7 +12,7 @@ function App() {
     <div>
       <Provider store={store}> 
         <BrowserRouter>
-          <ScrollToTop />
+          {/* ScrollToTop is removed to prevent automatic scrolling */}
           <Routes>
             <Route
               path="/"

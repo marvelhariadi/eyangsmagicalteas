@@ -1,6 +1,12 @@
 // Placeholder data for components
 import hero1 from '../images/heroBanners/hero_1.png';
-import hero2 from '../images/heroBanners/hero_2.png';
+// import hero2 from '../images/heroBanners/hero_2.png';
+import offer_AttractWealth from '../images/offer/offer_AttractWealth.png';
+import offer_CalmTheSeas from '../images/offer/offer_CalmTheSeas.png';
+import offer_TalkToAnimals from '../images/offer/offer_TalkToAnimals.png';
+import offer_TruthReveal from '../images/offer/offer_TruthReveal.png';
+import flash_CalmTheSeas from '../images/offer/flash_CalmTheSeas.png';
+import flash_TruthReveal from '../images/offer/flash_TruthReveal.png';
 
 // change slide content for the hero header
 export const slide = [
@@ -8,14 +14,14 @@ export const slide = [
     id: 1,
     image: hero1,
     title: "Premium Tea Selection",
-    desc: "Discover our magical collection of hand-picked teas"
+    desc: "Discover our magical collection of hand-enchanted teas"
   },
-  {
-    id: 2,
-    image: hero2,
-    title: "Organic Herbal Blends",
-    desc: "Experience the healing power of nature in every cup"
-  }
+  // {
+  //   id: 2,
+  //   image: hero2,
+  //   title: "Organic Herbal Blends",
+  //   desc: "Experience the healing power of nature in every cup"
+  // }
 ];
 
 export const categories = [
@@ -81,44 +87,44 @@ export const product = [
 export const flaseproduct = [
   {
     id: 1,
-    name: "Flash Sale 1",
-    price: 9.99,
-    discount: 50,
-    cover: "https://via.placeholder.com/200x200?text=Flash+Sale+1"
+    name: "Calm The Seas",
+    price: 34.88,
+    discount: 30,
+    cover: flash_CalmTheSeas
   },
   {
     id: 2,
-    name: "Flash Sale 2",
-    price: 19.99,
-    discount: 30,
-    cover: "https://via.placeholder.com/200x200?text=Flash+Sale+2"
+    name: "Truth Reveal Tea",
+    price: 24.99,
+    discount: 20,
+    cover: flash_TruthReveal
   }
 ];
 
 export const offerImgproduct = [
   {
     id: 1,
-    name: "Offer 1",
-    price: 14.99,
-    cover: "https://via.placeholder.com/300x200?text=Offer+1"
+    name: "AttractWealth",
+    price: 14.88,
+    cover: "https://via.placeholder.com/200x200?text=Category+6"
   },
   {
     id: 2,
-    name: "Offer 2",
-    price: 24.99,
-    cover: "https://via.placeholder.com/300x200?text=Offer+2"
+    name: "CalmTheSeas",
+    price: 11.11,
+    cover: "https://via.placeholder.com/200x200?text=Category+6"
   },
   {
     id: 3,
-    name: "Offer 3",
-    price: 34.99,
-    cover: "https://via.placeholder.com/300x200?text=Offer+3"
+    name: "TalkToAnimals",
+    price: 50.69,
+    cover: "https://via.placeholder.com/200x200?text=Category+6"
   },
   {
     id: 4,
-    name: "Offer 4",
-    price: 44.99,
-    cover: "https://via.placeholder.com/300x200?text=Offer+4"
+    name: "TruthReveal",
+    price: 42.91,
+    cover: "https://via.placeholder.com/200x200?text=Category+6"
   }
 ];
 

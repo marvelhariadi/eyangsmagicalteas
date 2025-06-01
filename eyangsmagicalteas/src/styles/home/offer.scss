@@ -1,0 +1,316 @@
+/* Offer section styling */
+.offer {
+  margin: 50px 0;
+  width: 100%;
+  overflow-x: hidden;
+  
+  .wrapper {
+    margin-top: 30px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .offer-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden;
+    
+    .imageWrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        
+        .animatedBg {
+          opacity: 0.2;
+        }
+      }
+      
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      .animatedBg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F88B7E;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+  }
+}
+
+/* Carousel styling */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+    
+    .carousel-slide {
+      min-width: 100%;
+      flex: 0 0 auto;
+      
+      .imageWrapper {
+        position: relative;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        
+        .animatedBg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #F88B7E;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          
+          &:hover {
+            opacity: 0.2;
+          }
+        }
+      }
+    }
+  }
+  
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ddd;
+      margin: 0 5px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      
+      &.active {
+        background-color: #F88B7E;
+        transform: scale(1.2);
+      }
+      
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+  }
+}
+
+/* Flash Sale section styling */
+.flaseSale {
+  background-color: #f9f5f0;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    width: 100%;
+    overflow-x: hidden;
+    
+    .imageWrapper {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      
+      @media (max-width: 768px) {
+        min-width: 100%;
+      }
+      
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      .animatedBg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F88B7E;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      &:hover .animatedBg {
+        opacity: 0.2;
+      }
+    }
+    
+    .products {
+      flex: 2;
+      min-width: 300px;
+      position: relative;
+      width: 100%;
+      overflow-x: hidden;
+      
+      @media (max-width: 768px) {
+        min-width: 100%;
+      }
+      
+      h1 {
+        font-family: "Cinzel Decorative", cursive;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      
+      .carousel-container {
+        height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        
+        .carousel-track {
+          display: flex;
+          transition: transform 0.5s ease;
+          width: 100%;
+        }
+        
+        .carousel-slide {
+          padding: 15px;
+          min-width: 100%;
+          box-sizing: border-box;
+          width: 100%;
+          
+          .product {
+            .img {
+              text-align: center;
+              margin-bottom: 15px;
+              
+              img {
+                max-width: 100%;
+                max-height: 150px;
+                object-fit: contain;
+              }
+            }
+            
+            .details {
+              h3 {
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #333;
+              }
+              
+              .price {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                
+                .price-tag {
+                  color: #D64F3E;
+                  font-weight: bold;
+                }
+                
+                .underline {
+                  text-decoration: line-through;
+                  color: #999;
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+          
+          .progress {
+            margin-top: 15px;
+            
+            .flex {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 5px;
+              
+              p {
+                font-size: 14px;
+                color: #666;
+              }
+            }
+            
+            .progressBar {
+              height: 8px;
+              background-color: #eee;
+              border-radius: 4px;
+              overflow: hidden;
+              
+              .progressFill {
+                height: 100%;
+                background-color: #F88B7E;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Offer arrows styling */
+.offer-arrow {
+  position: absolute;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #F88B7E;
+    color: white;
+  }
+  
+  &.next-arrow {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &.prev-arrow {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

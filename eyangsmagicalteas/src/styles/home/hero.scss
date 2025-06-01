@@ -1,35 +1,167 @@
 .hero {
-  overflow: hidden;
   position: relative;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  left: 0;
-  right: 0;
-  box-sizing: border-box;
-  max-width: 100%;
+  overflow: hidden;
+  width: 100%;
+  margin-left: 0;
+  
+  @media (max-width: 768px) {
+    width: 100vw;
+    margin-left: 0;
+  }
   
   .box {
-    width: 100vw;
-    height: 90vh;
-    margin: 0;
-    padding: 0;
+    position: relative;
+    width: 100%;
     overflow: hidden;
-    position: relative;
-  }
-  .img {
-    height: 90vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    img {
-      width: 100vw;
+    
+    .img {
+      width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
-      margin: 0;
-      max-width: none;
+      position: relative;
+      
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      .text-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        padding-right: 2vw;
+        text-align: right;
+        
+        @media (max-width: 768px) {
+          padding-right: 4vw;
+          padding-left: 4vw;
+          align-items: center;
+          text-align: center;
+        }
+        
+        h1 {
+          font-family: 'Cinzel Decorative', cursive;
+          color: white;
+          margin: 0 0 10px 0;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+          max-width: 32vw;
+          font-size: 4rem;
+          
+          @media (max-width: 1200px) {
+            font-size: 3.5rem;
+            max-width: 40vw;
+          }
+          
+          @media (max-width: 992px) {
+            font-size: 3rem;
+            max-width: 45vw;
+          }
+          
+          @media (max-width: 768px) {
+            font-size: 2.5rem;
+            max-width: 60vw;
+          }
+          
+          @media (max-width: 576px) {
+            font-size: 2rem;
+            max-width: 80vw;
+          }
+          
+          @media (max-width: 480px) {
+            font-size: 1.75rem;
+            max-width: 90vw;
+          }
+        }
+        
+        p {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 16px;
+          color: white;
+          margin: 0 0 10px 0;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+          max-width: 32vw;
+          line-height: 1.5;
+          align-self: flex-end;
+          
+          @media (max-width: 1200px) {
+            font-size: 15px;
+            max-width: 40vw;
+          }
+          
+          @media (max-width: 992px) {
+            font-size: 14px;
+            max-width: 45vw;
+          }
+          
+          @media (max-width: 768px) {
+            font-size: 14px;
+            max-width: 60vw;
+            align-self: center;
+          }
+          
+          @media (max-width: 576px) {
+            font-size: 13px;
+            max-width: 80vw;
+            line-height: 1.4;
+          }
+          
+          @media (max-width: 480px) {
+            font-size: 12px;
+            max-width: 90vw;
+            line-height: 1.3;
+          }
+        }
+        
+        button {
+          margin-top: 20px;
+          padding: 10px 25px;
+          background-color: #F88B7E; /* Salmon color from the header */
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-family: "Plus Jakarta Sans", sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          
+          @media (max-width: 768px) {
+            padding: 8px 20px;
+            font-size: 14px;
+            margin-top: 15px;
+          }
+          
+          @media (max-width: 576px) {
+            padding: 7px 18px;
+            font-size: 13px;
+            margin-top: 12px;
+          }
+          
+          @media (max-width: 480px) {
+            padding: 6px 15px;
+            font-size: 12px;
+            margin-top: 10px;
+          }
+          
+          &:hover {
+            background-color: (#D64F3E);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+          }
+          
+          &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
     }
   }
 

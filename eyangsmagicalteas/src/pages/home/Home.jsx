@@ -6,7 +6,7 @@ export const Home = () => {
     <>
       <Hero />
       <Offer />
-      <Category />
+      {/* <Category /> */}
       <Product />
       <Support />
     </>
