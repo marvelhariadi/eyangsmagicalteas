@@ -38,13 +38,13 @@ export const categories = [
   {
     id: 1,
     name: "Magic Tea Leaves",
-    description: "Our finest selection of enchanted tea leaves",
+    description: "Our finest selection of tea blends for every magical purpose",
     sectionId: "magic-tea-leaves"
   },
   {
     id: 2,
     name: "Enchanted Tea Pots",
-    description: "Magical tea pots for brewing your enchanted teas",
+    description: "Magical tea pots for enhancing the brewing experience",
     sectionId: "tea-pots"
   },
   {
