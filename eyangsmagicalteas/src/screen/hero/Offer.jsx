@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { flaseproduct, offerImgproduct } from "../../assets/data/data";
+import { flashproduct, offerImgproduct } from "../../assets/data/data";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { SampleNextArrows, SamplePrevArrows } from "./Hero";
 import banner2 from "../../assets/images/offer/banner-2.png";
@@ -38,7 +38,7 @@ export const Offer = () => {
 
 export const FlaseSales = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = flaseproduct.length;
+  const totalSlides = flashproduct.length;
   
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
@@ -49,7 +49,7 @@ export const FlaseSales = () => {
   };
   
   return (
-    <div className="flaseSale">
+    <div className="flashSale">
       <div className="content">
         <div className="imageWrapper">
           <img src={banner2} alt="Discount Banner. 50% for senior citizens" />
@@ -59,7 +59,7 @@ export const FlaseSales = () => {
           <h1>Flash Sale</h1>
           <div className="carousel-container">
             <div className="carousel-track" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-              {flaseproduct.map((product, index) => {
+              {flashproduct.map((product, index) => {
                 // Calculate discounted price
                 const discountedPrice = product.price - (product.price * product.discount / 100);
                 return (
@@ -91,7 +91,7 @@ export const FlaseSales = () => {
             <SamplePrevArrow onClick={prevSlide} />
             <SampleNextArrow onClick={nextSlide} />
             <div className="carousel-dots">
-              {flaseproduct.map((_, index) => (
+              {flashproduct.map((_, index) => (
                 <button 
                   key={index} 
                   className={`carousel-dot ${index === currentSlide ? 'active' : ''}`}

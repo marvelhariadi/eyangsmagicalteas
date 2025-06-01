@@ -1,12 +1,19 @@
 // Placeholder data for components
 import hero1 from '../images/heroBanners/hero_1.png';
 // import hero2 from '../images/heroBanners/hero_2.png';
-import offer_AttractWealth from '../images/offer/offer_AttractWealth.png';
-import offer_CalmTheSeas from '../images/offer/offer_CalmTheSeas.png';
-import offer_TalkToAnimals from '../images/offer/offer_TalkToAnimals.png';
-import offer_TruthReveal from '../images/offer/offer_TruthReveal.png';
+// import offer_AttractWealth from '../images/offer/offer_AttractWealth.png';
+// import offer_CalmTheSeas from '../images/offer/offer_CalmTheSeas.png';
+// import offer_TalkToAnimals from '../images/offer/offer_TalkToAnimals.png';
+// import offer_TruthReveal from '../images/offer/offer_TruthReveal.png';
 import flash_CalmTheSeas from '../images/offer/flash_CalmTheSeas.png';
 import flash_TruthReveal from '../images/offer/flash_TruthReveal.png';
+import attractWealth from '../images/product_teas/attractWealth.png';
+import beauty from '../images/product_teas/beauty.png';
+import protection from '../images/product_teas/protection.png';
+import talktoanimals from '../images/product_teas/talktoanimals.png';
+import universalantidote from '../images/product_teas/universalantidote.png';
+import summonspirits from '../images/product_teas/summonspirits.png';
+
 
 // change slide content for the hero header
 export const slide = [
@@ -24,6 +31,7 @@ export const slide = [
   // }
 ];
 
+//delete this
 export const categories = [
   {
     id: 1,
@@ -66,25 +74,55 @@ export const categories = [
 export const product = [
   {
     id: 1,
-    name: "Product 1",
-    price: 19.99,
-    desc: "Description for product 1",
-    cover: "https://via.placeholder.com/300x300?text=Product+1",
-    size: ["S", "M", "L"],
-    colors: ["Red", "Blue", "Green"]
+    name: "Animal Communication Tea",
+    price: 19.98,
+    desc: "A tea that lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
+    cover: talktoanimals,
+    size: ["50mg", "100mg", "200mg"]
   },
   {
     id: 2,
-    name: "Product 2",
+    name: "Universal Poison Antidote",
     price: 29.99,
-    desc: "Description for product 2",
-    cover: "https://via.placeholder.com/300x300?text=Product+2",
-    size: ["S", "M", "L", "XL"],
-    colors: ["Black", "White", "Gray"]
-  }
+    desc: "A tea that neutralizes any poison in your body. Do not brew under a blood moon",
+    cover: universalantidote,
+    size: ["50mg", "100mg", "200mg"]
+ },
+ {
+  id: 3,
+  name: "Wealth Attraction Tea",
+  price: 15.99,
+  desc: "A tea that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
+  cover: attractWealth,
+  size: ["50mg", "100mg", "200mg"]
+},
+{
+  id: 4,
+  name: "Beauty Glamour Tea",
+  price: 22.14,
+  desc: "A tea that enhances your natural beauty for a day. Brew for 2 minutes and 22 seconds under a full moon for best results",
+  cover: beauty,
+  size: ["50mg", "100mg", "200mg"]
+},
+{
+  id: 5,
+  name: "Protection Tea",
+  price: 42.10,
+  desc: "A tea that protects you from harm. Brew for 10 minutes for best results.",
+  cover: protection,
+  size: ["50mg", "100mg", "200mg"]
+},
+{
+  id: 5,
+  name: "Summon Spirits",
+  price: 62.00,
+  desc: "A tea that provides you necromantic powers to summons spirits of the dead. Best consumed under a full moon.",
+  cover: summonspirits,
+  size: ["50mg", "100mg", "200mg"]
+}
 ];
 
-export const flaseproduct = [
+export const flashproduct = [
   {
     id: 1,
     name: "Calm The Seas",

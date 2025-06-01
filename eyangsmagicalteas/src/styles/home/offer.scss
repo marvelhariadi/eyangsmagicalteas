@@ -127,7 +127,7 @@
 }
 
 /* Flash Sale section styling */
-.flaseSale {
+.flashSale {
   background-color: #f9f5f0;
   padding: 30px;
   border-radius: 12px;
@@ -293,7 +293,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Removed drop shadow */
   border: none;
   transition: all 0.3s ease;
   

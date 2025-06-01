@@ -204,7 +204,7 @@
       border-radius: 10px;
     }
   }
-  .flaseSale {
+  .flashSale {
     margin: 0 10px;
     .content {
       display: flex;
@@ -299,7 +299,7 @@
     }
   }
   .offer {
-    .flaseSale {
+    .flashSale {
       margin: 0;
       .content {
         flex-direction: column;
@@ -319,7 +319,7 @@
 
 @media screen and (max-width: 568px) {
   .offer {
-    .flaseSale {
+    .flashSale {
       .content {
         .imageWrapper {
           height: 20vh;

@@ -8,7 +8,7 @@ export const Home = () => {
       <Offer />
       {/* <Category /> */}
       <Product />
-      <Support />
+      {/* <Support /> */}
     </>
   );
 };
