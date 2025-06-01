@@ -62,7 +62,7 @@ export const products = {
       id: 1,
       name: "Animal Communication Tea",
       price: 19.98,
-      desc: "An Dayaknese tea blend that lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
+      desc: "Using herbs harvested by fox spirits at sunrise, this tea blend lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
       cover: talktoanimals,
       size: ["50mg", "100mg", "200mg"],
       category: "magic-tea-leaves"
@@ -71,7 +71,7 @@ export const products = {
       id: 2,
       name: "Wealth Attraction Tea",
       price: 15.99,
-      desc: "A Chinese tea that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
+      desc: "A Han Chinese tea blend that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
       cover: attractWealth,
       size: ["50mg", "100mg", "200mg"],
       category: "magic-tea-leaves"
@@ -96,18 +96,18 @@ export const products = {
     },
     {
       id: 2,
-      name: "Universal Antidote Tea",
+      name: "Grandmother's Universal Antidote",
       price: 15.99,
-      desc: "A tea that cures any poison or disease. Boil for 4 minutes for best results",
+      desc: "A Eyang's Magical Teas exclusive tea that cures any poison or disease. Boil for 4 minutes for best results",
       cover: universalantidote,
       size: ["50mg", "100mg", "200mg"],
       category: "magic-tea-leaves"
     },
     {
       id: 2,
-      name: "Summon Spirits Tea",
+      name: "Spirit Summoner Tea",
       price: 15.99,
-      desc: "A tea that summons spirits of the dead. Drink in the night before 12am",
+      desc: "A necromantic tea that summons spirits of the dead. Drink in the night before 12am",
       cover: summonspirits,
       size: ["50mg", "100mg", "200mg"],
       category: "magic-tea-leaves"
@@ -118,7 +118,7 @@ export const products = {
       id: 3,
       name: "Enchanted Copper Teapot",
       price: 89.99,
-      desc: "A copper teapot that enhances the magical properties of any tea brewed within it.",
+      desc: "A copper teapot that enhances the magical properties of any tea brewed tenfold.",
       cover: copperPot, // Reusing image for now
       size: ["100ml", "250ml", "500ml"],
       category: "tea-pots"
@@ -128,16 +128,16 @@ export const products = {
       name: "Moonlight Silver Teapot",
       price: 129.99,
       desc: "A silver teapot that absorbs moonlight energy to enhance your magical brews.",
-      cover: silverpot, // Reusing image for now
+      cover: silverpot,
       size: ["100ml", "250ml", "500ml"],
       category: "tea-pots"
     },
     {
       id: 4,
-      name: "Volcanic Clay Teapot",
+      name: "Sacred Volcanic Clay Teapot",
       price: 69.99,
-      desc: "A clay teapot made from volcanic ash clay from the sacred Mt. Agung in Bali, Indonesia. Infuses your tea with the power of the Gods.",
-      cover: claypot, // Reusing image for now
+      desc: "A clay teapot made from sacred volcanic ash clay from the sacred Mt. Agung in Bali, Indonesia.",
+      cover: claypot, 
       size: ["100ml", "250ml", "500ml"],
       category: "tea-pots"
     }

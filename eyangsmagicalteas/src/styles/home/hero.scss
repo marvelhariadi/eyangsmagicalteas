@@ -41,9 +41,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-end;
-        padding-right: calc(2vw + 12px);
+        padding-right: calc(4vw + 12px);
         text-align: right;
         
+        // when mobile view
         @media (max-width: 768px) {
           padding: 20px 4vw;
           align-items: center;

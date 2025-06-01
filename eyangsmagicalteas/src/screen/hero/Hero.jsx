@@ -36,9 +36,9 @@ export const Hero = () => {
         <div className="img">
           <img src={hero1} alt="Hero Banner" />
           <div className="text-overlay">
-            <h1>Dreams come true, one sip at a time</h1>
-            <p>At Eyang’s Tea Shop, we craft enchanted tea blends to support any manifestation you seek. From uncovering hidden truths to summoning courage in the face of adversity, there’s a brew for every need.</p>
-            <p>Need clarity? Strength? Protection? Whatever your intention, your path begins with a cup. Your manifestation is just one sip away.</p>
+            <h1>Dreams come true, one cup at a time</h1>
+            <p>At <b><i>Eyang’s Magical Teas</i></b>, we craft enchanted tea blends to support any manifestation you seek. From uncovering hidden truths to summoning courage in the face of adversity, there’s a brew for every need.</p>
+            <p>Your manifestation are only ever one sip away.</p>
             <button onClick={handleShopNow}>Shop Now</button> 
           </div>
         </div>

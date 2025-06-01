@@ -267,8 +267,13 @@
     .cart-actions {
       display: flex;
       justify-content: center;
+      align-items: center;
       margin-top: 30px;
       gap: 8px;
+      
+      button {
+        margin: 0 4px; /* Add 4px padding between buttons */
+      }
       
       @media (max-width: 768px) {
         flex-direction: column;
