@@ -10,4 +10,4 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 Beyond React and Redux, I also used Vite for the development environment, as it is more modern and much more stable than using React and Redux by itself.
 
 ## Extra Feature
-I implimented payment capability using Stripe API via React. 
+You can remove things from cart as well as add them. Global state is saved <3. I also have a shopping cart side bar. 
