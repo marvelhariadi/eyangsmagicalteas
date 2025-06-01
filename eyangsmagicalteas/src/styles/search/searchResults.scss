@@ -1,0 +1,231 @@
+.search-results {
+  padding: 80px 0;
+  min-height: calc(100vh - 200px);
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-family: "Cinzel Decorative", cursive;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+  }
+  
+  .search-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    width: 100%;
+    
+    .back-button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      margin-left: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      align-self: flex-start;
+      padding: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      
+      &:hover {
+        background-color: #F88B7E;
+        color: white;
+      }
+    }
+    
+    h1 {
+      font-family: "Cinzel Decorative", cursive;
+      color: #333;
+      margin-bottom: 12px;
+      text-align: start;
+      font-size: 2rem;
+    }
+    
+    p {
+      margin: 0 0 20px 0;
+      color: #666;
+      font-size: 16px;
+      text-align: start;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 22px;
+        margin: 10px 0 15px 0;
+      }
+      
+      p {
+        margin: 0 0 15px 0;
+      }
+    }
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 50px 0;
+    width: 100%;
+    max-width: 600px;
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #555;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    p {
+      color: #777;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    
+    .browse-button {
+      background-color: #F88B7E;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: darken(#F88B7E, 10%);
+      }
+    }
+  }
+  
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    
+    .product-card {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background-color: white;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        cursor: pointer;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s;
+        }
+        
+        &:hover img {
+          transform: scale(1.05);
+        }
+        
+        .no-image {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #f5f5f5;
+          color: #999;
+        }
+      }
+      
+      .product-info {
+        padding: 15px;
+        
+        h3 {
+          margin: 0 0 10px;
+          font-size: 18px;
+          font-weight: 600;
+          cursor: pointer;
+          color: #333;
+          
+          &:hover {
+            color: #F88B7E;
+          }
+        }
+        
+        .product-price {
+          font-weight: 700;
+          font-size: 18px;
+          color: #F88B7E;
+          margin: 0 0 5px;
+        }
+        
+        .product-category {
+          color: #999;
+          font-size: 14px;
+          margin: 0 0 15px;
+          text-transform: capitalize;
+        }
+        
+        .add-to-cart-btn {
+          width: 100%;
+          padding: 10px;
+          background-color: #F88B7E;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: background-color 0.3s;
+          
+          &:hover {
+            background-color: darken(#F88B7E, 10%);
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 20px 0;
+    
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      
+      .product-card {
+        .product-image {
+          height: 150px;
+        }
+        
+        .product-info {
+          padding: 10px;
+          
+          h3 {
+            font-size: 16px;
+          }
+          
+          .product-price {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}

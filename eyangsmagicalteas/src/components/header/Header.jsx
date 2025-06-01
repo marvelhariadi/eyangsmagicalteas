@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import CompanyLogo from "../../assets/images/CompanyLogo.svg";
 
 import { Cart } from "./Cart";
@@ -9,6 +9,7 @@ export const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const navigate = useNavigate();
   
   // Handle window resize to detect mobile view
   useEffect(() => {
@@ -42,8 +43,8 @@ export const Header = () => {
   
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Search functionality removed - keeping the UI element only
-    console.log('Search term:', searchTerm);
+    // Navigate to search page when form is submitted
+    navigate('/search');
     setMobileMenuOpen(false);
   };
   

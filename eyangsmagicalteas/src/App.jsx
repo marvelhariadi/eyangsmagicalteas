@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home, Header, ProductDetail, TeaLeaves, TeaPots, TeaBags, ShoppingCart } from "./utils/Route";
+import { SearchResults } from "./pages/search/SearchResults";
 import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -61,7 +62,14 @@ function App() {
                 </Layout>
               }
             />
-
+            <Route
+              path="/search"
+              element={
+                <Layout>
+                  <SearchResults />
+                </Layout>
+              }
+            />
           </Routes>
         </Router>
       </Provider>
