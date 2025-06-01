@@ -10,4 +10,4 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 Beyond React and Redux, I also used Vite for the development environment, as it is more modern and much more stable than using React and Redux by itself.
 
 ## Extra Feature
-You can remove things from cart as well as add them. Global state is saved <3. I also have a shopping cart side bar. 
+If the cart is empty, a screen that says "your cart is empty" will appear. If it is full, then it will be populated by items. So there are esentially two divs that the cart page switches between depending on if their are items to populate the cart or not.
