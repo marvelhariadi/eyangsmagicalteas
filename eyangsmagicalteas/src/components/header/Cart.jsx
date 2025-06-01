@@ -73,7 +73,7 @@ export const Cart = () => {
 
       <div className={cardOpen ? "cartItem" : "cardhide"} onClick={(e) => e.stopPropagation()}>
         <div className="title flex">
-          <h2>Tea Cart</h2>
+          <h2>Shopping Cart</h2>
           <button onClick={closeCard}>
             <AiOutlineClose className="icon" />
           </button>
