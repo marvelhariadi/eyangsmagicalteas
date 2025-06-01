@@ -2,23 +2,23 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PropTypes from "prop-types";
 import hero1 from "../../assets/images/heroBanners/hero_1.png";
 
-// export function SampleNextArrows(props) {
-//   const { onClick } = props;
-//   return (
-//     <button className="next-arrow" onClick={onClick}>
-//       <IoIosArrowForward size={25} />
-//     </button>
-//   );
-// } 
+export function SampleNextArrows(props) {
+  const { onClick } = props;
+  return (
+    <button className="next-arrow" onClick={onClick}>
+      <IoIosArrowForward size={25} />
+    </button>
+  );
+} 
 
-// export function SamplePrevArrows(props) {
-//   const { onClick } = props;
-//   return (
-//     <button className="prev-arrow" onClick={onClick}>
-//       <IoIosArrowBack size={25} />
-//     </button>
-//   );
-// }
+export function SamplePrevArrows(props) {
+  const { onClick } = props;
+  return (
+    <button className="prev-arrow" onClick={onClick}>
+      <IoIosArrowBack size={25} />
+    </button>
+  );
+}
 
 
 export const Hero = () => {
@@ -51,9 +51,9 @@ export const Hero = () => {
   );
 };
 
-// SampleNextArrows.propTypes = {
-//   onClick: PropTypes.any,
-// };
-// SamplePrevArrows.propTypes = {
-//   onClick: PropTypes.any,
-// };
+SampleNextArrows.propTypes = {
+  onClick: PropTypes.any,
+};
+SamplePrevArrows.propTypes = {
+  onClick: PropTypes.any,
+};

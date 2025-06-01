@@ -11,13 +11,6 @@ export const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
-  // Add/remove body class to prevent scrolling when modal is open
-  if (selectedProduct) {
-    document.body.classList.add('active-popup');
-  } else {
-    document.body.classList.remove('active-popup');
-  }
-
   const handlePopup = (product) => {
     setSelectedProduct(product);
     setQuantity(1); // Reset quantity when opening a new product
@@ -27,8 +20,11 @@ export const Product = () => {
     setSelectedProduct(null);
   };
 
-  const handleOverlayClick = () => {
-    closePopup();
+  const handleBackgroundClick = (e) => {
+    // Close popup when clicking on the background (outside the popup-inner)
+    if (e.target.className === 'popup') {
+      closePopup();
+    }
   };
 
   const increaseQuantity = () => {
@@ -66,11 +62,8 @@ export const Product = () => {
           </div>
         </div>
       </section>
-      
-      {/* Modal popup implementation */}
       {selectedProduct && (
-        <div className="popup">
-          <div className="overlay" onClick={handleOverlayClick}></div>
+        <div className="popup" onClick={handleBackgroundClick}>
           <div className="popup-inner">
             <button className="close-btn" onClick={closePopup}>
               <IoMdClose size={20} />
