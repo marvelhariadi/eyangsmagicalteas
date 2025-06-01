@@ -4,7 +4,7 @@ For my grandmother, Pertamaningsih, the most magical woman around.
 
 This was an exercise in web development and design. As a UX-er, this was really fun (and also very painful)! I  liked seeing the design come together slowly and trying to make everything responsive. 
 
-[Web tour youtube video link]([url](https://youtu.be/hvuWiTS8ehs))
+[Web tour youtube video link]([url](#https://youtu.be/hvuWiTS8ehs))
 
 ## About
 I just finished reading a book, ["A Magic Steeped in Poison" by Judy I. Lin ]([url](https://www.goodreads.com/book/show/56978089-a-magic-steeped-in-poison)) where tea is used as a form of enacting magic. I was inspired by that book to create a e-commerce website selling magic teas that have spiritual properties to help you manifest your goals. I decided to call it "Eyang's Magic Teas," as "Eyang" means grandparent in Javanese–my grandmother's native language. 
