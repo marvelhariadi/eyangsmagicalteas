@@ -155,8 +155,12 @@ html, body, #root, main {
           }
           
           &:hover {
-            background-color: #000000;
-            color: white;
+            color: #F88B7E;
+            
+            svg {
+              stroke: #F88B7E;
+              fill: #F88B7E;
+            }
           }
         }
         
