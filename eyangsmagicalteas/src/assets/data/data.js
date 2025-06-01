@@ -74,13 +74,13 @@ export const products = {
     {
       id: 2,
       name: "Wealth Attraction Tea",
-      basePrice: 15.99,
+      basePrice: 12.29,
       desc: "A Han Chinese tea blend that attracts wealth and abundance. Cold brew for 8 days and 8 nights before drinking for best results",
       cover: attractWealth,
       sizes: [
-        { name: "50mg", price: 15.99 },
-        { name: "100mg", price: 25.99 },
-        { name: "200mg", price: 35.99 }
+        { name: "50mg", price: 12.29 },
+        { name: "100mg", price: 25.29 },
+        { name: "200mg", price: 35.29 }
       ],
       category: "magic-tea-leaves"
     },
@@ -101,7 +101,7 @@ export const products = {
       id: 4,
       name: "Divine Protection Tea",
       basePrice: 15.99,
-      desc: "Infused with iron will of the Black Toirtoise God, this tea will protect you from all physical, psychological, or spiritual harm. Boil for 10 minutes for best results",
+      desc: "Infused with the iron will of the Black Toirtoise God, this tea will protect you from all physical, psychological, or spiritual harm. Boil for 10 minutes for best results",
       cover: protection,
       sizes: [
         { name: "50mg", price: 15.99 },
@@ -113,26 +113,26 @@ export const products = {
     {
       id: 5,
       name: "Grandmother's Universal Antidote",
-      basePrice: 15.99,
-      desc: "A Eyang's Magical Teas exclusive tea that cures any poison or disease. Boil for 4 minutes for best results",
+      basePrice: 81.23,
+      desc: "A <i>Eyang's Magical Teas</i> exclusive tea that cures any poison or disease. Boil for 4 minutes for best results",
       cover: universalantidote,
       sizes: [
-        { name: "50mg", price: 15.99 },
-        { name: "100mg", price: 25.99 },
-        { name: "200mg", price: 35.99 }
+        { name: "50mg", price: 81.23 },
+        { name: "100mg", price: 181.23 },
+        { name: "200mg", price: 201.23 }
       ],
       category: "magic-tea-leaves"
     },
     {
       id: 6,
       name: "Spirit Summoning Tea",
-      basePrice: 15.99,
+      basePrice: 10.11,
       desc: "A Eyang's Magical Teas exclusive tea that lets you summon spirits of the dead. Steep for 30 minutes for best results",
       cover: summonspirits,
       sizes: [
-        { name: "50mg", price: 15.99 },
-        { name: "100mg", price: 25.99 },
-        { name: "200mg", price: 35.99 }
+        { name: "50mg", price: 10.11 },
+        { name: "100mg", price: 15.11 },
+        { name: "200mg", price: 25.11 }
       ],
       category: "magic-tea-leaves"
     }

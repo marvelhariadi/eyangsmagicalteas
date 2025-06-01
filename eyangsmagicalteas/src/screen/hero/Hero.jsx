@@ -38,7 +38,7 @@ export const Hero = () => {
           <div className="text-overlay">
             <h1>Dreams come true, one cup at a time</h1>
             <p>At <b><i>Eyang’s Magical Teas</i></b>, we craft enchanted tea blends to support any manifestation you seek. From uncovering hidden truths to summoning courage in the face of adversity, there’s a brew for every need.</p>
-            <p>Your manifestation are only ever one sip away.</p>
+            <p>Your manifestations are only ever one sip away.</p>
             <button onClick={handleShopNow}>Shop Now</button> 
           </div>
         </div>
