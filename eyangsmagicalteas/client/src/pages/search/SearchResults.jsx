@@ -62,6 +62,7 @@ export const SearchResults = () => {
             ))}
           </div>
         ) : (
+          //defauly appearancer. hence no conditional stmt
           <div className="no-results">
             <h2>No products found</h2>
             <p>Try a different search term or browse our categories</p>
