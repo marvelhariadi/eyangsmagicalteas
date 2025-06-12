@@ -68,6 +68,7 @@ export const ProductDetail = () => {
     }
   };
 
+  //wIth help from claudeAI bc this made me cry
   const addToCart = () => {
     if (selectedProduct) {
       // Add product with the selected quantity

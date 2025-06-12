@@ -7,7 +7,7 @@ import "../../styles/cart/shoppingCart.scss";
 export const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.itemsList);
+  const cartItems = useSelector((state) => state.cart.itemsList); //gets itemList from cartslice from the cart STATE
   
   // Calculate total price
   const totalPrice = cartItems.reduce((total, item) => {
