@@ -52,7 +52,7 @@ const readCategoriesData = () => {
     },
     {
       name: "Magic Tea Bags",
-      slug: "tea-bags",
+      slug: "magic-tea-bags", // Fixed slug to match Products.js
       description: "Pre-packaged magic tea bags for convenience."
     },
     {
@@ -70,13 +70,18 @@ const seedDatabase = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    // Clear existing data
-    await Promise.all([
-      Category.deleteMany({}),
-      Product.deleteMany({}),
-      ProductAttribute.deleteMany({}),
-      ProductVariant.deleteMany({})
-    ]);
+    // Drop collections to remove old indexes
+    try {
+      await Promise.all([
+        mongoose.connection.dropCollection('categories'),
+        mongoose.connection.dropCollection('products'),
+        mongoose.connection.dropCollection('productattributes'),
+        mongoose.connection.dropCollection('productvariants')
+      ]);
+    } catch (error) {
+      // Collections might not exist yet, which is fine
+      console.log('Note: Some collections may not have existed yet');
+    }
     console.log('Cleared existing data');
 
     // Create categories
