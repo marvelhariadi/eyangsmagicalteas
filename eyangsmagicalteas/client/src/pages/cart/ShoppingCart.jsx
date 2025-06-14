@@ -46,8 +46,8 @@ export const ShoppingCart = () => {
   };
   
   const handleCheckout = () => {
-    // Implement checkout logic here
-    alert("Checkout functionality will be implemented soon!");
+    // Navigate to the checkout page
+    navigate("/checkout");
   };
   
   return (
