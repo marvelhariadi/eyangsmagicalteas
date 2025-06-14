@@ -76,6 +76,22 @@ export const Header = () => {
             </form>
           )}
           
+          {/* Desktop Best Sellers Link - Hidden on Mobile */}
+          {!isMobile && (
+            <NavLink 
+              to="/best-sellers" 
+              className="best-sellers-link"
+              style={{ 
+                textDecoration: 'none', 
+                color: '#000', 
+                fontWeight: 'bold',
+                marginRight: '15px'
+              }}
+            >
+              Best Sellers
+            </NavLink>
+          )}
+          
           {/* Mobile Header Right Section */}
           <div className="mobile-header-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             {/* Shopping Cart - Always Visible */}
@@ -138,6 +154,7 @@ export const Header = () => {
             </form>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Home</NavLink>
+              <NavLink to="/best-sellers" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Best Sellers</NavLink>
               <NavLink to="/category/tea-leaves" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Leaves</NavLink>
               <NavLink to="/category/tea-pots" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Tea Pots</NavLink>
               <NavLink to="/category/tea-bags" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Bags</NavLink>
