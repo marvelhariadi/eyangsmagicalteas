@@ -13,7 +13,13 @@ const sizeSchema = new mongoose.Schema({
   stock: {
     type: Number,
     required: true,
-    default: 0
+    min: 0,
+    validate: {
+      validator: function(value) {
+        return Number.isInteger(value) && value >= 0;
+      },
+      message: 'Stock must be a non-negative integer'
+    }
   }
 }, { _id: false }); // _id: false for subdocuments if you don't need a separate ID for each size variant
 

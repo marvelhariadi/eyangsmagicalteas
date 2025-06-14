@@ -82,8 +82,10 @@ export const CheckoutPage = () => {
     return (
       <div className="checkout-page">
         <div className="container">
-          <div className="order-confirmation">
+          <div className="checkout-header">
             <h1>Order Confirmed!</h1>
+          </div>
+          <div className="order-confirmation">
             <div className="confirmation-details">
               <p>Thank you for your order, <strong>{customerName}</strong>!</p>
               <p>Your order number is: <strong>{orderId}</strong></p>
@@ -101,7 +103,9 @@ export const CheckoutPage = () => {
   return (
     <div className="checkout-page">
       <div className="container">
-        <h1>Checkout</h1>
+        <div className="checkout-header">
+          <h1>Checkout</h1>
+        </div>
         
         <div className="checkout-content">
           <div className="checkout-form">

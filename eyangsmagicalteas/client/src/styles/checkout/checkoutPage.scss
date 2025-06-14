@@ -5,18 +5,28 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
     
     @media (max-width: 768px) {
       padding: 0 15px;
+      gap: 20px;
     }
   }
   
-  h1 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 30px;
+  .checkout-header {
     text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    
+    h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-weight: bold;
+      color: #000;
+      margin-top: 20px;
+      margin-bottom: 4px;
+    }
   }
   
   h2 {
@@ -220,7 +230,8 @@
     margin: 0 auto;
     
     h1 {
-      color: #F88B7E;
+      font-family: 'Cinzel Decorative', cursive;
+      color: #000;
       margin-bottom: 25px;
     }
     
