@@ -2,20 +2,22 @@ import mongoose from 'mongoose';
 
 // Define a schema for order items
 const orderItemSchema = new mongoose.Schema({
-  product: {
+  // Reference to the product variant for historical tracking
+  productVariant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
+    ref: 'ProductVariant',
     required: true
   },
-  productId: {
-    type: Number,
-    required: true
-  },
-  name: {
+  // Store product details at time of order (snapshot)
+  productName: {
     type: String,
     required: true
   },
-  price: {
+  variantDescription: {
+    type: String,
+    required: true
+  },
+  pricePaid: {
     type: Number,
     required: true
   },
@@ -24,11 +26,7 @@ const orderItemSchema = new mongoose.Schema({
     required: true,
     min: 1
   },
-  size: {
-    type: String,
-    default: 'Default'
-  },
-  cover: {
+  image: {
     type: String, // Image URL/path
     required: true
   },
@@ -44,6 +42,11 @@ const orderSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true
+  },
   orderNumber: {
     type: String,
     required: true,
@@ -55,6 +58,11 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
+    default: 'pending'
   },
   orderDate: {
     type: Date,
