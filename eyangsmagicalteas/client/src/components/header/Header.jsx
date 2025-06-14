@@ -121,9 +121,11 @@ export const Header = () => {
               </button>
             )}
             
-            {/* Desktop Account Button - Hidden on Mobile */}
+            {/* Desktop Admin Button - Hidden on Mobile */}
             {!isMobile && (
-              <button className="profile">Sign In</button>
+              <NavLink to="/admin">
+                <button className="profile">Admin</button>
+              </NavLink>
             )}
           </div>
         </div>
@@ -159,7 +161,9 @@ export const Header = () => {
               <NavLink to="/category/tea-leaves" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Leaves</NavLink>
               <NavLink to="/category/tea-pots" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Tea Pots</NavLink>
               <NavLink to="/category/tea-bags" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Bags</NavLink>
-              <button className="profile" style={{ alignSelf: 'flex-start', marginTop: '10px' }}>Sign In</button>
+              <NavLink to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                <button className="profile" style={{ alignSelf: 'flex-start', marginTop: '10px' }}>Admin</button>
+              </NavLink>
             </div>
           </div>
         )}
