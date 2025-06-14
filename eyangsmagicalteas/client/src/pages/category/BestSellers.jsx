@@ -12,7 +12,7 @@ export const BestSellers = () => {
     <section className="category-page">
       <div className="container">
         <div className="category-header">
-          <h1>{category?.name || "Best Sellers"}</h1>
+          <h1>{category?.title || "Best Sellers"}</h1>
           <p>{category?.description || "Our most popular magical products loved by customers."}</p>
         </div>
 
