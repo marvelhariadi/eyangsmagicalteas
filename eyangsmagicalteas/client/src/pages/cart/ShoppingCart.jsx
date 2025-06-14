@@ -20,6 +20,7 @@ export const ShoppingCart = () => {
       name: item.name,
       price: item.price,
       cover: item.cover,
+      size: item.size, // Add the size property to ensure correct item matching
     }));
   };
   
