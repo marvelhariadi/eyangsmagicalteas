@@ -52,25 +52,66 @@ export const categories = [
     name: "Magic Tea Bags",
     description: "Convenient pre-packaged magical tea bags.",
     sectionId: "magic-tea-bags"
+  },
+  {
+    id: 4,
+    name: "Best Sellers",
+    description: "Our most popular magical products loved by customers.",
+    sectionId: "best-sellers"
   }
 ];
 
-// Products organized by category
-export const products = {
-  "magic-tea-leaves": [
-    {
-      id: 1,
-      name: "Animal Communication Tea",
-      basePrice: 19.98,
-      desc: "Using herbs harvested by fox spirits at sunrise, this tea blend lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
-      cover: talktoanimals,
-      sizes: [
-        { name: "50mg", price: 19.98 },
-        { name: "100mg", price: 29.98 },
-        { name: "200mg", price: 39.98 }
-      ],
-      category: "magic-tea-leaves"
-    },
+// Helper function to organize products by category
+const organizeProductsByCategory = (productList) => {
+  const result = {};
+  
+  // Initialize empty arrays for each category
+  categories.forEach(category => {
+    result[category.sectionId] = [];
+  });
+  
+  // Add products to their respective categories
+  productList.forEach(product => {
+    product.categories.forEach(categoryId => {
+      if (result[categoryId]) {
+        result[categoryId].push(product);
+      }
+    });
+  });
+  
+  // For best-sellers category, if there are more than 3 products, randomly select 3
+  if (result['best-sellers'] && result['best-sellers'].length > 3) {
+    // Create a copy to avoid modifying the original array
+    const bestSellers = [...result['best-sellers']];
+    
+    // Shuffle the array using Fisher-Yates algorithm
+    for (let i = bestSellers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [bestSellers[i], bestSellers[j]] = [bestSellers[j], bestSellers[i]];
+    }
+    
+    // Select only the first 3 products
+    result['best-sellers'] = bestSellers.slice(0, 3);
+  }
+  
+  return result;
+};
+
+// All products with their categories
+const allProducts = [
+  {
+    id: 1,
+    name: "Animal Communication Tea",
+    basePrice: 19.98,
+    desc: "Using herbs harvested by fox spirits at sunrise, this tea blend lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
+    cover: talktoanimals,
+    sizes: [
+      { name: "50mg", price: 19.98 },
+      { name: "100mg", price: 29.98 },
+      { name: "200mg", price: 39.98 }
+    ],
+    categories: ["magic-tea-leaves", "best-sellers"]
+  },
     {
       id: 2,
       name: "Wealth Attraction Tea",
@@ -82,7 +123,7 @@ export const products = {
         { name: "100mg", price: 25.29 },
         { name: "200mg", price: 35.29 }
       ],
-      category: "magic-tea-leaves"
+      categories: ["magic-tea-leaves"]
     },
     {
       id: 3,
@@ -95,7 +136,7 @@ export const products = {
         { name: "100mg", price: 89.69 },
         { name: "200mg", price: 109.69 }
       ],
-      category: "magic-tea-leaves"
+      categories: ["magic-tea-leaves", "best-sellers"]
     },
     {
       id: 4,
@@ -108,7 +149,7 @@ export const products = {
         { name: "100mg", price: 25.99 },
         { name: "200mg", price: 35.99 }
       ],
-      category: "magic-tea-leaves"
+      categories: ["magic-tea-leaves"]
     },
     {
       id: 5,
@@ -121,7 +162,7 @@ export const products = {
         { name: "100mg", price: 181.23 },
         { name: "200mg", price: 201.23 }
       ],
-      category: "magic-tea-leaves"
+      categories: ["magic-tea-leaves"]
     },
     {
       id: 6,
@@ -134,10 +175,8 @@ export const products = {
         { name: "100mg", price: 15.11 },
         { name: "200mg", price: 25.11 }
       ],
-      category: "magic-tea-leaves"
-    }
-  ],
-  "tea-pots": [
+      categories: ["magic-tea-leaves"]
+    },
     {
       id: 7,
       name: "Enchanted Copper Teapot",
@@ -149,7 +188,7 @@ export const products = {
         { name: "250ml", price: 119.99 },
         { name: "500ml", price: 149.99 }
       ],
-      category: "tea-pots"
+      categories: ["tea-pots", "best-sellers"]
     },
     {
       id: 8,
@@ -162,7 +201,7 @@ export const products = {
         { name: "250ml", price: 159.99 },
         { name: "500ml", price: 189.99 }
       ],
-      category: "tea-pots"
+      categories: ["tea-pots"]
     },
     {
       id: 9,
@@ -175,10 +214,8 @@ export const products = {
         { name: "250ml", price: 89.99 },
         { name: "500ml", price: 109.99 }
       ],
-      category: "tea-pots"
-    }
-  ],
-  "magic-tea-bags": [
+      categories: ["tea-pots"]
+    },
     {
       id: 10,
       name: "Protection Tea Bags",
@@ -190,7 +227,7 @@ export const products = {
         { name: "Box of 20", price: 22.10 },
         { name: "Box of 30", price: 30.10 }
       ],
-      category: "magic-tea-bags"
+      categories: ["magic-tea-bags"]
     },
     {
       id: 11,
@@ -203,17 +240,15 @@ export const products = {
         { name: "Box of 10", price: 26.00 },
         { name: "Box of 15", price: 36.00 }
       ],
-      category: "magic-tea-bags"
+      categories: ["magic-tea-bags", "best-sellers"]
     }
-  ]
-};
+];
 
-// DONT NEED THIS SHIT ANYMORE I TRIED TOO HARD TO MAKE IT FANCY
-// export const product = [
-//   ...products["magic-tea-leaves"],
-//   ...products["tea-pots"],
-//   ...products["magic-tea-bags"]
-// ];
+// Export the organized products
+export const products = organizeProductsByCategory(allProducts);
+
+// Export all products as a flat array too, in case it's needed elsewhere
+export const product = allProducts;
 
 // export const flashproduct = [
 //   {

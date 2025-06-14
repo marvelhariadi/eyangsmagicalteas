@@ -4,6 +4,7 @@ export { Product } from "../screen/product/Product";
 
 export { Category } from "../screen/category/Category";
 
+
 export { Hero } from "../screen/hero/Hero";
 export { Offer } from "../screen/hero/Offer";
 

@@ -10,12 +10,22 @@ export const Category = () => {
     const routeMap = {
       "magic-tea-leaves": "/category/tea-leaves",
       "tea-pots": "/category/tea-pots",
-      "magic-tea-bags": "/category/tea-bags"
+      "magic-tea-bags": "/category/tea-bags",
+      "best-sellers": "/#best-sellers" // Anchor link to the Best Sellers section
     };
     
     // Navigate to the appropriate category page
     if (routeMap[sectionId]) {
-      navigate(routeMap[sectionId]);
+      if (sectionId === "best-sellers") {
+        // For Best Sellers, scroll to the section on the home page
+        const bestSellersSection = document.getElementById("best-sellers");
+        if (bestSellersSection) {
+          bestSellersSection.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        // For other categories, navigate to their dedicated pages
+        navigate(routeMap[sectionId]);
+      }
     }
   };
 
