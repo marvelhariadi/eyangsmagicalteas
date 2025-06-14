@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home, Header, ProductDetail, TeaLeaves, TeaPots, TeaBags, ShoppingCart } from "./utils/Route";
+import { Home, Header, ProductDetail, TeaLeaves, TeaPots, TeaBags, BestSellers, ShoppingCart } from "./utils/Route";
 import { SearchResults } from "./pages/search/SearchResults";
 import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
@@ -51,6 +51,14 @@ function App() {
               element={
                 <Layout>
                   <TeaBags />
+                </Layout>
+              }
+            />
+            <Route
+              path="/category/best-sellers"
+              element={
+                <Layout>
+                  <BestSellers />
                 </Layout>
               }
             />

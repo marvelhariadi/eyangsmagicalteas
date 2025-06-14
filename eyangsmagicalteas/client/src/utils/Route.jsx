@@ -17,4 +17,5 @@ export { ProductDetail } from "../pages/product/ProductDetail";
 export { TeaLeaves } from "../pages/category/TeaLeaves";
 export { TeaPots } from "../pages/category/TeaPots";
 export { TeaBags } from "../pages/category/TeaBags";
+export { BestSellers } from "../pages/category/BestSellers";
 export { ShoppingCart } from "../pages/cart/ShoppingCart";
