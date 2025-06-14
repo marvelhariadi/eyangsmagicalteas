@@ -84,7 +84,8 @@ export const Header = () => {
               style={{ 
                 textDecoration: 'none', 
                 color: '#000', 
-                fontWeight: 'bold',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 'normal',
                 marginRight: '15px'
               }}
             >
@@ -154,7 +155,7 @@ export const Header = () => {
             </form>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Home</NavLink>
-              <NavLink to="/best-sellers" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Best Sellers</NavLink>
+              <NavLink to="/best-sellers" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Best Sellers</NavLink>
               <NavLink to="/category/tea-leaves" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Leaves</NavLink>
               <NavLink to="/category/tea-pots" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Tea Pots</NavLink>
               <NavLink to="/category/tea-bags" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#000', padding: '10px 0', borderBottom: '1px solid #eee' }}>Magic Tea Bags</NavLink>
