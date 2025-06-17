@@ -92,13 +92,17 @@ export const Product = () => {
           <h1 className="section-title">Our Magical Products</h1>
           
           {categories.map((category) => (
-            <div key={category.id} id={category.sectionId} className="product-category-section">
+            <div key={category.id || category._id} id={category.sectionId} className="product-category-section">
               <h2>{category.name}</h2>
               <p>{category.description}</p>
               <div className="content">
-                {productsByCategory[category.sectionId] && productsByCategory[category.sectionId].map((product) => (
-                  <ProductCard key={product._id} products={product} />
-                ))}
+                {productsByCategory[category.sectionId] && productsByCategory[category.sectionId].length > 0 ? (
+                  productsByCategory[category.sectionId].map((product) => (
+                    <ProductCard key={product._id} products={product} />
+                  ))
+                ) : (
+                  <p>No products found in this category.</p>
+                )}
               </div>
             </div>
           ))}
