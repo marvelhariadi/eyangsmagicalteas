@@ -13,13 +13,29 @@ import orderRoutes from './routes/orderRoutes.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, ".env") }); // Configure dotenv with explicit path
+dotenv.config({ path: path.join(__dirname, ".env") }); // Configure dotenv with explicit!!! path
 
 //database
+console.log('Attempting to connect to MongoDB with URI:', process.env.MONGODB_URI);
+
+// Set mongoose connection options. here for troubleshooting.
+const mongooseOptions = {
+  serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+  socketTimeoutMS: 45000,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+};
+
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI, mongooseOptions)
   .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    console.error("Connection details:", {
+      uri: process.env.MONGODB_URI ? `${process.env.MONGODB_URI.substring(0, 20)}...` : 'undefined',
+      options: mongooseOptions
+    });
+  });
 
 const app = express();
 const port = process.env.PORT || 3000;
