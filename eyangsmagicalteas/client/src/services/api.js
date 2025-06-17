@@ -55,6 +55,26 @@ export const fetchProductById = async (productId) => {
 };
 
 /**
+ * Fetch all categories from the API
+ * @returns {Promise<Array>} - Promise resolving to array of categories
+ */
+export const fetchCategories = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/categories`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch categories: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
+};
+
+/**
  * Helper function to organize products by category
  * @param {Array} products - Array of product objects
  * @returns {Object} - Object with category names as keys and arrays of products as values

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { products } from '../../assets/data/data';
+import { fetchProducts } from '../../services/api';
 import { ProductCard } from '../../components/cards/ProductCard';
 import '../../styles/search/searchResults.scss';
 
@@ -13,12 +13,27 @@ export const SearchResults = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Get all products in a flat array
-  const allProducts = [
-    ...products['magic-tea-leaves'],
-    ...products['tea-pots'],
-    ...products['magic-tea-bags']
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [allProducts, setAllProducts] = useState([]);
+  
+  // Fetch all products when component mounts
+  useEffect(() => {
+    const loadAllProducts = async () => {
+      try {
+        setLoading(true);
+        const products = await fetchProducts();
+        setAllProducts(products);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error loading products:', err);
+        setError('Failed to load products. Please try again later.');
+        setLoading(false);
+      }
+    };
+    
+    loadAllProducts();
+  }, []);
   
   useEffect(() => {
     // Get search query from URL
@@ -36,13 +51,15 @@ export const SearchResults = () => {
         const searchLower = query.toLowerCase();
         return (
           product.name.toLowerCase().includes(searchLower) ||
-          product.desc.toLowerCase().includes(searchLower) ||
-          product.category.toLowerCase().includes(searchLower)
+          (product.description && product.description.toLowerCase().includes(searchLower)) ||
+          (product.categories && product.categories.some(cat => 
+            cat.name && cat.name.toLowerCase().includes(searchLower)
+          ))
         );
       });
       setFilteredProducts(filtered);
     }
-  }, [location.search]);
+  }, [location.search, allProducts]);
 
   return (
     <div className="search-results">
