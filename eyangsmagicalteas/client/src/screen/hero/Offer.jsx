@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-// Commented out due to missing exports in data.js
-// import { flashproduct, offerImgproduct } from "../../assets/data/data";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { SampleNextArrows, SamplePrevArrows } from "./Hero";
 // Unused imports commented out
