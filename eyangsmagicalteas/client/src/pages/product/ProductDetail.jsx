@@ -10,6 +10,19 @@ import "../../styles/product/productDetail.scss";
 // Import a custom event emitter for cart visibility
 import { cartEvents } from "../../utils/cartEvents";
 
+// Helper function to construct image paths
+const getImagePath = (imageName) => {
+  if (!imageName) return "";
+  
+  // If the path already includes http:// or https:// or starts with /, it's already a full path
+  if (imageName.includes("http") || imageName.startsWith("/")) {
+    return imageName;
+  }
+  
+  // Otherwise, construct the path to the image in the assets folder
+  return `/src/assets/images/product_teas/${imageName}.png`;
+};
+
 export const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -30,14 +43,30 @@ export const ProductDetail = () => {
         
         if (product) {
           setSelectedProduct(product);
+          
           // Set default size to the first size if available
           if (product.variants && product.variants.length > 0) {
-            // Assuming variants contain size information
             const firstVariant = product.variants[0];
-            setSelectedSize(firstVariant.name || 'Default');
+            
+            // Find the size attribute in the variant
+            let sizeValue = 'Default';
+            if (firstVariant.attributes && firstVariant.attributes.length > 0) {
+              // Look for an attribute that represents size
+              const sizeAttribute = firstVariant.attributes.find(attr => 
+                attr.attribute && 
+                (attr.attribute.name === 'Size' || attr.attribute.name.toLowerCase().includes('size'))
+              );
+              
+              if (sizeAttribute) {
+                sizeValue = sizeAttribute.value;
+              }
+            }
+            
+            setSelectedSize(sizeValue);
             setCurrentPrice(firstVariant.price || product.price);
           } else {
-            setCurrentPrice(product.price);
+            // If no variants, use base price
+            setCurrentPrice(product.price || 0);
           }
         } else {
           // Redirect to home if product not found
@@ -61,18 +90,29 @@ export const ProductDetail = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1)); // Don't go below 1
   };
 
-  const handleSizeChange = (sizeName) => {
-    setSelectedSize(sizeName);
+  const handleSizeChange = (sizeValue) => {
+    setSelectedSize(sizeValue);
+    
     // Update price based on selected size
     if (selectedProduct && selectedProduct.variants) {
-      const variant = selectedProduct.variants.find(v => v.name === sizeName);
+      // Find the variant that has this size value
+      const variant = selectedProduct.variants.find(v => {
+        if (!v.attributes || !v.attributes.length) return false;
+        
+        // Look for the size attribute in this variant
+        return v.attributes.some(attr => 
+          attr.attribute && 
+          (attr.attribute.name === 'Size' || attr.attribute.name.toLowerCase().includes('size')) && 
+          attr.value === sizeValue
+        );
+      });
+      
       if (variant) {
         setCurrentPrice(variant.price);
       }
     }
   };
 
-  //wIth help from claudeAI bc this made me cry
   const addToCart = () => {
     if (selectedProduct) {
       // Add product with the selected quantity
@@ -81,7 +121,7 @@ export const ProductDetail = () => {
           id: selectedProduct._id,
           name: selectedProduct.name,
           price: currentPrice,
-          cover: selectedProduct.imageUrl || selectedProduct.image,
+          cover: getImagePath(selectedProduct.image), // Use the helper function to get the correct image path
           quantity: quantity,
           size: selectedSize || 'Default',
         })
@@ -111,7 +151,7 @@ export const ProductDetail = () => {
         
         <div className="product-content">
           <div className="product-image">
-            <img src={selectedProduct.imageUrl || selectedProduct.image} alt={selectedProduct.name} />
+            <img src={getImagePath(selectedProduct.image)} alt={selectedProduct.name} />
           </div>
           
           <div className="product-info">
@@ -122,15 +162,27 @@ export const ProductDetail = () => {
             <div className="size-selection">
               <h3>Size</h3>
               <div className="size-buttons">
-                {selectedProduct.variants && selectedProduct.variants.map((variant, index) => (
-                  <button 
-                    key={index} 
-                    className={`size-btn ${selectedSize === variant.name ? 'active' : ''}`}
-                    onClick={() => handleSizeChange(variant.name)}
-                  >
-                    {variant.name}
-                  </button>
-                ))}
+                {selectedProduct.variants && selectedProduct.variants.length > 0 && (
+                  // Extract unique size values from variants
+                  [...new Set(selectedProduct.variants
+                    .filter(v => v.attributes && v.attributes.length > 0)
+                    .flatMap(v => v.attributes
+                      .filter(attr => 
+                        attr.attribute && 
+                        (attr.attribute.name === 'Size' || attr.attribute.name.toLowerCase().includes('size'))
+                      )
+                      .map(attr => attr.value)
+                    )
+                  )].map((sizeValue, index) => (
+                    <button 
+                      key={index} 
+                      className={`size-btn ${selectedSize === sizeValue ? 'active' : ''}`}
+                      onClick={() => handleSizeChange(sizeValue)}
+                    >
+                      {sizeValue}
+                    </button>
+                  ))
+                )}
               </div>
             </div>
 

@@ -22,6 +22,7 @@ export const ProductCard = ({ products }) => {
     }
     
     // Otherwise, construct the path to the image in the assets folder
+    // The image name from the database is just the base name without extension
     return `/src/assets/images/product_teas/${imageName}.png`;
   };
   
