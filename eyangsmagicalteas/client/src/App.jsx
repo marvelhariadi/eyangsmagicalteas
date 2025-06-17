@@ -5,6 +5,9 @@ import { SearchResults } from "./pages/search/SearchResults";
 import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
+import { Admin } from "./pages/admin/Admin";
+import { CartsList } from "./pages/admin/CartsList";
+import { OrdersList } from "./pages/admin/OrdersList";
 import "./App.css";
 
 function App() {
@@ -86,6 +89,20 @@ function App() {
                 </Layout>
               }
             />
+            {/* Admin Routes */}
+            <Route
+              path="/admin"
+              element={
+                <Layout>
+                  <Admin />
+                </Layout>
+              }
+            >
+              {/* Nested Admin Routes */}
+              <Route index element={<div className="admin-placeholder"><h2>Welcome to Admin Dashboard</h2><p>Please select a section from the navigation above.</p></div>} />
+              <Route path="carts" element={<CartsList />} />
+              <Route path="orders" element={<OrdersList />} />
+            </Route>
           </Routes>
         </Router>
       </Provider>
