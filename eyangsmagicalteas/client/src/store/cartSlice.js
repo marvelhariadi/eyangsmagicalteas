@@ -60,7 +60,7 @@ export const removeItemFromCart = createAsyncThunk(
   async (productVariantId, { rejectWithValue }) => {
     try {
       const sessionId = getOrCreateCartId();
-      const response = await apiRemoveCartItem(sessionId, productVariantId);
+      const response = await apiRemoveCartItem(productVariantId);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });
