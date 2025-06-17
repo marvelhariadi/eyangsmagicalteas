@@ -18,7 +18,7 @@ export const CartItems = ({ item }) => {
   const { product, price, attributes } = productVariant;
 
   // Find the size attribute for display
-  const sizeAttribute = attributes.find(attr => attr.attribute.name.toLowerCase() === 'size');
+  const sizeAttribute = attributes.find(attr => attr.attribute && typeof attr.attribute === 'object' && attr.attribute.name && attr.attribute.name.toLowerCase() === 'size');
   const size = sizeAttribute ? sizeAttribute.value : 'N/A';
 
   const handleUpdateQuantity = (newQuantity) => {

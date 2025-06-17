@@ -16,7 +16,7 @@ const cartItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   }
-}, { _id: false }); // No need for separate IDs for each item
+});
 
 const shoppingCartSchema = new mongoose.Schema({
   // Cart can be associated with a user (logged in) or a session (anonymous)
@@ -30,7 +30,7 @@ const shoppingCartSchema = new mongoose.Schema({
     sparse: true, // Allow null for user carts
     // index: true -- makes duplicate indexes!!!!
   },
-  items: [cartItemSchema], // Array of cart items
+  items: [cartItemSchema], // Array of cart items. EACH ITEM HAS OWN ID!!!!
   totalAmount: {
     type: Number,
     default: 0

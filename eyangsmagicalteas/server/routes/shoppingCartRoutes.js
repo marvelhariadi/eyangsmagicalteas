@@ -60,7 +60,7 @@ router.post('/:sessionId/items', async (req, res) => {
     }
     
     // Find the product variant to get its price
-    const productVariant = await ProductVariant.findById(productVariantId).populate('product');
+    const productVariant = await ProductVariant.findOne({ sku: productVariantId }).populate('product');
     if (!productVariant) {
       return res.status(404).json({ message: 'Product variant not found' });
     }

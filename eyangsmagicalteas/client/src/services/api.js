@@ -161,13 +161,12 @@ export const getCartBySessionId = async () => {
 };
 
 // Add item to cart
-export const addToCart = async (productVariantId, quantity) => {
-  const sessionId = getOrCreateCartId();
+export const addToCart = async (sessionId, itemData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/cart/${sessionId}/items`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productVariantId, quantity }),
+      body: JSON.stringify(itemData),
     });
     if (!response.ok) {
       throw new Error(`Failed to add item to cart: ${response.status} ${response.statusText}`);
