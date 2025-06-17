@@ -9,6 +9,10 @@ import Category from '../models/Category.js';
 import Product from '../models/Product.js';
 import ProductAttribute from '../models/ProductAttribute.js';
 import ProductVariant from '../models/ProductVariant.js';
+import User from '../models/User.js';
+
+// Import user data
+import users from '../data/Users.js';
 
 // Configure environment variables
 dotenv.config();
@@ -76,7 +80,8 @@ const seedDatabase = async () => {
         mongoose.connection.dropCollection('categories'),
         mongoose.connection.dropCollection('products'),
         mongoose.connection.dropCollection('productattributes'),
-        mongoose.connection.dropCollection('productvariants')
+        mongoose.connection.dropCollection('productvariants'),
+        mongoose.connection.dropCollection('users')
       ]);
     } catch (error) {
       // Collections might not exist yet, which is fine
@@ -137,11 +142,15 @@ const seedDatabase = async () => {
           price: sizeData.price,
           stock: sizeData.stock,
           sku: `${productData.id}-${sizeData.name.replace(/\s+/g, '')}`
-        });
+        }); 
       }
       console.log(`Created ${productData.sizes.length} variants for ${product.name}`);
     }
 
+    // Seed users
+    await User.create(users);
+    console.log(`Created ${users.length} users`);
+    
     console.log('Database seeding completed successfully');
   } catch (error) {
     console.error('Error seeding database:', error);
