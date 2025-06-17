@@ -28,7 +28,7 @@ const shoppingCartSchema = new mongoose.Schema({
   sessionId: {
     type: String,
     sparse: true, // Allow null for user carts
-    index: true // For faster lookups
+    // index: true -- makes duplicate indexes!!!!
   },
   items: [cartItemSchema], // Array of cart items
   totalAmount: {
