@@ -1,0 +1,266 @@
+import express from 'express';
+import ShoppingCart from '../models/ShoppingCart.js';
+import ProductVariant from '../models/ProductVariant.js';
+
+const router = express.Router();
+
+/**
+ * Get a cart by sessionId
+ * GET /api/cart/:sessionId
+ */
+router.get('/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    // Find cart by sessionId
+    let cart = await ShoppingCart.findOne({ sessionId })
+      .populate({
+        path: 'items.productVariant',
+        populate: {
+          path: 'product',
+          select: 'name image'
+        }
+      });
+    
+    // If no cart exists for this session, create a new empty one
+    if (!cart) {
+      cart = new ShoppingCart({
+        sessionId,
+        items: [],
+        totalAmount: 0
+      });
+      await cart.save();
+    }
+    
+    res.json(cart);
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    res.status(500).json({ message: 'Error fetching cart', error: error.message });
+  }
+});
+
+/**
+ * Add item to cart
+ * POST /api/cart/:sessionId/items
+ * Body: { productVariantId, quantity }
+ */
+router.post('/:sessionId/items', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const { productVariantId, quantity } = req.body;
+    
+    // Validate input
+    if (!productVariantId || !quantity || quantity < 1) {
+      return res.status(400).json({ message: 'Product variant ID and quantity (minimum 1) are required' });
+    }
+    
+    // Find the product variant to get its price
+    const productVariant = await ProductVariant.findById(productVariantId).populate('product', 'name image');
+    if (!productVariant) {
+      return res.status(404).json({ message: 'Product variant not found' });
+    }
+    
+    // Find cart by sessionId or create a new one
+    let cart = await ShoppingCart.findOne({ sessionId });
+    if (!cart) {
+      cart = new ShoppingCart({
+        sessionId,
+        items: [],
+        totalAmount: 0
+      });
+    }
+    
+    // Check if item already exists in cart
+    const existingItemIndex = cart.items.findIndex(
+      item => item.productVariant.toString() === productVariantId
+    );
+    
+    if (existingItemIndex > -1) {
+      // Update quantity if item exists
+      cart.items[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item if it doesn't exist
+      cart.items.push({
+        productVariant: productVariantId,
+        quantity,
+        price: productVariant.price
+      });
+    }
+    
+    // Update cart total and save
+    cart.calculateTotal();
+    await cart.save();
+    
+    // Return updated cart with populated product info
+    const updatedCart = await ShoppingCart.findById(cart._id)
+      .populate({
+        path: 'items.productVariant',
+        populate: {
+          path: 'product',
+          select: 'name image'
+        }
+      });
+    
+    res.json(updatedCart);
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+    res.status(500).json({ message: 'Error adding item to cart', error: error.message });
+  }
+});
+
+/**
+ * Update item quantity in cart
+ * PUT /api/cart/:sessionId/items/:productVariantId
+ * Body: { quantity }
+ */
+router.put('/:sessionId/items/:productVariantId', async (req, res) => {
+  try {
+    const { sessionId, productVariantId } = req.params;
+    const { quantity } = req.body;
+    
+    // Validate input
+    if (!quantity || quantity < 0) {
+      return res.status(400).json({ message: 'Valid quantity is required' });
+    }
+    
+    // Find cart by sessionId
+    const cart = await ShoppingCart.findOne({ sessionId });
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+    
+    // Find the item in the cart
+    const itemIndex = cart.items.findIndex(
+      item => item.productVariant.toString() === productVariantId
+    );
+    
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: 'Item not found in cart' });
+    }
+    
+    if (quantity === 0) {
+      // Remove item if quantity is 0
+      cart.items.splice(itemIndex, 1);
+    } else {
+      // Update quantity
+      cart.items[itemIndex].quantity = quantity;
+    }
+    
+    // Update cart total and save
+    cart.calculateTotal();
+    await cart.save();
+    
+    // Return updated cart with populated product info
+    const updatedCart = await ShoppingCart.findById(cart._id)
+      .populate({
+        path: 'items.productVariant',
+        populate: {
+          path: 'product',
+          select: 'name image'
+        }
+      });
+    
+    res.json(updatedCart);
+  } catch (error) {
+    console.error('Error updating cart item:', error);
+    res.status(500).json({ message: 'Error updating cart item', error: error.message });
+  }
+});
+
+/**
+ * Remove item from cart
+ * DELETE /api/cart/:sessionId/items/:productVariantId
+ */
+router.delete('/:sessionId/items/:productVariantId', async (req, res) => {
+  try {
+    const { sessionId, productVariantId } = req.params;
+    
+    // Find cart by sessionId
+    const cart = await ShoppingCart.findOne({ sessionId });
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+    
+    // Find the item in the cart
+    const itemIndex = cart.items.findIndex(
+      item => item.productVariant.toString() === productVariantId
+    );
+    
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: 'Item not found in cart' });
+    }
+    
+    // Remove the item
+    cart.items.splice(itemIndex, 1);
+    
+    // Update cart total and save
+    cart.calculateTotal();
+    await cart.save();
+    
+    // Return updated cart with populated product info
+    const updatedCart = await ShoppingCart.findById(cart._id)
+      .populate({
+        path: 'items.productVariant',
+        populate: {
+          path: 'product',
+          select: 'name image'
+        }
+      });
+    
+    res.json(updatedCart);
+  } catch (error) {
+    console.error('Error removing item from cart:', error);
+    res.status(500).json({ message: 'Error removing item from cart', error: error.message });
+  }
+});
+
+/**
+ * Clear cart
+ * DELETE /api/cart/:sessionId
+ */
+router.delete('/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    // Find cart by sessionId
+    const cart = await ShoppingCart.findOne({ sessionId });
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+    
+    // Clear all items
+    cart.items = [];
+    cart.totalAmount = 0;
+    await cart.save();
+    
+    res.json(cart);
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    res.status(500).json({ message: 'Error clearing cart', error: error.message });
+  }
+});
+
+/**
+ * Get all carts (admin only)
+ * GET /api/cart
+ */
+router.get('/', async (req, res) => {
+  try {
+    // In a real app, this would be protected by authentication
+    const carts = await ShoppingCart.find()
+      .populate({
+        path: 'items.productVariant',
+        populate: {
+          path: 'product',
+          select: 'name image'
+        }
+      });
+    
+    res.json(carts);
+  } catch (error) {
+    console.error('Error fetching all carts:', error);
+    res.status(500).json({ message: 'Error fetching all carts', error: error.message });
+  }
+});
+
+export default router;
