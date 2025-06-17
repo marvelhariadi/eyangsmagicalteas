@@ -9,7 +9,7 @@ export const CartsList = () => {
         You'll be able to view cart contents, customer information, and take administrative actions.
       </p>
       <div className="placeholder-data">
-        <p>Coming soon: Integration with backend cart data.</p>
+        <p>MMM DATA DATA DATA DATA MONGODB DATA.</p>
       </div>
     </div>
   );

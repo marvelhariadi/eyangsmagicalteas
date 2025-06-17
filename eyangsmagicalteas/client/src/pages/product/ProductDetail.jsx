@@ -31,6 +31,7 @@ export const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
   const dispatch = useDispatch();
+  const [selectedVariantId, setSelectedVariantId] = useState(null);
 
   useEffect(() => {
     // Scroll to the top of the page when component mounts
@@ -62,6 +63,7 @@ export const ProductDetail = () => {
               }
             }
             
+            setSelectedVariantId(firstVariant._id);
             setSelectedSize(sizeValue);
             setCurrentPrice(firstVariant.price || product.price);
           } else {
@@ -109,28 +111,27 @@ export const ProductDetail = () => {
       
       if (variant) {
         setCurrentPrice(variant.price);
+        setSelectedVariantId(variant._id);
       }
     }
   };
 
-  const addToCart = () => {
-    if (selectedProduct) {
-      // Add product with the selected quantity
+    const addToCart = () => {
+    if (selectedProduct && selectedVariantId) {
       dispatch(
-        cartActions.addToCart({
-          id: selectedProduct._id,
-          name: selectedProduct.name,
-          price: currentPrice,
-          cover: getImagePath(selectedProduct.image), // Use the helper function to get the correct image path
+        cartActions.addItemToCart({
+          productVariantId: selectedVariantId,
           quantity: quantity,
-          size: selectedSize || 'Default',
         })
       );
-      
-      // Show the cart popup - use setTimeout to ensure it happens after Redux state update
+
+      // Show the cart popup
       setTimeout(() => {
-        cartEvents.emit('showCart');
+        cartEvents.emit("showCart");
       }, 100);
+    } else {
+      console.error("Product variant not selected.");
+      // Optionally, provide user feedback here
     }
   };
 
