@@ -138,3 +138,84 @@ export const searchProducts = async (query) => {
     throw error;
   }
 };
+
+// Cart API functions
+import { getOrCreateCartId } from '../utils/cartUtils';
+
+// Get cart by session ID
+export const getCartBySessionId = async () => {
+  const sessionId = getOrCreateCartId();
+  try {
+    const response = await fetch(`${API_BASE_URL}/cart/${sessionId}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null; // Cart not found, which is a valid case
+      }
+      throw new Error(`Failed to get cart: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    throw error;
+  }
+};
+
+// Add item to cart
+export const addToCart = async (productVariantId, quantity) => {
+  const sessionId = getOrCreateCartId();
+  try {
+    const response = await fetch(`${API_BASE_URL}/cart/${sessionId}/items`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productVariantId, quantity }),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to add item to cart: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    throw error;
+  }
+};
+
+// Update item quantity in cart
+export const updateCartItemQuantity = async (productVariantId, quantity) => {
+  const sessionId = getOrCreateCartId();
+  try {
+    const response = await fetch(`${API_BASE_URL}/cart/${sessionId}/items/${productVariantId}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to update cart item: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating cart item:', error);
+    throw error;
+  }
+};
+
+// Remove item from cart
+export const removeCartItem = async (productVariantId) => {
+  const sessionId = getOrCreateCartId();
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/cart/${sessionId}/items/${productVariantId}`,
+      {
+        method: 'DELETE',
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to remove cart item: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error removing cart item:', error);
+    throw error;
+  }
+};

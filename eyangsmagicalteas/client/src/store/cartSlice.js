@@ -1,93 +1,132 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  getCartBySessionId,
+  addToCart as apiAddToCart,
+  updateCartItemQuantity as apiUpdateCartItemQuantity,
+  removeCartItem as apiRemoveCartItem,
+} from "../services/api";
+import { getOrCreateCartId } from "../utils/cartUtils";
+
+// Async thunk to fetch the cart from the backend.
+// No arguments needed, it gets the session ID from localStorage.
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async (_, { rejectWithValue }) => {
+    try {
+      const sessionId = getOrCreateCartId();
+      const response = await getCartBySessionId(sessionId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: error.message });
+    }
+  }
+);
+
+// Async thunk to add an item to the cart.
+// Expects { productVariantId, quantity } in the payload.
+export const addItemToCart = createAsyncThunk(
+  "cart/addItemToCart",
+  async (itemData, { rejectWithValue }) => {
+    try {
+      const sessionId = getOrCreateCartId();
+      // The API expects { productVariantId, quantity }
+      const response = await apiAddToCart(sessionId, itemData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: error.message });
+    }
+  }
+);
+
+// Async thunk to update an item's quantity in the cart.
+// Expects { productVariantId, quantity } in the payload.
+export const updateItemQuantity = createAsyncThunk(
+  "cart/updateItemQuantity",
+  async ({ productVariantId, quantity }, { rejectWithValue }) => {
+    try {
+      const sessionId = getOrCreateCartId();
+      const response = await apiUpdateCartItemQuantity(sessionId, productVariantId, { quantity });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: error.message });
+    }
+  }
+);
+
+// Async thunk to remove an entire item from the cart (regardless of quantity).
+// Expects productVariantId in the payload.
+export const removeItemFromCart = createAsyncThunk(
+  "cart/removeItemFromCart",
+  async (productVariantId, { rejectWithValue }) => {
+    try {
+      const sessionId = getOrCreateCartId();
+      const response = await apiRemoveCartItem(sessionId, productVariantId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: error.message });
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    itemsList: [], // keeps track of items 
+    items: [], // This will now be populated from the backend
     totalQuantity: 0,
+    totalAmount: 0,
+    status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+    error: null,
   },
   reducers: {
-    addToCart(state, action) {
-      const newItem = action.payload;
-      const quantity = newItem.quantity || 1; // Default to 1 if quantity not provided
-
-      // Check if item already exists with the same size
-      const existingItem = state.itemsList.find(
-        (item) => item.id === newItem.id && item.size === newItem.size
-      );
-
-      if (existingItem) {
-        // Update existing item
-        existingItem.quantity += quantity;
-        existingItem.totalPrice += newItem.price * quantity;
-      } else {
-        // Add new item
-        state.itemsList.push({
-          id: newItem.id,
-          price: newItem.price,
-          quantity: quantity,
-          totalPrice: newItem.price * quantity,
-          name: newItem.name,
-          cover: newItem.cover,
-          size: newItem.size || 'Default',
-        });
-      }
-
-      // Update total quantity - count actual items, not just unique entries
-      state.totalQuantity = state.itemsList.reduce(
-        (total, item) => total + item.quantity, 0
-      );
-    },
-    removeFromCart(state, action) {
-      const { id, size } = action.payload;
-      const existingItem = state.itemsList.find(
-        (item) => item.id === id && item.size === size
-      );
-      
-      if (existingItem) {
-        if (existingItem.quantity === 1) {
-          // Remove item completely if quantity is 1
-          state.itemsList = state.itemsList.filter(
-            (item) => !(item.id === id && item.size === size)
-          );
-        } else {
-          // Decrease quantity if more than 1
-          existingItem.quantity--;
-          existingItem.totalPrice -= existingItem.price;
+    // We can add non-async reducers here if needed in the future
+    clearCartState: (state) => {
+        state.items = [];
+        state.totalQuantity = 0;
+        state.totalAmount = 0;
+        state.status = 'idle';
+        state.error = null;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      // Centralized handler for pending states
+      .addMatcher(
+        (action) => action.type.startsWith("cart/") && action.type.endsWith("/pending"),
+        (state) => {
+          state.status = "loading";
+          state.error = null; // Clear previous errors on a new request
         }
-        
-        // Update total quantity
-        state.totalQuantity = state.itemsList.reduce(
-          (total, item) => total + item.quantity, 0
-        );
-      }
-    },
-    clearCart(state) {
-      state.itemsList = [];
-      state.totalQuantity = 0;
-    },
-    removeEntireItem(state, action) {
-      const { id, size } = action.payload;
-      // Find the item to remove
-      const itemToRemove = state.itemsList.find(
-        (item) => item.id === id && item.size === size
+      )
+      // Centralized handler for fulfilled states
+      .addMatcher(
+        (action) => action.type.startsWith("cart/") && action.type.endsWith("/fulfilled"),
+        (state, action) => {
+          state.status = "succeeded";
+          const cart = action.payload;
+          
+          // The backend cart has 'items' and 'totalAmount'
+          state.items = cart.items || [];
+          state.totalAmount = cart.totalAmount || 0;
+          
+          // Recalculate total quantity based on the items received from the backend
+          state.totalQuantity = state.items.reduce(
+            (total, item) => total + item.quantity,
+            0
+          );
+        }
+      )
+      // Centralized handler for rejected states
+      .addMatcher(
+        (action) => action.type.startsWith("cart/") && action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.status = "failed";
+          // Store a serializable error message
+          state.error = action.payload?.message || action.error.message || "An unknown error occurred";
+        }
       );
-      
-      if (itemToRemove) {
-        // Remove the item from the list
-        state.itemsList = state.itemsList.filter(
-          (item) => !(item.id === id && item.size === size)
-        );
-        
-        // Update total quantity
-        state.totalQuantity = state.itemsList.reduce(
-          (total, item) => total + item.quantity, 0
-        );
-      }
-    },
   },
 });
-export const { clearCart } = cartSlice.actions;
 
-export const cartActions = cartSlice.actions;
-export default cartSlice;
+export const { clearCartState } = cartSlice.actions;
+export const cartActions = { ...cartSlice.actions, fetchCart, addItemToCart, updateItemQuantity, removeItemFromCart };
+export default cartSlice.reducer;

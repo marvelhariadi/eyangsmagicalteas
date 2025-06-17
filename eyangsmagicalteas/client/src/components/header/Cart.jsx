@@ -1,15 +1,29 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
-import PropTypes from "prop-types";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { cartEvents } from "../../utils/cartEvents";
+import { cartActions } from "../../store/cartSlice";
 
 export const Cart = () => {
   const [cardOpen, setCardOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const {
+    items,
+    totalQuantity,
+    totalAmount,
+    status,
+    error,
+  } = useSelector((state) => state.cart);
+
+  // Fetch cart data when the component mounts for the first time
+  useEffect(() => {
+    dispatch(cartActions.fetchCart());
+  }, [dispatch]);
   
   const closeCard = () => {
     setCardOpen(false);
@@ -17,26 +31,20 @@ export const Cart = () => {
 
   const openCard = (e) => {
     e.stopPropagation();
+    // Fetch the latest cart data every time the cart is opened
+    dispatch(cartActions.fetchCart());
     setCardOpen(true);
   };
-
-  const quantity = useSelector((state) => state.cart.totalQuantity);
-  const cartItems = useSelector((state) => state.cart.itemsList);
-
-  // Calculate total
-  let total = 0;
-  cartItems.forEach((item) => {
-    total += item.totalPrice;
-  });
   
   const goToCartPage = () => {
     closeCard();
     navigate('/cart');
   };
 
-  // Listen for cart show events
+  // Listen for external events to show the cart (e.g., after adding an item)
   useEffect(() => {
     const showCartHandler = () => {
+      dispatch(cartActions.fetchCart());
       setCardOpen(true);
     };
     
@@ -45,14 +53,13 @@ export const Cart = () => {
     return () => {
       cartEvents.off('showCart', showCartHandler);
     };
-  }, []);
+  }, [dispatch]);
 
   // Close cart when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      // Only close if clicking outside the cart and it's open
       if (cardOpen && !e.target.closest('.cartItem') && !e.target.closest('.card')) {
-        setCardOpen(false);
+        closeCard();
       }
     };
 
@@ -62,11 +69,30 @@ export const Cart = () => {
     };
   }, [cardOpen]);
 
+  const renderCartContent = () => {
+    if (status === 'loading') {
+      return <div className="emptyCart"><p>Loading...</p></div>;
+    }
+    if (status === 'failed') {
+      return <div className="emptyCart"><p>Error: {error}</p></div>;
+    }
+    if (items.length === 0) {
+      return <div className="emptyCart"><p>Your cart is empty</p></div>;
+    }
+    return items.map((item) => (
+      <CartItems
+        key={item.productVariant._id} // Use a unique key from the backend data
+        item={item} // Pass the whole item object
+      />
+    ));
+  };
+
   return (
     <>
       <div className="card" onClick={openCard}>
         <IoBagHandleOutline className="cardIcon" />
-        <span className="flexCenter">{quantity}</span>
+        {/* Show total quantity only if it's greater than 0 */}
+        {totalQuantity > 0 && <span className="flexCenter">{totalQuantity}</span>}
       </div>
       
       {cardOpen && <div className="overlay" onClick={closeCard}></div>}
@@ -80,39 +106,17 @@ export const Cart = () => {
         </div>
         
         <div className="cart-items-container">
-          {cartItems.length > 0 ? cartItems.map((item) => (
-            <CartItems 
-              key={item.id} 
-              id={item.id} 
-              cover={item.cover} 
-              name={item.name} 
-              price={item.price} 
-              quantity={item.quantity} 
-              totalPrice={item.totalPrice} 
-              size={item.size}
-            />
-          )) : (
-            <div className="emptyCart">
-              <p>Your cart is empty</p>
-            </div>
-          )}
+          {renderCartContent()}
         </div>
 
         <div className="checkOut">
-          <button onClick={goToCartPage} disabled={cartItems.length === 0}>
+          <button onClick={goToCartPage} disabled={items.length === 0 || status === 'loading'}>
             <span>View Cart</span>
-            <label>${total.toFixed(2)}</label>
+            {/* Display total amount from the state */}
+            <label>${totalAmount.toFixed(2)}</label>
           </button>
         </div>
       </div>
     </>
   );
-};
-CartItems.propTypes = {
-  id: PropTypes.number,
-  cover: PropTypes.any,
-  name: PropTypes.any,
-  price: PropTypes.any,
-  quantity: PropTypes.any,
-  totalPrice: PropTypes.any,
 };
