@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
-import { products } from "../../assets/data/data";
+import { fetchProductById } from "../../services/api";
 import "../../styles/product/productDetail.scss";
 
 // Import a custom event emitter for cart visibility
@@ -23,30 +23,34 @@ export const ProductDetail = () => {
     // Scroll to the top of the page when component mounts
     window.scrollTo(0, 0);
     
-    // Find the product by ID across all categories
-    let foundProduct = null;
-    
-    // Products is an object with categories as keys, each containing an array of products
-    Object.values(products).forEach(categoryProducts => {
-      const found = categoryProducts.find(p => p.id === parseInt(productId));
-      if (found) {
-        foundProduct = found;
+    // Loading state
+    const loadProduct = async () => {
+      try {
+        const product = await fetchProductById(productId);
+        
+        if (product) {
+          setSelectedProduct(product);
+          // Set default size to the first size if available
+          if (product.variants && product.variants.length > 0) {
+            // Assuming variants contain size information
+            const firstVariant = product.variants[0];
+            setSelectedSize(firstVariant.name || 'Default');
+            setCurrentPrice(firstVariant.price || product.price);
+          } else {
+            setCurrentPrice(product.price);
+          }
+        } else {
+          // Redirect to home if product not found
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        // Redirect to home on error
+        navigate("/");
       }
-    });
+    };
     
-    if (foundProduct) {
-      setSelectedProduct(foundProduct);
-      // Set default size to the first size
-      if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-        setSelectedSize(foundProduct.sizes[0].name);
-        setCurrentPrice(foundProduct.sizes[0].price);
-      } else {
-        setCurrentPrice(foundProduct.basePrice);
-      }
-    } else {
-      // Redirect to home if product not found
-      navigate("/");
-    }
+    loadProduct();
   }, [productId, navigate]);
 
   const increaseQuantity = () => {
@@ -60,10 +64,10 @@ export const ProductDetail = () => {
   const handleSizeChange = (sizeName) => {
     setSelectedSize(sizeName);
     // Update price based on selected size
-    if (selectedProduct && selectedProduct.sizes) {
-      const sizeObj = selectedProduct.sizes.find(s => s.name === sizeName);
-      if (sizeObj) {
-        setCurrentPrice(sizeObj.price);
+    if (selectedProduct && selectedProduct.variants) {
+      const variant = selectedProduct.variants.find(v => v.name === sizeName);
+      if (variant) {
+        setCurrentPrice(variant.price);
       }
     }
   };
@@ -74,12 +78,12 @@ export const ProductDetail = () => {
       // Add product with the selected quantity
       dispatch(
         cartActions.addToCart({
-          id: selectedProduct.id,
+          id: selectedProduct._id,
           name: selectedProduct.name,
           price: currentPrice,
-          cover: selectedProduct.cover,
+          cover: selectedProduct.imageUrl || selectedProduct.image,
           quantity: quantity,
-          size: selectedSize || (selectedProduct.sizes ? selectedProduct.sizes[0].name : 'Default'),
+          size: selectedSize || 'Default',
         })
       );
       
@@ -107,7 +111,7 @@ export const ProductDetail = () => {
         
         <div className="product-content">
           <div className="product-image">
-            <img src={selectedProduct.cover} alt={selectedProduct.name} />
+            <img src={selectedProduct.imageUrl || selectedProduct.image} alt={selectedProduct.name} />
           </div>
           
           <div className="product-info">
@@ -118,13 +122,13 @@ export const ProductDetail = () => {
             <div className="size-selection">
               <h3>Size</h3>
               <div className="size-buttons">
-                {selectedProduct.sizes && selectedProduct.sizes.map((sizeObj, index) => (
+                {selectedProduct.variants && selectedProduct.variants.map((variant, index) => (
                   <button 
                     key={index} 
-                    className={`size-btn ${selectedSize === sizeObj.name ? 'active' : ''}`}
-                    onClick={() => handleSizeChange(sizeObj.name)}
+                    className={`size-btn ${selectedSize === variant.name ? 'active' : ''}`}
+                    onClick={() => handleSizeChange(variant.name)}
                   >
-                    {sizeObj.name}
+                    {variant.name}
                   </button>
                 ))}
               </div>
