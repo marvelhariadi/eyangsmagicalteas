@@ -14,15 +14,18 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 ## Extra Feature(s)
 - Admin can make a product stock 0. when this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart.
 
-# How to Docker
+# How to Run the application on Docker
 ## Navigate to the project directory
-cd students-marvelha/eyangsmagicalteas
+cd .../eyangsmagicalteas
 
 ## Build the Docker images
-docker compose build
+docker compose build --no-cache
 
 ## Start all services
-docker compose up
+docker compose up -d
+
+## Access
+You can access the application through the browser preview at http://localhost:80
 
 ## To stop the service
 docker compose down
