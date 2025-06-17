@@ -89,6 +89,14 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Specific reducer for addItemToCart.fulfilled
+      .addCase(addItemToCart.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedCart = action.payload;
+        state.items = updatedCart.items;
+        state.totalQuantity = updatedCart.items.reduce((total, item) => total + item.quantity, 0);
+        state.totalAmount = updatedCart.totalAmount;
+      })
       // Centralized handler for pending states
       .addMatcher(
         (action) => action.type.startsWith("cart/") && action.type.endsWith("/pending"),

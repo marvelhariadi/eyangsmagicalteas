@@ -118,6 +118,7 @@ export const ProductDetail = () => {
 
     const addToCart = () => {
     if (selectedProduct && selectedVariantId) {
+      console.log('Adding to cart: ProductVariantID:', selectedVariantId, 'Quantity:', quantity);
       dispatch(
         cartActions.addItemToCart({
           productVariantId: selectedVariantId,

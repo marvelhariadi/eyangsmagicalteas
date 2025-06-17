@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 import CompanyLogo from "../../assets/images/CompanyLogo.svg";
@@ -6,6 +7,7 @@ import CompanyLogo from "../../assets/images/CompanyLogo.svg";
 import { Cart } from "./Cart";
 
 export const Header = () => {
+  const { totalQuantity } = useSelector((state) => state.cart);
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -98,6 +100,9 @@ export const Header = () => {
             {/* Shopping Cart - Always Visible */}
             <div className="cart-wrapper" style={{ position: 'relative' }}>
               <Cart />
+              {totalQuantity > 0 && (
+                <span className="cart-quantity-badge">{totalQuantity}</span>
+              )}
             </div>
             
             {/* Mobile Menu Toggle Button */}
