@@ -16,20 +16,23 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, ".env") }); // Configure dotenv with explicit!!! path
 
 //database
+// DEBUG CODE ADDED 2025-06-17: Enhanced MongoDB connection logging and timeout settings
+// This helped resolve connection issues with MongoDB Atlas
 console.log('Attempting to connect to MongoDB with URI:', process.env.MONGODB_URI);
 
-// Set mongoose connection options. here for troubleshooting.
+// Set mongoose connection options with increased timeouts to handle potential connection delays
 const mongooseOptions = {
-  serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
-  socketTimeoutMS: 45000,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  serverSelectionTimeoutMS: 30000, // Increased from default 10000ms to allow more time for server selection
+  socketTimeoutMS: 45000,         // Added to prevent socket timeout during long operations
+  useNewUrlParser: true,          // Use new URL parser to avoid deprecation warnings
+  useUnifiedTopology: true        // Use new topology engine for better server monitoring
 };
 
 mongoose
   .connect(process.env.MONGODB_URI, mongooseOptions)
   .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => {
+    // Enhanced error logging to provide more context for debugging connection issues
     console.error("MongoDB connection error:", err);
     console.error("Connection details:", {
       uri: process.env.MONGODB_URI ? `${process.env.MONGODB_URI.substring(0, 20)}...` : 'undefined',

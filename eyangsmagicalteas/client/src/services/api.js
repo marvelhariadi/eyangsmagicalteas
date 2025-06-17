@@ -111,3 +111,30 @@ export const organizeProductsByCategory = (products) => {
   
   return organizedProducts;
 };
+
+/**
+ * Search products using the backend search API
+ * @param {string} query - Search query string
+ * @returns {Promise<Array>} - Promise resolving to array of matching products
+ */
+export const searchProducts = async (query) => {
+  try {
+    // If query is empty, return empty array immediately
+    if (!query || query.trim() === '') {
+      return [];
+    }
+    
+    const url = `${API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`;
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to search products: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error searching products:', error);
+    throw error;
+  }
+};
