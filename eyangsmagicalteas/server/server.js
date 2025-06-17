@@ -5,6 +5,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import databaseSeeder from "./databaseSeeder.js";
 import productRoutes from './routes/productRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import shoppingCartRoutes from './routes/shoppingCartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,9 +23,15 @@ mongoose
 const app = express();
 const port = process.env.PORT || 3000;
 
-// API routes. database seeder
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+// API routes
 app.use("/api/seed", databaseSeeder);
 app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/cart", shoppingCartRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "..", "client", "dist")));
