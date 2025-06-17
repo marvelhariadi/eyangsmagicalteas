@@ -13,6 +13,13 @@ const getImagePath = (imageName) => {
 };
 
 export const CartItems = ({ item }) => {
+  console.log('[CartItems] Rendering item:', JSON.parse(JSON.stringify(item)));
+  if (item && item.productVariant && item.productVariant.attributes) {
+    console.log('[CartItems] item.productVariant.attributes:', JSON.parse(JSON.stringify(item.productVariant.attributes)));
+    item.productVariant.attributes.forEach((attr, index) => {
+      console.log(`[CartItems] attributes[${index}].attribute type: ${typeof attr.attribute}, value:`, JSON.parse(JSON.stringify(attr.attribute)));
+    });
+  }
   const dispatch = useDispatch();
   const { productVariant, quantity } = item;
   const { product, price, attributes } = productVariant;

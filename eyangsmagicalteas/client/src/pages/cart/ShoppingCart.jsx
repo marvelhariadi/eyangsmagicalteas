@@ -84,7 +84,7 @@ export const ShoppingCart = () => {
                 </div>
                 <div className="product-details">
                   <h3>{productVariant.product.name}</h3>
-                  <p>Size: {productVariant.attributes.find(a => a.attribute.name.toLowerCase() === 'size')?.value || 'N/A'}</p>
+                  <p>Size: {productVariant.attributes.find(a => a.attribute && typeof a.attribute === 'object' && a.attribute.name && a.attribute.name.toLowerCase() === 'size')?.value || 'N/A'}</p>
                 </div>
               </div>
 

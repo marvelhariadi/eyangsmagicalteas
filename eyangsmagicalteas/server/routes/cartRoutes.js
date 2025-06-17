@@ -1,6 +1,7 @@
 import express from 'express';
 import ShoppingCart from '../models/ShoppingCart.js';
 import ProductVariant from '../models/ProductVariant.js';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -16,10 +17,16 @@ router.get('/:sessionId', async (req, res) => {
     let cart = await ShoppingCart.findOne({ sessionId })
       .populate({
         path: 'items.productVariant',
-        populate: {
-          path: 'product',
-          select: 'name image'
-        }
+        populate: [
+          {
+            path: 'product',
+            select: 'name image'
+          },
+          {
+            path: 'attributes.attribute',
+            model: 'ProductAttribute'
+          }
+        ]
       });
     
     // If no cart exists for this session, create a new empty one
@@ -30,6 +37,28 @@ router.get('/:sessionId', async (req, res) => {
         totalAmount: 0
       });
       await cart.save();
+    }
+
+    // Detailed logging for debugging population
+    if (cart && cart.items && cart.items.length > 0) {
+      const firstItem = cart.items[0];
+      if (firstItem && firstItem.productVariant && firstItem.productVariant.attributes && firstItem.productVariant.attributes.length > 0) {
+        console.log('\n--- Server-Side Cart Item Debug ---');
+        console.log('Session ID:', sessionId);
+        console.log('Populated cart.items[0].productVariant._id:', firstItem.productVariant._id);
+        console.log('Populated cart.items[0].productVariant.attributes:', JSON.stringify(firstItem.productVariant.attributes, null, 2));
+        firstItem.productVariant.attributes.forEach((attr, index) => {
+          console.log(`  Attribute ${index}:`);
+          console.log(`    attr.value: ${attr.value}`);
+          console.log(`    typeof attr.attribute: ${typeof attr.attribute}`);
+          if (attr.attribute) {
+            console.log(`    attr.attribute instanceof mongoose.Types.ObjectId: ${attr.attribute instanceof mongoose.Types.ObjectId}`);
+            console.log(`    attr.attribute (raw): ${JSON.stringify(attr.attribute)}`);
+            console.log(`    attr.attribute.name (expected if populated): ${attr.attribute.name}`);
+          }
+        });
+        console.log('--- End Server-Side Cart Item Debug ---\n');
+      }
     }
     
     res.json(cart);
@@ -95,10 +124,16 @@ router.post('/:sessionId/items', async (req, res) => {
     const updatedCart = await ShoppingCart.findById(cart._id)
       .populate({
         path: 'items.productVariant',
-        populate: {
-          path: 'product',
-          select: 'name image'
-        }
+        populate: [
+          {
+            path: 'product',
+            select: 'name image'
+          },
+          {
+            path: 'attributes.attribute',
+            model: 'ProductAttribute'
+          }
+        ]
       });
     
     res.json(updatedCart);
@@ -154,10 +189,16 @@ router.put('/:sessionId/items/:productVariantId', async (req, res) => {
     const updatedCart = await ShoppingCart.findById(cart._id)
       .populate({
         path: 'items.productVariant',
-        populate: {
-          path: 'product',
-          select: 'name image'
-        }
+        populate: [
+          {
+            path: 'product',
+            select: 'name image'
+          },
+          {
+            path: 'attributes.attribute',
+            model: 'ProductAttribute'
+          }
+        ]
       });
     
     res.json(updatedCart);
@@ -201,10 +242,16 @@ router.delete('/:sessionId/items/:productVariantId', async (req, res) => {
     const updatedCart = await ShoppingCart.findById(cart._id)
       .populate({
         path: 'items.productVariant',
-        populate: {
-          path: 'product',
-          select: 'name image'
-        }
+        populate: [
+          {
+            path: 'product',
+            select: 'name image'
+          },
+          {
+            path: 'attributes.attribute',
+            model: 'ProductAttribute'
+          }
+        ]
       });
     
     res.json(updatedCart);
@@ -250,10 +297,16 @@ router.get('/', async (req, res) => {
     const carts = await ShoppingCart.find()
       .populate({
         path: 'items.productVariant',
-        populate: {
-          path: 'product',
-          select: 'name image'
-        }
+        populate: [
+          {
+            path: 'product',
+            select: 'name image'
+          },
+          {
+            path: 'attributes.attribute',
+            model: 'ProductAttribute'
+          }
+        ]
       });
     
     res.json(carts);
