@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { cartActions } from "../../store/cartSlice";
 import { createOrder } from "../../store/orderSlice"; // Import createOrder thunk
 import { getOrCreateCartId } from "../../utils/cartUtils"; // Import cart utility
+import { getProductTeaImagePath } from "../../utils/imageUtils"; // Added import
 import "../../styles/checkout/checkoutPage.scss";
 
 export const CheckoutPage = () => {
@@ -153,7 +154,7 @@ export const CheckoutPage = () => {
                 <div className="summary-item" key={item.productVariant._id}>
                   <div className="item-info">
                     <div className="item-image">
-                      <img src={item.productVariant.product?.image ? `/src/assets/images/product_teas/${item.productVariant.product.image}.png` : '/path/to/default-image.png'} alt={item.productVariant.product?.name} />
+                      <img src={item.productVariant.product?.image ? getProductTeaImagePath(item.productVariant.product.image) : '/path/to/default-image.png'} alt={item.productVariant.product?.name} />
                     </div>
                     <div className="item-details">
                       <h3>{item.productVariant.product?.name}</h3>
