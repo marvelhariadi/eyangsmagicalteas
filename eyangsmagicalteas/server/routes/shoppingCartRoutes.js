@@ -31,15 +31,12 @@ router.get('/:sessionId', async (req, res) => {
         }
       });
     
-    // If no cart exists, create a new one
+    // If no cart exists, return null or an appropriate response (e.g., 404)
     if (!cart) {
-      cart = new ShoppingCart({
-        ...(userId ? { user: userId } : {}),
-        ...(sessionId ? { sessionId } : {}),
-        items: [],
-        totalAmount: 0
-      });
-      await cart.save();
+      // Option 1: Return null, client handles it
+      return res.status(200).json(null); 
+      // Option 2: Return 404 Not Found
+      // return res.status(404).json({ message: 'Cart not found' });
     }
     
     res.status(200).json(cart);
@@ -74,33 +71,44 @@ router.post('/:sessionId/items', async (req, res) => {
       return res.status(400).json({ message: 'Either sessionId or userId is required' });
     }
     
-    // Find the cart or create a new one
-    let cart = await ShoppingCart.findOne(query);
-    if (!cart) {
-      cart = new ShoppingCart({
-        ...(userId ? { user: userId } : {}),
-        ...(sessionId ? { sessionId } : {}),
-        items: [],
-        totalAmount: 0
-      });
-    }
+    // Find the cart or create a new one atomically
+    let cart = await ShoppingCart.findOneAndUpdate(
+      query,
+      {
+        $setOnInsert: {
+          ...(userId ? { user: userId } : {}),
+          ...(sessionId ? { sessionId } : {}),
+          items: [],
+          totalAmount: 0
+        }
+      },
+      {
+        new: true, // Return the modified document, or the new one if upserted
+        upsert: true, // Create the document if it doesn't exist
+        setDefaultsOnInsert: true // Apply schema defaults if a new document is created
+      }
+    );
     
     // Check if the item already exists in the cart
+    // Ensure productVariant (the fetched details object) and its _id are used for comparison
     const existingItemIndex = cart.items.findIndex(
-      item => item.productVariant.toString() === productVariantId
+      item => item.productVariant && item.productVariant.toString() === productVariant._id.toString()
     );
     
     if (existingItemIndex > -1) {
       // Update existing item quantity
       cart.items[existingItemIndex].quantity += quantity;
     } else {
-      // Add new item to cart
+      // Add new item to cart, using productVariant._id and productVariant.price
       cart.items.push({
-        productVariant: productVariantId,
+        productVariant: productVariant._id, // Use the ObjectId of the product variant
         quantity,
-        price: productVariant.price
+        price: productVariant.price // Use the price from the fetched product variant
       });
     }
+
+    // Recalculate total amount
+    cart.totalAmount = cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
     // Save the cart
     await cart.save();
