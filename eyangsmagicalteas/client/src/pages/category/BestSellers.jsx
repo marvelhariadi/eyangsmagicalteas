@@ -4,6 +4,7 @@ import { ProductCard } from "../../components/cards/ProductCard";
 import "../../styles/category/categoryPage.scss";
 
 export const BestSellers = () => {
+  const [displayedProducts, setDisplayedProducts] = useState([]);
   const [bestSellersProducts, setBestSellersProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,6 +16,12 @@ export const BestSellers = () => {
         // Fetch products with the best-sellers category
         const products = await fetchProducts('best-sellers');
         setBestSellersProducts(products);
+        if (products.length > 3) {
+          const shuffled = [...products].sort(() => 0.5 - Math.random());
+          setDisplayedProducts(shuffled.slice(0, 3));
+        } else {
+          setDisplayedProducts(products);
+        }
         setLoading(false);
       } catch (err) {
         console.error('Error loading best sellers products:', err);
@@ -40,7 +47,7 @@ export const BestSellers = () => {
           <div className="error-state">{error}</div>
         ) : (
           <div className="products-grid">
-            {bestSellersProducts.map((product, index) => (
+            {displayedProducts.map((product, index) => (
               <ProductCard key={product._id || index} products={product} />
             ))}
           </div>

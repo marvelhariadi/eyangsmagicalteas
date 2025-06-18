@@ -1,0 +1,146 @@
+// SCSS for CategoryHomeShowcase.jsx to align with product-category-section styling
+
+.product-category-section {
+  padding: 40px 0; // Base padding, includes padding-top: 40px
+  margin-bottom: 60px; // Matched from product.scss
+  scroll-margin-top: 100px; // Matched from product.scss for fixed header adjustments
+  // background-color: #f9f9f9; // Optional: uncomment if you want a light background for this section
+
+  .container {
+    margin-bottom: 60px;
+    padding-top: 40px;
+    scroll-margin-top: 100px;
+
+    h2 {
+      font-family: "Cinzel Decorative", cursive;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    p { // Section description (e.g., "Our most popular and highly-rated magical teas.")
+      text-align: left;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1.1rem; 
+    }
+
+    .content { // This is the grid container for your ProductCards
+      padding-top: 20px; // Matched from product.scss
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Responsive columns, min width 280px
+      gap: 30px; // Spacing between cards
+
+      .item { // Styles for each ProductCard (ProductCard.jsx renders a div with class="item")
+        background-color: #fff;
+        border-radius: 10px;
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden; // Ensures child elements (like images) respect the border-radius
+
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+          transform: translateY(-10px);
+          cursor: pointer;
+        }
+
+        .img { // Image container within ProductCard
+          height: 300px; // Matched from product.scss
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; // Ensures image covers the area without distortion
+            border-radius: 10px; // Matched from product.scss
+          }
+        }
+
+        .text { // Text content area within ProductCard
+          padding: 20px;
+          h3 { // Product name
+            margin-bottom: 10px;
+            color: #333;
+            // font-size and font-weight removed to inherit/match product.scss behavior
+          }
+          p { // Product description
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 20px; // Matched from product.scss
+            margin: 10px 0; // Matched from product.scss
+          }
+          .price-tag { // Product price
+            // font-size: inherit; // Or match a default h3/p if known
+            // font-weight: inherit;
+            color: #333;
+            // text-align: left; // Default alignment
+            margin-top: 10px;
+            // Removed specific font-size, font-weight, and text-align to better match product.scss
+          }
+        }
+
+        &:hover {
+          box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+          transform: translateY(-5px); // Lift effect on hover
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 992px) { // Medium devices (tablets)
+  .product-category-section {
+    .container {
+      .content {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+      }
+      .item .img {
+        height: 250px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) { // Small devices (tablets, large phones)
+  .product-category-section {
+    .container {
+      h2 {
+        font-size: 2.2rem;
+      }
+      > p {
+        font-size: 1rem;
+      }
+      .content {
+        grid-template-columns: repeat(2, 1fr); // Two columns
+        gap: 20px;
+      }
+      .item .img {
+        height: 220px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) { // Extra small devices (phones)
+  .product-category-section {
+    .container {
+      h2 {
+        font-size: 1.8rem;
+      }
+      .content {
+        grid-template-columns: 1fr; // Single column
+        gap: 20px;
+      }
+      .item .img {
+        height: 280px; // Can be taller in single column
+      }
+      .item .text {
+        padding: 15px;
+        h3 { font-size: 1.15rem; }
+        p { font-size: 0.85rem; min-height: 50px; }
+        .price-tag { font-size: 1.3rem; }
+      }
+    }
+  }
+}
