@@ -91,13 +91,48 @@ router.post('/', async (req, res) => {
     await order.save();
 
     // --- Decrement stock for each item in the order ---
+    // console.log('[Order Creation] Attempting to decrement stock for order items...');
     const stockUpdatePromises = cart.items.map(item => {
+      const variantId = item.productVariant._id;
+      const quantityToDecrement = item.quantity;
+      // console.log(`[Order Creation] Preparing to decrement stock for ProductVariant ID: ${variantId} by quantity: ${quantityToDecrement}`);
+      
       return ProductVariant.updateOne(
-        { _id: item.productVariant._id },
-        { $inc: { stock: -item.quantity } }
-      );
+        { _id: variantId },
+        { $inc: { stock: -quantityToDecrement } }
+      )
+      .then(updateResult => {
+        // console.log(`[Order Creation] Stock update result for ProductVariant ID ${variantId}:`, JSON.stringify(updateResult));
+        if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
+          // console.warn(`[Order Creation] Stock for ProductVariant ID ${variantId} was not modified. This might happen if the stock was already 0 or if the $inc operation had no effect for other reasons.`);
+        } else if (updateResult.matchedCount === 0) {
+          // console.error(`[Order Creation] CRITICAL: ProductVariant ID ${variantId} NOT FOUND during stock decrement. This should not happen if stock validation passed.`);
+        }
+        return updateResult;
+      })
+      .catch(err => {
+        // console.error(`[Order Creation] Error updating stock for ProductVariant ID ${variantId}:`, err);
+        // Decide if you want to throw the error to stop Promise.all or handle it
+        // For now, logging and continuing so other stock updates might proceed, but this is a critical error.
+        return { error: true, variantId, details: err }; 
+      });
     });
-    await Promise.all(stockUpdatePromises);
+
+    try {
+      const results = await Promise.all(stockUpdatePromises);
+      // console.log('[Order Creation] All stock update promises resolved. Results:', JSON.stringify(results));
+      results.forEach(result => {
+        if (result.error) {
+          // console.error(`[Order Creation] A critical error occurred during stock update for variant ${result.variantId}. Manual check required.`);
+          // Potentially mark the order for review or notify admin
+        }
+      });
+    } catch (error) {
+      // console.error('[Order Creation] CRITICAL: Error during Promise.all for stock updates:', error);
+      // This error might indicate a larger issue or an unhandled promise rejection from one of the updates
+      // At this point, the order is saved, but stock might be inconsistent.
+      // Consider adding logic to flag this order for manual review.
+    }
     
     // Clear the cart (optional, depending on your business logic)
     cart.items = [];

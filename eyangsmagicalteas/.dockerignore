@@ -1,0 +1,34 @@
+# Git files
+.git
+.gitignore
+
+# Node modules - these will be installed within the Docker image
+node_modules
+client/node_modules
+server/node_modules
+
+# Local environment files - use Docker's environment variable handling instead
+.env
+client/.env
+server/.env
+.env.*
+
+# Build artifacts (if any are generated outside the Docker build process)
+client/dist
+client/build
+
+# Docker files (if you have multiple or old ones)
+Dockerfile.old
+
+# IDE and OS specific files
+.vscode
+.idea
+*.DS_Store
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test reports (if any)
+coverage
