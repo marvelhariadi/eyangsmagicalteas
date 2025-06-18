@@ -12,20 +12,18 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 - Also fixed some UI issues related to incrementing orders. 
 
 ## Extra Feature(s)
-- Admin can make a product stock 0. when this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart.
+Admin can make a product stock 0. when this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart.
 
 # How to Run the application on Docker
-## Navigate to the project directory
-cd .../eyangsmagicalteas
-
-## Build the Docker images
-docker compose build --no-cache
-
-## Start all services
-docker compose up -d
+0. Make sure that Marvel has MongoDB with the collection running on their machine on Atlas.
+1. Navigate to the project directory: `cd .../eyangsmagicalteas`
+2. Build the Docker image: `docker build -t eyangsmagicalteas .`
+3. Start the Docker container: `docker run -d -p 3000:3000 -e MONGODB_URI="mongodb+srv://marvelhariadi:gfbPtUhvciqCvsJR@eyangsmagicalteas.awooomk.mongodb.net/?retryWrites=true&w=majority&appName=EyangsMagicalTeas" --name eyangsmagicalteas-app eyangsmagicalteas`
+4. wait 30 seconds, then run `docker logs eyangsmagicalteas-app`.
+5. You should see _Server is listening on port 3000. MongoDB connected successfully_
 
 ## Access
-You can access the application through the browser preview at http://localhost:80
+Open your web browser and go to: http://localhost:3000
 
 ## To stop the service
-docker compose down
+`docker stop eyangsmagicalteas-app && docker rm eyangsmagicalteas-app`
