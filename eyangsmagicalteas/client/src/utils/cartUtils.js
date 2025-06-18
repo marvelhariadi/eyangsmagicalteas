@@ -2,34 +2,50 @@
  * Cart utility functions
  */
 
+// Module-level promise to manage in-flight requests for a new session ID
+let cartIdPromise = null;
+
 // Function to get a unique cart session ID for the current browser session.
-// Fetches a new ID from the backend if one doesn't exist in sessionStorage.
+// Prevents race conditions when fetching a new ID from the backend.
 export const getOrCreateCartId = async () => {
   let cartSessionId = sessionStorage.getItem('cartSessionId');
 
-  if (!cartSessionId) {
+  if (cartSessionId) {
+    return cartSessionId;
+  }
+
+  // If a request is already in flight, return its promise
+  if (cartIdPromise) {
+    return cartIdPromise;
+  }
+
+  // No session ID in storage and no request in flight, so initiate one
+  cartIdPromise = (async () => {
     try {
       const response = await fetch('/api/cart/session/new');
       if (!response.ok) {
-        throw new Error(`Failed to initiate session: ${response.status}`);
+        throw new Error(`Failed to initiate session: ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
       if (data && data.sessionId) {
-        cartSessionId = data.sessionId;
-        sessionStorage.setItem('cartSessionId', cartSessionId);
+        sessionStorage.setItem('cartSessionId', data.sessionId);
+        return data.sessionId;
       } else {
         console.error('Failed to retrieve sessionId from backend.');
-        // Fallback or further error handling might be needed here
-        // For now, returning null or throwing an error are options
-        return null; 
+        throw new Error('Failed to retrieve sessionId from backend.');
       }
     } catch (error) {
       console.error('Error fetching new cart session ID:', error);
-      // Fallback or further error handling
-      return null;
+      // Ensure the promise rejects so callers can handle the error
+      throw error; 
+    } finally {
+      // Reset the promise variable once the operation is complete (success or failure)
+      // This allows future calls (e.g., if sessionStorage is cleared) to make a new request.
+      cartIdPromise = null;
     }
-  }
-  return cartSessionId;
+  })();
+
+  return cartIdPromise;
 };
 
 export const getCart = () => {
