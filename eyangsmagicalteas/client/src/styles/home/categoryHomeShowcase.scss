@@ -2,20 +2,27 @@
 
 .product-category-section {
   padding: 40px 0; // Base padding, includes padding-top: 40px
-  margin-bottom: 60px; // Matched from product.scss
-  scroll-margin-top: 100px; // Matched from product.scss for fixed header adjustments
+  margin-bottom: 60px; 
+  scroll-margin-top: 100px; 
   // background-color: #f9f9f9; // Optional: uncomment if you want a light background for this section
 
   .container {
-    margin-bottom: 60px;
-    padding-top: 40px;
-    scroll-margin-top: 100px;
+    max-width: 90%;          // Match the general page container's width behavior
+    margin-left: auto;       // Centering
+    margin-right: auto;      // Centering
+    padding: 0 15px;         // Match the general page container's horizontal padding
+    display: flex;           // Use flexbox
+    flex-direction: column;  // Stack children (h2, p, .content) vertically
+    align-items: flex-start; // Align children (h2, p) to the left
+    // Removed redundant margin-bottom, padding-top, scroll-margin-top as they belong on .product-category-section
 
     h2 {
       font-family: "Cinzel Decorative", cursive;
       color: #333;
       margin-bottom: 10px;
       font-size: 1.8rem;
+      text-align: left; // Ensure title is left-aligned
+
     }
 
     p { // Section description (e.g., "Our most popular and highly-rated magical teas.")
@@ -30,6 +37,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Responsive columns, min width 280px
       gap: 30px; // Spacing between cards
+      width: 100%; // Explicitly set width to fill parent container
 
       .item { // Styles for each ProductCard (ProductCard.jsx renders a div with class="item")
         background-color: #fff;
@@ -55,7 +63,7 @@
         }
 
         .text { // Text content area within ProductCard
-          padding: 20px;
+          padding-top: 20px;
           h3 { // Product name
             margin-bottom: 10px;
             color: #333;
