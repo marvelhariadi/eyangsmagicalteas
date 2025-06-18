@@ -1,6 +1,5 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PropTypes from "prop-types";
-import hero1 from "../../assets/images/heroBanners/hero_1.png";
 
 export function SampleNextArrows(props) {
   const { onClick } = props;
@@ -34,7 +33,7 @@ export const Hero = () => {
     <section className="hero">
       <div className="box">
         <div className="img">
-          <img src={hero1} alt="Hero Banner" />
+          <img src="/images/heroBanners/hero_1.png" alt="Hero Banner" />
           <div className="text-overlay">
             <h1>Dreams come true, one cup at a time</h1>
             <p>At <b><i>Eyang’s Magical Teas</i></b>, we craft enchanted tea blends to support any manifestation you seek. From uncovering hidden truths to summoning courage in the face of adversity, there’s a brew for every need.</p>

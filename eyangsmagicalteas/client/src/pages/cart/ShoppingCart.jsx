@@ -3,15 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineDelete } from "react-icons/ai";
 import { cartActions } from "../../store/cartSlice";
+import { getProductTeaImagePath } from "../../utils/imageUtils"; // Added import
 import "../../styles/cart/shoppingCart.scss";
 
-// Helper to get the correct image path
-const getImagePath = (imageName) => {
-  if (!imageName || imageName.includes('http') || imageName.startsWith('/')) {
-    return imageName;
-  }
-  return `/src/assets/images/product_teas/${imageName}.png`;
-};
 
 export const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -80,7 +74,7 @@ export const ShoppingCart = () => {
             <div className="cart-item" key={productVariant._id}>
               <div className="product-info">
                 <div className="product-image">
-                  <img src={getImagePath(productVariant.product.image)} alt={productVariant.product.name} />
+                  <img src={getProductTeaImagePath(productVariant.product.image)} alt={productVariant.product.name} />
                 </div>
                 <div className="product-details">
                   <h3>{productVariant.product.name}</h3>

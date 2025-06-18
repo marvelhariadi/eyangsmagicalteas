@@ -5,23 +5,12 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
 import { fetchProductById } from "../../services/api";
+import { getProductTeaImagePath } from "../../utils/imageUtils"; // Added import
 import "../../styles/product/productDetail.scss";
 
 // Import a custom event emitter for cart visibility
 import { cartEvents } from "../../utils/cartEvents";
 
-// Helper function to construct image paths
-const getImagePath = (imageName) => {
-  if (!imageName) return "";
-  
-  // If the path already includes http:// or https:// or starts with /, it's already a full path
-  if (imageName.includes("http") || imageName.startsWith("/")) {
-    return imageName;
-  }
-  
-  // Otherwise, construct the path to the image in the assets folder
-  return `/src/assets/images/product_teas/${imageName}.png`;
-};
 
 export const ProductDetail = () => {
   const { productId } = useParams();
@@ -173,7 +162,7 @@ export const ProductDetail = () => {
         
         <div className="product-content">
           <div className="product-image">
-            <img src={getImagePath(selectedProduct.image)} alt={selectedProduct.name} />
+            <img src={getProductTeaImagePath(selectedProduct.image)} alt={selectedProduct.name} />
           </div>
           
           <div className="product-info">

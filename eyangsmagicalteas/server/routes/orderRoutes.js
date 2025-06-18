@@ -129,9 +129,7 @@ router.post('/', async (req, res) => {
       });
     } catch (error) {
       // console.error('[Order Creation] CRITICAL: Error during Promise.all for stock updates:', error);
-      // This error might indicate a larger issue or an unhandled promise rejection from one of the updates
-      // At this point, the order is saved, but stock might be inconsistent.
-      // Consider adding logic to flag this order for manual review.
+
     }
     
     // Clear the cart (optional, depending on your business logic)
