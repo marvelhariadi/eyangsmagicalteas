@@ -100,6 +100,11 @@ router.post('/:sessionId/items', async (req, res) => {
     if (!productVariant) {
       return res.status(404).json({ message: 'Product variant not found' });
     }
+
+    // Backend Stock Check
+    if (productVariant.stock < quantity) {
+      return res.status(400).json({ message: 'Not enough stock available for the requested quantity.' });
+    }
     
     // Find cart by sessionId or create a new one atomically using findOneAndUpdate
     let cart = await ShoppingCart.findOneAndUpdate(
@@ -126,9 +131,13 @@ router.post('/:sessionId/items', async (req, res) => {
     
     if (existingItemIndex > -1) {
       // Update quantity if item exists
-      cart.items[existingItemIndex].quantity += quantity;
+      const newQuantity = cart.items[existingItemIndex].quantity + quantity;
+      if (productVariant.stock < newQuantity) {
+        return res.status(400).json({ message: 'Not enough stock available to increase quantity.' });
+      }
+      cart.items[existingItemIndex].quantity = newQuantity;
     } else {
-      // Add new item if it doesn't exist
+      // Add new item if it doesn't exist (initial stock check for 'quantity' already done)
       cart.items.push({
         productVariant: productVariantId,
         quantity,

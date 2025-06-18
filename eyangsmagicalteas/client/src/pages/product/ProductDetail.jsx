@@ -30,6 +30,8 @@ export const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentStock, setCurrentStock] = useState(0); // Add state for stock
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' }); // Add state for notification
   const dispatch = useDispatch();
   const [selectedVariantId, setSelectedVariantId] = useState(null);
 
@@ -66,6 +68,7 @@ export const ProductDetail = () => {
             setSelectedVariantId(firstVariant._id);
             setSelectedSize(sizeValue);
             setCurrentPrice(firstVariant.price || product.price);
+            setCurrentStock(firstVariant.stock); // Set initial stock
           } else {
             // If no variants, use base price
             setCurrentPrice(product.price || 0);
@@ -112,11 +115,24 @@ export const ProductDetail = () => {
       if (variant) {
         setCurrentPrice(variant.price);
         setSelectedVariantId(variant._id);
+        setCurrentStock(variant.stock); // Update stock on size change
       }
     }
   };
 
-    const addToCart = () => {
+  const showNotification = (message, type) => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: '' });
+    }, 3000); // Hide after 3 seconds
+  };
+
+  const addToCart = () => {
+    if (currentStock === 0) {
+      showNotification("item sold out :(", "error");
+      return;
+    }
+
     if (selectedProduct && selectedVariantId) {
       console.log('Adding to cart: ProductVariantID:', selectedVariantId, 'Quantity:', quantity);
       dispatch(
@@ -132,7 +148,6 @@ export const ProductDetail = () => {
       }, 100);
     } else {
       console.error("Product variant not selected.");
-      // Optionally, provide user feedback here
     }
   };
 
@@ -146,6 +161,11 @@ export const ProductDetail = () => {
 
   return (
     <section className="product-detail">
+      {notification.show && (
+        <div className={`notification-popup ${notification.type} ${notification.show ? 'show' : ''}`}>
+          {notification.message}
+        </div>
+      )}
       <div className="container">
         <button className="back-button" onClick={goBack}>
           <IoMdClose size={20} />
@@ -199,8 +219,12 @@ export const ProductDetail = () => {
                 </button>
               </div>
               
-              <button className="add-to-cart-btn" onClick={addToCart}>
-                Add To Cart
+              <button 
+                className="add-to-cart-btn" 
+                onClick={addToCart}
+                disabled={currentStock === 0}
+              >
+                {currentStock === 0 ? 'Out of Stock' : 'Add To Cart'}
               </button>
             </div>
           </div>

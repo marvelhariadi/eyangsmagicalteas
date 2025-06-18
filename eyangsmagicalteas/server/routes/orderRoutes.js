@@ -38,6 +38,20 @@ router.post('/', async (req, res) => {
     if (!cart || cart.items.length === 0) {
       return res.status(404).json({ message: 'Cart not found or empty' });
     }
+
+    // --- Stock Validation before creating order ---
+    for (const item of cart.items) {
+      // The productVariant on the cart item is already populated from the query above
+      const productVariant = item.productVariant;
+      if (productVariant.stock < item.quantity) {
+        return res.status(400).json({
+          message: `Sorry, '${productVariant.product.name}' is no longer available in the requested quantity. Please update your cart.`,
+          error: 'INSUFFICIENT_STOCK',
+          productName: productVariant.product.name,
+          variantId: productVariant._id
+        });
+      }
+    }
     
     // Generate a unique order number
     const orderNumber = Order.generateOrderNumber();
@@ -75,6 +89,15 @@ router.post('/', async (req, res) => {
     
     // Save the order
     await order.save();
+
+    // --- Decrement stock for each item in the order ---
+    const stockUpdatePromises = cart.items.map(item => {
+      return ProductVariant.updateOne(
+        { _id: item.productVariant._id },
+        { $inc: { stock: -item.quantity } }
+      );
+    });
+    await Promise.all(stockUpdatePromises);
     
     // Clear the cart (optional, depending on your business logic)
     cart.items = [];

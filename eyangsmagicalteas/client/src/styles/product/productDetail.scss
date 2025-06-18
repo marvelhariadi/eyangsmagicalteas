@@ -193,6 +193,19 @@ html, body, #root, main {
           border-color: #F88B7E;
           color: white;
         }
+
+        &[disabled] {
+          background-color: #cccccc;
+          color: #666666;
+          cursor: not-allowed;
+          border-color: #cccccc;
+
+          &:hover {
+            background-color: #cccccc;
+            color: #666666;
+            border-color: #cccccc;
+          }
+        }
       }
     }
   }
@@ -204,5 +217,36 @@ html, body, #root, main {
     height: 400px;
     font-size: 1.5rem;
     color: #555;
+  }
+
+  .notification-popup {
+    position: fixed;
+    top: 90px; // Position below the header
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 25px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1050; // Ensure it's above other content
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s ease, top 0.4s ease;
+    font-weight: bold;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      top: 100px; // Animate it sliding down slightly
+    }
+
+    &.error {
+      background-color: #e74c3c; // Red for errors
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    &.success {
+      background-color: #2ecc71; // Green for success
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+    }
   }
 }
