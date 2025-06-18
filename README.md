@@ -18,7 +18,7 @@ Admin can make a product stock 0. when this happens and the user tries to add a 
 0. Make sure that Marvel has MongoDB with the collection running on their machine on Atlas.
 1. Navigate to the project directory: `cd .../eyangsmagicalteas`
 2. Build the Docker image: `docker build -t eyangsmagicalteas .`
-3. Start the Docker container: `docker run -d -p 3000:3000 -e MONGODB_URI="mongodb+srv://marvelhariadi:gfbPtUhvciqCvsJR@eyangsmagicalteas.awooomk.mongodb.net/?retryWrites=true&w=majority&appName=EyangsMagicalTeas" --name eyangsmagicalteas-app eyangsmagicalteas`
+3. Start the Docker container: `docker run -d -p 3000:3000 -e MONGODB_URI="mongodb+srv://marvelhariadi:jhCJyx.vnG7-5St@eyangsmagicalteas.awooomk.mongodb.net/?retryWrites=true&w=majority&appName=EyangsMagicalTeas" --name eyangsmagicalteas-app eyangsmagicalteas`
 4. wait 30 seconds, then run `docker logs eyangsmagicalteas-app`.
 5. You should see _Server is listening on port 3000. MongoDB connected successfully_
 
