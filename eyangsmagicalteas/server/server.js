@@ -10,6 +10,7 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import scheduleCartCleanup from './jobs/cartCleanup.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,6 +69,9 @@ app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
+
+// Schedule the cart cleanup job
+scheduleCartCleanup();
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

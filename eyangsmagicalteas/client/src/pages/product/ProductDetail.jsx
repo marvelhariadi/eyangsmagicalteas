@@ -158,7 +158,7 @@ export const ProductDetail = () => {
           
           <div className="product-info">
             <h1>{selectedProduct.name}</h1>
-            <p className="description">{selectedProduct.desc}</p>
+            <p className="description">{selectedProduct.description}</p>
             <h2 className="price">${currentPrice.toFixed(2)}</h2>
 
             <div className="size-selection">
