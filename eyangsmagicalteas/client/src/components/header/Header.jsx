@@ -100,9 +100,6 @@ export const Header = () => {
             {/* Shopping Cart - Always Visible */}
             <div className="cart-wrapper" style={{ position: 'relative' }}>
               <Cart />
-              {totalQuantity > 0 && (
-                <span className="cart-quantity-badge">{totalQuantity}</span>
-              )}
             </div>
             
             {/* Mobile Menu Toggle Button */}

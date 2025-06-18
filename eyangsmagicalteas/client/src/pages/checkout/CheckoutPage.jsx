@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Added useEffect
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../../store/cartSlice";
+import { createOrder } from "../../store/orderSlice"; // Import createOrder thunk
+import { getOrCreateCartId } from "../../utils/cartUtils"; // Import cart utility
 import "../../styles/checkout/checkoutPage.scss";
 
 export const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.itemsList);
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
+  const order = useSelector((state) => state.order); // Get the whole order slice
   const [customerName, setCustomerName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState("");
+  // We'll use order.status instead of local isSubmitting and orderComplete
+  // const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [orderComplete, setOrderComplete] = useState(false);
+  // const [orderId, setOrderId] = useState("");
 
   // Calculate total price
-  const totalPrice = cartItems.reduce((total, item) => {
-    return total + item.totalPrice;
-  }, 0);
+  // Calculate total price - using cartTotalAmount from Redux state directly
+  const totalPrice = cartTotalAmount;
 
   const handleNameChange = (e) => {
     setCustomerName(e.target.value);
@@ -26,14 +30,14 @@ export const CheckoutPage = () => {
     navigate("/cart");
   };
 
-  const generateOrderId = () => {
+  // const generateOrderId = () => { // Backend will generate order ID and number
     // Generate a random order ID with format: EMT-YYYY-XXXX
     const year = new Date().getFullYear();
     const randomNum = Math.floor(1000 + Math.random() * 9000); // 4-digit number
-    return `EMT-${year}-${randomNum}`;
-  };
+    // return `EMT-${year}-${randomNum}`;
+  // };
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     
     if (!customerName.trim()) {
@@ -41,26 +45,25 @@ export const CheckoutPage = () => {
       return;
     }
 
-    setIsSubmitting(true);
-
-    // Simulate processing time
-    setTimeout(() => {
-      const newOrderId = generateOrderId();
-      setOrderId(newOrderId);
-      setOrderComplete(true);
-      
-      // Clear the cart
-      dispatch(cartActions.clearCart());
-      setIsSubmitting(false);
-    }, 1000);
+    const sessionId = getOrCreateCartId();
+    // You can add an email field to your form and pass it here if desired
+    // const email = customerEmail; 
+    dispatch(createOrder({ customerName, sessionId /*, email */ }));
   };
 
   const handleContinueShopping = () => {
     navigate("/");
   };
 
+    useEffect(() => {
+    // When order is successfully created, then clear the cart
+    if (order.status === 'succeeded' && order.currentOrder) {
+      dispatch(cartActions.clearCartState());
+    }
+  }, [order.status, order.currentOrder, dispatch]);
+
   // If cart is empty and not from a completed order, redirect to cart
-  if (cartItems.length === 0 && !orderComplete) {
+  if (cartItems.length === 0 && order.status !== 'succeeded') {
     return (
       <div className="checkout-page">
         <div className="container">
@@ -78,7 +81,7 @@ export const CheckoutPage = () => {
   }
 
   // If order is complete, show confirmation
-  if (orderComplete) {
+  if (order.status === 'succeeded' && order.currentOrder) {
     return (
       <div className="checkout-page">
         <div className="container">
@@ -87,8 +90,8 @@ export const CheckoutPage = () => {
           </div>
           <div className="order-confirmation">
             <div className="confirmation-details">
-              <p>Thank you for your order, <strong>{customerName}</strong>!</p>
-              <p>Your order number is: <strong>{orderId}</strong></p>
+              <p>Thank you for your order, <strong>{order.currentOrder.customerName}</strong>!</p>
+              <p>Your order number is: <strong>{order.currentOrder.orderNumber}</strong></p>
               <p>We'll prepare your magical teas with care.</p>
             </div>
             <button onClick={handleContinueShopping} className="continue-shopping">
@@ -128,16 +131,16 @@ export const CheckoutPage = () => {
                   type="button" 
                   onClick={handleBackToCart} 
                   className="back-to-cart"
-                  disabled={isSubmitting}
+                  disabled={order.status === 'loading'}
                 >
                   Back to Cart
                 </button>
                 <button 
                   type="submit" 
                   className="place-order"
-                  disabled={isSubmitting}
+                  disabled={order.status === 'loading'}
                 >
-                  {isSubmitting ? "Processing..." : "Place Order"}
+                  {order.status === 'loading' ? "Processing..." : "Place Order"}
                 </button>
               </div>
             </form>
@@ -147,17 +150,17 @@ export const CheckoutPage = () => {
             <h2>Order Summary</h2>
             <div className="summary-items">
               {cartItems.map((item) => (
-                <div className="summary-item" key={`${item.id}-${item.size}`}>
+                <div className="summary-item" key={item.productVariant._id}>
                   <div className="item-info">
                     <div className="item-image">
-                      <img src={item.cover} alt={item.name} />
+                      <img src={item.productVariant.product?.image ? `/src/assets/images/product_teas/${item.productVariant.product.image}.png` : '/path/to/default-image.png'} alt={item.productVariant.product?.name} />
                     </div>
                     <div className="item-details">
-                      <h3>{item.name}</h3>
+                      <h3>{item.productVariant.product?.name}</h3>
                       <p>Quantity: {item.quantity}</p>
                     </div>
                   </div>
-                  <div className="item-price">${item.totalPrice.toFixed(2)}</div>
+                  <div className="item-price">${(item.productVariant.price * item.quantity).toFixed(2)}</div>
                 </div>
               ))}
             </div>
