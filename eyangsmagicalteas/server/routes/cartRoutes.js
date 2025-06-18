@@ -43,14 +43,10 @@ router.get('/:sessionId', async (req, res) => {
         ]
       });
     
-    // If no cart exists for this session, create a new empty one
+    // If no cart exists for this session, return null.
+    // The client or the add item endpoint will handle creation if necessary.
     if (!cart) {
-      cart = new ShoppingCart({
-        sessionId,
-        items: [],
-        totalAmount: 0
-      });
-      await cart.save();
+      return res.status(200).json(null); // Or res.status(404).json({ message: 'Cart not found' });
     }
 
     /*
@@ -105,15 +101,23 @@ router.post('/:sessionId/items', async (req, res) => {
       return res.status(404).json({ message: 'Product variant not found' });
     }
     
-    // Find cart by sessionId or create a new one
-    let cart = await ShoppingCart.findOne({ sessionId });
-    if (!cart) {
-      cart = new ShoppingCart({
-        sessionId,
-        items: [],
-        totalAmount: 0
-      });
-    }
+    // Find cart by sessionId or create a new one atomically using findOneAndUpdate
+    let cart = await ShoppingCart.findOneAndUpdate(
+      { sessionId }, // Query to find the cart
+      {
+        $setOnInsert: { // Fields to set only if a new document is created (upserted)
+          sessionId,
+          items: [],
+          totalAmount: 0,
+          lastUpdated: new Date() // Initialize lastUpdated on creation
+        }
+      },
+      {
+        new: true,        // Return the modified document (or the new one if upserted)
+        upsert: true,     // Create the document if it doesn't exist
+        setDefaultsOnInsert: true // Apply schema defaults if a new document is created
+      }
+    );
     
     // Check if item already exists in cart
     const existingItemIndex = cart.items.findIndex(
