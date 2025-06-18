@@ -1,5 +1,5 @@
 .product {
-    padding: 80px 0;
+    padding: 4vw 0;
     
     h1 {
       text-align: center;
@@ -9,8 +9,8 @@
     }
     
     .product-category-section {
-      margin-bottom: 60px;
-      padding-top: 40px; // Space for scrolling to anchor
+      margin-bottom: 0px;
+      padding: 40px 0; // Consistent padding with Best Sellers
       scroll-margin-top: 100px; // Adjust for fixed header if needed
       
       h2 {

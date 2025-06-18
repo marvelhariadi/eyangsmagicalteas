@@ -89,8 +89,6 @@ export const Product = () => {
     <>
       <section className="product">
         <div className="container" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <h1 className="section-title">Our Magical Products</h1>
-          
           {categories.map((category) => (
             <div key={category.id || category._id} id={category.sectionId} className="product-category-section">
               <h2>{category.name}</h2>
