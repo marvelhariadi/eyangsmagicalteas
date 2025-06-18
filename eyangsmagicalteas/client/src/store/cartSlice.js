@@ -45,7 +45,7 @@ export const updateItemQuantity = createAsyncThunk(
   async ({ productVariantId, quantity }, { rejectWithValue }) => {
     try {
       const sessionId = getOrCreateCartId();
-      const response = await apiUpdateCartItemQuantity(sessionId, productVariantId, { quantity });
+      const response = await apiUpdateCartItemQuantity(productVariantId, quantity);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });
@@ -111,6 +111,22 @@ const cartSlice = createSlice({
         (state, action) => {
           state.status = "succeeded";
           const cart = action.payload;
+
+          if (action.type === 'cart/addItemToCart/fulfilled') {
+            console.log('[cartSlice] addItemToCart.fulfilled - action.payload:', JSON.stringify(cart, null, 2));
+            if (cart && cart.items && cart.items.length > 0) {
+              // Log the last item, assuming it's the most recently added or updated
+              const lastItem = cart.items[cart.items.length - 1];
+              if (lastItem && lastItem.productVariant && lastItem.productVariant.attributes && lastItem.productVariant.attributes.length > 0) {
+                console.log('[cartSlice] addItemToCart.fulfilled - Last item attributes[0].attribute:', JSON.stringify(lastItem.productVariant.attributes[0].attribute, null, 2));
+                console.log('[cartSlice] addItemToCart.fulfilled - typeof lastItem.productVariant.attributes[0].attribute:', typeof lastItem.productVariant.attributes[0].attribute);
+              } else {
+                console.log('[cartSlice] addItemToCart.fulfilled - Last item or its attributes/attribute not found as expected.');
+              }
+            } else {
+              console.log('[cartSlice] addItemToCart.fulfilled - action.payload.items is empty or not structured as expected.');
+            }
+          }
           
           // The backend cart has 'items' and 'totalAmount'
           state.items = cart.items || [];

@@ -1,34 +1,35 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllOrders } from '../../store/orderSlice'; // Adjusted path assuming OrdersList.jsx is in pages/admin/
-// import './OrdersList.scss'; // Or a more general admin styling file
+import { fetchAllOrders } from '../../store/orderSlice'; // Adjust path if needed
+// import './AdminOrdersPage.scss'; // Optional: for styling
 
-export const OrdersList = () => { // Ensure named export matches App.jsx import
+const AdminOrdersPage = () => {
   const dispatch = useDispatch();
-  // Assuming orderSlice is mounted at 'order' in your root reducer
   const { allOrders, fetchAllStatus, fetchAllError } = useSelector((state) => state.order);
 
   useEffect(() => {
+    // Fetch orders only if they haven't been fetched yet or if status is idle/failed
     if (fetchAllStatus === 'idle' || fetchAllStatus === 'failed') {
       dispatch(fetchAllOrders());
     }
   }, [dispatch, fetchAllStatus]);
 
   if (fetchAllStatus === 'loading') {
-    return <div className="orders-list-page"><p>Loading orders...</p></div>; // Changed class for clarity
+    return <div className="admin-orders-page"><p>Loading orders...</p></div>;
   }
 
   if (fetchAllError) {
-    return <div className="orders-list-page"><p>Error fetching orders: {fetchAllError}</p></div>;
+    return <div className="admin-orders-page"><p>Error fetching orders: {fetchAllError}</p></div>;
   }
 
   if (fetchAllStatus === 'succeeded' && allOrders.length === 0) {
-    return <div className="orders-list-page"><p>No orders found.</p></div>;
+    return <div className="admin-orders-page"><p>No orders found.</p></div>;
   }
 
   return (
-    <div className="orders-list-page"> {/* Changed class for clarity */}
+    <div className="admin-orders-page">
       <h1>Admin - All Orders</h1>
+      {/* We'll add a table or list here to display orders */}
       <table>
         <thead>
           <tr>
@@ -65,5 +66,4 @@ export const OrdersList = () => { // Ensure named export matches App.jsx import
   );
 };
 
-// Default export is not needed if App.jsx uses named import: import { OrdersList } ...
-// export default OrdersList;
+export default AdminOrdersPage;
