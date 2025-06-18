@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = express.Router();
 
 // NEW ENDPOINT: Initiate a new session and get a unique ID
-router.get('/initiate-session', (req, res) => {
+router.get('/session/new', (req, res) => {
   try {
     const newSessionId = uuidv4();
     res.json({ sessionId: newSessionId });
@@ -53,27 +53,7 @@ router.get('/:sessionId', async (req, res) => {
       await cart.save();
     }
 
-    // Detailed logging for debugging population
-    if (cart && cart.items && cart.items.length > 0) {
-      const firstItem = cart.items[0];
-      if (firstItem && firstItem.productVariant && firstItem.productVariant.attributes && firstItem.productVariant.attributes.length > 0) {
-        console.log('\n--- Server-Side Cart Item Debug ---');
-        console.log('Session ID:', sessionId);
-        console.log('Populated cart.items[0].productVariant._id:', firstItem.productVariant._id);
-        console.log('Populated cart.items[0].productVariant.attributes:', JSON.stringify(firstItem.productVariant.attributes, null, 2));
-        firstItem.productVariant.attributes.forEach((attr, index) => {
-          console.log(`  Attribute ${index}:`);
-          console.log(`    attr.value: ${attr.value}`);
-          console.log(`    typeof attr.attribute: ${typeof attr.attribute}`);
-          if (attr.attribute) {
-            console.log(`    attr.attribute instanceof mongoose.Types.ObjectId: ${attr.attribute instanceof mongoose.Types.ObjectId}`);
-            console.log(`    attr.attribute (raw): ${JSON.stringify(attr.attribute)}`);
-            console.log(`    attr.attribute.name (expected if populated): ${attr.attribute.name}`);
-          }
-        });
-        console.log('--- End Server-Side Cart Item Debug ---\n');
-      }
-    }
+
     
     res.json(cart);
   } catch (error) {

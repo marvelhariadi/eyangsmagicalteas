@@ -9,7 +9,7 @@ export const getOrCreateCartId = async () => {
 
   if (!cartSessionId) {
     try {
-      const response = await fetch('/api/cart/initiate-session');
+      const response = await fetch('/api/cart/session/new');
       if (!response.ok) {
         throw new Error(`Failed to initiate session: ${response.status}`);
       }
