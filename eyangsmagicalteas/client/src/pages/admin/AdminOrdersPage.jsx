@@ -8,11 +8,9 @@ const AdminOrdersPage = () => {
   const { allOrders, fetchAllStatus, fetchAllError } = useSelector((state) => state.order);
 
   useEffect(() => {
-    // Fetch orders only if they haven't been fetched yet or if status is idle/failed
-    if (fetchAllStatus === 'idle' || fetchAllStatus === 'failed') {
-      dispatch(fetchAllOrders());
-    }
-  }, [dispatch, fetchAllStatus]);
+    // Always fetch orders when the component mounts to ensure fresh data
+    dispatch(fetchAllOrders());
+  }, [dispatch]); // dispatch is stable, so this effectively runs once on mount or when dispatch changes (rare)
 
   if (fetchAllStatus === 'loading') {
     return <div className="admin-orders-page"><p>Loading orders...</p></div>;
