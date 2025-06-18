@@ -9,6 +9,7 @@ import Category from '../models/Category.js';
 import Product from '../models/Product.js';
 import ProductAttribute from '../models/ProductAttribute.js';
 import ProductVariant from '../models/ProductVariant.js';
+import CategoryProduct from '../models/CategoryProduct.js'; // Import the new model
 import User from '../models/User.js';
 
 // Import user data
@@ -81,6 +82,7 @@ const seedDatabase = async () => {
         mongoose.connection.dropCollection('products'),
         mongoose.connection.dropCollection('productattributes'),
         mongoose.connection.dropCollection('productvariants'),
+        mongoose.connection.dropCollection('categoryproducts'), // Add CategoryProduct to collections to drop
         mongoose.connection.dropCollection('users')
       ]);
     } catch (error) {
@@ -145,6 +147,15 @@ const seedDatabase = async () => {
         }); 
       }
       console.log(`Created ${productData.sizes.length} variants for ${product.name}`);
+
+      // Create CategoryProduct entries for this product
+      for (const categoryId of product.categories) {
+        await CategoryProduct.create({
+          product: product._id,
+          category: categoryId
+        });
+      }
+      console.log(`Created ${product.categories.length} CategoryProduct entries for ${product.name}`);
     }
 
     // Seed users
