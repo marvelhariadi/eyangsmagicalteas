@@ -48,7 +48,7 @@ const ActiveCarts = () => {
           </thead>
           <tbody>
             {carts.map((cart) => (
-              <tr key={cart.sessionId}>
+                            <tr key={cart._id}>
                 <td title={cart.sessionId}>{`${cart.sessionId.substring(0, 8)}...`}</td>
                 <td>
                   {cart.items.length > 0 ? (

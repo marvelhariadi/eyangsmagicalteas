@@ -10,8 +10,13 @@ const router = express.Router();
  */
 router.get('/carts', async (req, res) => {
   try {
-    const activeCarts = await ShoppingCart.find({})
-      .sort({ updatedAt: -1 }) // Show most recently updated carts first
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+    const activeCarts = await ShoppingCart.find({
+      'items.0': { $exists: true }, // Ensure the cart is not empty
+      updatedAt: { $gte: twentyFourHoursAgo }, // Filter for carts updated in the last 24 hours
+    })
+      .sort({ updatedAt: -1 })
       .populate({
         path: 'items.productVariant',
         populate: {
