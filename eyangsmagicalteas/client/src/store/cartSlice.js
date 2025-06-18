@@ -13,7 +13,10 @@ export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { rejectWithValue }) => {
     try {
-      const sessionId = getOrCreateCartId();
+      const sessionId = await getOrCreateCartId();
+      if (!sessionId) {
+        return rejectWithValue({ message: 'Failed to obtain session ID for cart.' });
+      }
       const response = await getCartBySessionId(sessionId);
       return response;
     } catch (error) {
@@ -28,7 +31,10 @@ export const addItemToCart = createAsyncThunk(
   "cart/addItemToCart",
   async (itemData, { rejectWithValue }) => {
     try {
-      const sessionId = getOrCreateCartId();
+      const sessionId = await getOrCreateCartId();
+      if (!sessionId) {
+        return rejectWithValue({ message: 'Failed to obtain session ID for cart.' });
+      }
       // The API expects { productVariantId, quantity }
       const response = await apiAddToCart(sessionId, itemData);
       return response;
@@ -44,8 +50,11 @@ export const updateItemQuantity = createAsyncThunk(
   "cart/updateItemQuantity",
   async ({ productVariantId, quantity }, { rejectWithValue }) => {
     try {
-      const sessionId = getOrCreateCartId();
-      const response = await apiUpdateCartItemQuantity(productVariantId, quantity);
+      const sessionId = await getOrCreateCartId();
+      if (!sessionId) {
+        return rejectWithValue({ message: 'Failed to obtain session ID for cart.' });
+      }
+      const response = await apiUpdateCartItemQuantity(productVariantId, quantity, sessionId); // Assuming API needs sessionId
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });
@@ -59,8 +68,11 @@ export const removeItemFromCart = createAsyncThunk(
   "cart/removeItemFromCart",
   async (productVariantId, { rejectWithValue }) => {
     try {
-      const sessionId = getOrCreateCartId();
-      const response = await apiRemoveCartItem(productVariantId);
+      const sessionId = await getOrCreateCartId();
+      if (!sessionId) {
+        return rejectWithValue({ message: 'Failed to obtain session ID for cart.' });
+      }
+      const response = await apiRemoveCartItem(productVariantId, sessionId); // Assuming API needs sessionId
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });

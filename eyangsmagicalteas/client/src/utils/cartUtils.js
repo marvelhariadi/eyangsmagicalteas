@@ -1,17 +1,35 @@
 /**
  * Cart utility functions
- * Note: Cart session ID functionality has been temporarily removed to fix React hook errors
  */
-import { v4 as uuidv4 } from 'uuid';
 
-// Function to get or create a unique cart session ID
-export const getOrCreateCartId = () => {
-  let cartId = localStorage.getItem('cartId');
-  if (!cartId) {
-    cartId = uuidv4();
-    localStorage.setItem('cartId', cartId);
+// Function to get a unique cart session ID for the current browser session.
+// Fetches a new ID from the backend if one doesn't exist in sessionStorage.
+export const getOrCreateCartId = async () => {
+  let cartSessionId = sessionStorage.getItem('cartSessionId');
+
+  if (!cartSessionId) {
+    try {
+      const response = await fetch('/api/cart/initiate-session');
+      if (!response.ok) {
+        throw new Error(`Failed to initiate session: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data && data.sessionId) {
+        cartSessionId = data.sessionId;
+        sessionStorage.setItem('cartSessionId', cartSessionId);
+      } else {
+        console.error('Failed to retrieve sessionId from backend.');
+        // Fallback or further error handling might be needed here
+        // For now, returning null or throwing an error are options
+        return null; 
+      }
+    } catch (error) {
+      console.error('Error fetching new cart session ID:', error);
+      // Fallback or further error handling
+      return null;
+    }
   }
-  return cartId;
+  return cartSessionId;
 };
 
 export const getCart = () => {
