@@ -15,13 +15,15 @@ I just finished reading a book, ["A Magic Steeped in Poison" by Judy I. Lin ](ht
 ## Tech Stack
 A classic MERN stack e-commerce wbesite. Beyond React and Redux, I also used Vite for the development environment, as it is more modern and much more stable than using React and Redux by itself in the front-end. The products are hosted on MongoDB in the backend and facilitated by ExpressJS & NodeJS. 
 
-## Fun Feature(s)
+## This is a fully functional e-commerce site! (Minus payments)
 - If the cart is empty, a screen that says "your cart is empty" will appear. If it is full, then it will be populated by items. So there are esentially two divs that the cart page switches between depending on if their are items to populate the cart or not.
 - Price varies depending on the size of the product quantity. So user can choose what size of the product they want. Size information and variable price amount is persisted as part of the cart's global state.  
 - I made a cart pop-up! It's information is consistent with the home page. Both use the global state offered by redux.
 - We can remove items last minute from the cart home page. 
 - Checkout page is fully functional. Orders are saved in the database.
-- "Admin" page can track live number of active carts present on the site at any given time. Also shows orders archive. 
+- "Admin" page can track live number of active carts present on the site at any given time. Also shows orders archive.
+- The database also tracks product stock. If an item is out of stock, the "Add to cart" button becomes "out of stock" and is unclickable.
+- If you checkout cart items, it decrements the stock of the product in the backend database. 
 
 ## Credit
 All images not my own! I'll be slowly updating this Readme to include credits to all the photographers from Unsplash and Google that I took these imags from. 
