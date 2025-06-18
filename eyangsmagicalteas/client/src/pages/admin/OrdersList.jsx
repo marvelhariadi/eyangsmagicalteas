@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllOrders } from '../../store/orderSlice'; // Adjusted path assuming OrdersList.jsx is in pages/admin/
-// import './OrdersList.scss'; // Or a more general admin styling file
+import { fetchAllOrders } from '../../store/orderSlice';
+import './OrdersList.scss'; // Import the SCSS file
 
 export const OrdersList = () => { // Ensure named export matches App.jsx import
   const dispatch = useDispatch();
@@ -15,20 +15,19 @@ export const OrdersList = () => { // Ensure named export matches App.jsx import
   }, [dispatch, fetchAllStatus]);
 
   if (fetchAllStatus === 'loading') {
-    return <div className="orders-list-page"><p>Loading orders...</p></div>; // Changed class for clarity
+    return <div className="orders-list-container"><p>Loading orders...</p></div>;
   }
 
   if (fetchAllError) {
-    return <div className="orders-list-page"><p>Error fetching orders: {fetchAllError}</p></div>;
+    return <div className="orders-list-container"><p>Error fetching orders: {fetchAllError}</p></div>;
   }
 
   if (fetchAllStatus === 'succeeded' && allOrders.length === 0) {
-    return <div className="orders-list-page"><p>No orders found.</p></div>;
+    return <div className="orders-list-container"><p>No orders found.</p></div>;
   }
 
   return (
-    <div className="orders-list-page"> {/* Changed class for clarity */}
-      <h1>Admin - All Orders</h1>
+    <div className="orders-list-container">
       <table>
         <thead>
           <tr>

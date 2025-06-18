@@ -3,7 +3,7 @@
   min-height: calc(100vh - 200px);
   
   .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -51,7 +51,7 @@
     padding: 30px;
     min-height: 400px;
     width: 100%;
-    max-width: 700px;
+    // max-width: 1000px; //alr set by container
   }
   
   .admin-placeholder {
