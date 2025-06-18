@@ -1,6 +1,8 @@
 import ShoppingCart from '../models/ShoppingCart.js';
 import cron from 'node-cron';
 
+// deletes non-active carts. uses node-cron to facilitate this.  done after 7 days.
+
 const cleanupAbandonedCarts = async () => {
   console.log('Running abandoned carts cleanup job...');
   try {
