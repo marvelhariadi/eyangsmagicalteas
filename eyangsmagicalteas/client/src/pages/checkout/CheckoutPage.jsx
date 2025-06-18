@@ -45,7 +45,7 @@ export const CheckoutPage = () => {
       return;
     }
 
-    const sessionId = getOrCreateCartId();
+    const sessionId = await getOrCreateCartId();
     // You can add an email field to your form and pass it here if desired
     // const email = customerEmail; 
     dispatch(createOrder({ customerName, sessionId /*, email */ }));

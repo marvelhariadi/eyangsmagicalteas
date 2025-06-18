@@ -6,8 +6,10 @@ import { Layout } from "./components/common/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Admin } from "./pages/admin/Admin";
-import { CartsList } from "./pages/admin/CartsList";
+
 import { OrdersList } from "./pages/admin/OrdersList";
+import ActiveCarts from "./components/admin/ActiveCarts";
+
 import "./App.css";
 
 function App() {
@@ -100,8 +102,8 @@ function App() {
             >
               {/* Nested Admin Routes */}
               <Route index element={<div className="admin-placeholder"><h2>Welcome to Admin Dashboard</h2><p>Please select a section from the navigation above.</p></div>} />
-              <Route path="carts" element={<CartsList />} />
               <Route path="orders" element={<OrdersList />} />
+              <Route path="active-carts" element={<ActiveCarts />} />
             </Route>
           </Routes>
         </Router>

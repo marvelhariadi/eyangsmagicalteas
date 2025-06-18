@@ -78,6 +78,7 @@ router.post('/', async (req, res) => {
     
     // Clear the cart (optional, depending on your business logic)
     cart.items = [];
+    cart.totalAmount = 0;
     await cart.save();
     
     res.status(201).json(order);
