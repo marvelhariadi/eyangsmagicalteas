@@ -9,17 +9,18 @@ export const Admin = () => {
         <h1>Admin Dashboard</h1>
         
         <div className="admin-navigation">
-          <NavLink 
-            to="/admin/carts" 
-            className={({ isActive }) => isActive ? "admin-nav-link active" : "admin-nav-link"}
-          >
-            Shopping Carts List
-          </NavLink>
+
           <NavLink 
             to="/admin/orders" 
             className={({ isActive }) => isActive ? "admin-nav-link active" : "admin-nav-link"}
           >
             Orders List
+          </NavLink>
+          <NavLink 
+            to="/admin/active-carts" 
+            className={({ isActive }) => isActive ? "admin-nav-link active" : "admin-nav-link"}
+          >
+            Active Carts
           </NavLink>
         </div>
         
