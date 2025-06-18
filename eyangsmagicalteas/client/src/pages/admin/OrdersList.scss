@@ -1,0 +1,29 @@
+// client/src/pages/admin/OrdersList.scss
+.orders-list-container {
+  padding: 0px; // Add some padding around the content
+
+  table {
+    width: 100%; // Make the table take up more available width
+    border-collapse: collapse; // Standard good practice for tables
+    margin-top: 20px; // Add some space above the table
+
+    th, td {
+      border: 1px solid #ddd; // Basic borders
+      padding: 8px; // Increase padding in cells
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4; // Light grey background for headers
+    }
+
+    ul {
+      padding-left: 20px; // Indent the item list a bit
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 5px; // Space out items in the list
+    }
+  }
+}
