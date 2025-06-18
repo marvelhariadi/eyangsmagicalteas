@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { getProductTeaImagePath } from "../../utils/imageUtils"; // Added import
 
 export const ProductCard = ({ products }) => {
   const navigate = useNavigate();
@@ -11,20 +12,6 @@ export const ProductCard = ({ products }) => {
   
   // Extract description from either description or desc field
   const description = products.description || products.desc || "";
-  
-  // Handle image paths - if it's just a name, construct the full path
-  const getImagePath = (imageName) => {
-    if (!imageName) return "";
-    
-    // If the path already includes http:// or https:// or starts with /, it's already a full path
-    if (imageName.includes("http") || imageName.startsWith("/")) {
-      return imageName;
-    }
-    
-    // Otherwise, construct the path to the image in the assets folder
-    // The image name from the database is just the base name without extension
-    return `/src/assets/images/product_teas/${imageName}.png`;
-  };
   
   // Get the price from either basePrice, price, or from the first variant if available
   const getPrice = () => {
@@ -40,7 +27,7 @@ export const ProductCard = ({ products }) => {
     <>
       <div className="item" onClick={handleProductClick}>
         <div className="img">
-          <img src={getImagePath(products.cover || products.image)} alt={products.name} />
+          <img src={getProductTeaImagePath(products.cover || products.image)} alt={products.name} />
         </div>
         <div className="text">
           <h3>{products.name}</h3>

@@ -3,14 +3,8 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
 import PropTypes from 'prop-types';
+import { getProductTeaImagePath } from "../../utils/imageUtils"; // Added import
 
-// Helper to get the correct image path
-const getImagePath = (imageName) => {
-  if (!imageName || imageName.includes('http') || imageName.startsWith('/')) {
-    return imageName;
-  }
-  return `/src/assets/images/product_teas/${imageName}.png`;
-};
 
 export const CartItems = ({ item }) => {
   console.log('[CartItems] Rendering item:', JSON.parse(JSON.stringify(item)));
@@ -55,7 +49,7 @@ export const CartItems = ({ item }) => {
   return (
     <div className="cartContent">
       <div className="img">
-        <img src={getImagePath(product.image)} alt={product.name} />
+        <img src={getProductTeaImagePath(product.image)} alt={product.name} />
         <button className="remove flexCenter" onClick={handleRemoveItem}>
           <AiOutlineClose />
         </button>

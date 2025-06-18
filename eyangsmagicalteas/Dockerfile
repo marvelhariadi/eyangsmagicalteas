@@ -36,7 +36,7 @@ COPY server/ server/
 COPY --from=builder /app/server/node_modules server/node_modules
 
 # Copy the built client application from the builder stage
-COPY --from=builder /app/client/build server/public
+COPY --from=builder /app/client/dist server/public
 
 # Set environment variables (optional, can be overridden at runtime)
 ENV NODE_ENV=production

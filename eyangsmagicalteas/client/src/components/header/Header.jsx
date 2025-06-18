@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
-import CompanyLogo from "../../assets/images/CompanyLogo.svg";
 
 import { Cart } from "./Cart";
 
@@ -60,7 +59,7 @@ export const Header = () => {
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
           <div className="logo" style={{ flex: '0 0 auto' }}>
             <NavLink to="/">
-              <img src={CompanyLogo} alt="Eyang's Magical Teas Company Logo" />
+              <img src="/images/CompanyLogo.svg" alt="Eyang's Magical Teas Company Logo" />
             </NavLink>
           </div>
           
