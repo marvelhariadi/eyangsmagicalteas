@@ -7,7 +7,7 @@ const products = [
     desc: "Using herbs harvested by fox spirits at sunrise, this tea blend lets you understand the language of earthly beasts. Steep for 5 minutes and 55 seconds.",
     cover: "talktoanimals",
     sizes: [
-      { name: "50mg", price: 19.98, stock: 100 },
+      { name: "50mg", price: 19.98, stock: 0 }, //to show out of stock functionality
       { name: "100mg", price: 29.98, stock: 100 },
       { name: "200mg", price: 39.98, stock: 100 }
     ],
