@@ -143,8 +143,16 @@ export const searchProducts = async (query) => {
 import { getOrCreateCartId } from '../utils/cartUtils';
 
 // Get cart by session ID
-export const getCartBySessionId = async () => {
-  const sessionId = getOrCreateCartId();
+export const getCartBySessionId = async (sessionIdFromThunk) => { // Renamed param to avoid confusion with internal var
+  // sessionIdFromThunk is passed from cartSlice, which already called getOrCreateCartId
+  // If this function were to be called directly elsewhere without a sessionId, 
+  // it would need its own await getOrCreateCartId(), but current usage is via cartSlice.
+  const sessionId = sessionIdFromThunk; 
+  if (!sessionId) {
+    console.error('getCartBySessionId called without a session ID.');
+    // Or throw new Error('Session ID is required to fetch cart.');
+    return null; // Or an empty cart structure, depending on how callers handle it
+  }
   try {
     const response = await fetch(`${API_BASE_URL}/cart/${sessionId}`);
     if (!response.ok) {
@@ -179,8 +187,12 @@ export const addToCart = async (sessionId, itemData) => {
 };
 
 // Update item quantity in cart
-export const updateCartItemQuantity = async (productVariantId, quantity) => {
-  const sessionId = getOrCreateCartId();
+export const updateCartItemQuantity = async (productVariantId, quantity, sessionId) => {
+  // sessionId is now passed as a parameter from cartSlice
+  if (!sessionId) {
+    console.error('updateCartItemQuantity called without a session ID.');
+    throw new Error('Session ID is required to update cart item quantity.');
+  }
   try {
     const response = await fetch(`${API_BASE_URL}/cart/${sessionId}/items/${productVariantId}`,
       {
@@ -200,8 +212,12 @@ export const updateCartItemQuantity = async (productVariantId, quantity) => {
 };
 
 // Remove item from cart
-export const removeCartItem = async (productVariantId) => {
-  const sessionId = getOrCreateCartId();
+export const removeCartItem = async (productVariantId, sessionId) => {
+  // sessionId is now passed as a parameter from cartSlice
+  if (!sessionId) {
+    console.error('removeCartItem called without a session ID.');
+    throw new Error('Session ID is required to remove cart item.');
+  }
   try {
     const response = await fetch(
       `${API_BASE_URL}/cart/${sessionId}/items/${productVariantId}`,

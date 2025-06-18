@@ -24,7 +24,8 @@
     "react-router-dom": "^6.14.2",
     "react-slick": "^0.30.3",
     "react-stripe-checkout": "^2.6.3",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

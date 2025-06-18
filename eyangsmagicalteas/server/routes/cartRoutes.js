@@ -2,8 +2,22 @@ import express from 'express';
 import ShoppingCart from '../models/ShoppingCart.js';
 import ProductVariant from '../models/ProductVariant.js';
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
+
+// NEW ENDPOINT: Initiate a new session and get a unique ID
+router.get('/initiate-session', (req, res) => {
+  try {
+    const newSessionId = uuidv4();
+    res.json({ sessionId: newSessionId });
+  } catch (error) {
+    console.error('Error initiating session:', error);
+    res.status(500).json({ message: 'Error initiating session', error: error.message });
+  }
+});
+
+/**
 
 /**
  * Get a cart by sessionId
