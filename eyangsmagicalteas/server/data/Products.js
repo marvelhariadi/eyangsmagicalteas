@@ -11,7 +11,7 @@ const products = [
       { name: "100mg", price: 29.98, stock: 100 },
       { name: "200mg", price: 39.98, stock: 100 }
     ],
-    category: ["magic-tea-leaves"]
+    category: ["magic-tea-leaves", "best-sellers"]
   },
   {
     id: 2,

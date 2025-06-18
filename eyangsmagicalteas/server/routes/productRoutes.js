@@ -24,9 +24,21 @@ router.get("/", async (req, res) => {
     
     // Find products matching the query
     const products = await Product.find(query).populate('categories');
+
+    let processedProducts = [...products]; // Create a mutable copy to potentially slice
+
+    // If fetching best-sellers and there are more than 3, randomly select 3
+    if (categorySlug === 'best-sellers' && processedProducts.length > 3) {
+      // Fisher-Yates (Knuth) Shuffle
+      for (let i = processedProducts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [processedProducts[i], processedProducts[j]] = [processedProducts[j], processedProducts[i]];
+      }
+      processedProducts = processedProducts.slice(0, 3);
+    }
     
-    // For each product, find its variants
-    const productsWithVariants = await Promise.all(products.map(async (product) => {
+    // For each product (or the selected subset), find its variants
+    const productsWithVariants = await Promise.all(processedProducts.map(async (product) => {
       const variants = await ProductVariant.find({ product: product._id })
         .populate('attributes.attribute');
       
