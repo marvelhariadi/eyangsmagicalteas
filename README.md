@@ -12,7 +12,7 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 - Also fixed some UI issues related to incrementing orders. 
 
 ## Extra Feature(s)
-A product stock 0. wWen this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart. When orders are taken, it also decrements the product stock in the database. 
+A product stock can be 0. When this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart. When orders are taken, it also decrements the product stock in the database. 
 
 # How to Run the application on Docker
 0. Make sure that Marvel has MongoDB with the collection running on their machine on Atlas.
