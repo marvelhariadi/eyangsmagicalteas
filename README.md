@@ -24,6 +24,8 @@ A product stock can be 0. When this happens and the user tries to add a item to 
 
 * just gonna trust yall cpsc staff to not mess w my data rip.
 
+Note that I am using Node.js Version 24. So you may need to install run `conda install -n cpsc455 nodejs=24 -y` or the npm equivalent in order to bring Node.js to the version 24. 
+
 ## Access
 Open your web browser and go to: http://localhost:3000
 
