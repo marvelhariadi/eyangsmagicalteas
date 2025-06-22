@@ -10,7 +10,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - MONGODB_URI=mongodb+srv://marvelhariadi:gfbPtUhvciqCvsJR@eyangsmagicalteas.awooomk.mongodb.net/?retryWrites=true&w=majority&appName=EyangsMagicalTeas
+      - MONGODB_URI=${MONGODB_URI} # Use variable from .env file
     networks:
       - app-network
 
