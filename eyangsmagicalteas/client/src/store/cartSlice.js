@@ -101,14 +101,6 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Specific reducer for addItemToCart.fulfilled
-      .addCase(addItemToCart.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        const updatedCart = action.payload;
-        state.items = updatedCart.items;
-        state.totalQuantity = updatedCart.items.reduce((total, item) => total + item.quantity, 0);
-        state.totalAmount = updatedCart.totalAmount;
-      })
       // Centralized handler for pending states
       .addMatcher(
         (action) => action.type.startsWith("cart/") && action.type.endsWith("/pending"),
@@ -124,31 +116,20 @@ const cartSlice = createSlice({
           state.status = "succeeded";
           const cart = action.payload;
 
-          if (action.type === 'cart/addItemToCart/fulfilled') {
-            console.log('[cartSlice] addItemToCart.fulfilled - action.payload:', JSON.stringify(cart, null, 2));
-            if (cart && cart.items && cart.items.length > 0) {
-              // Log the last item, assuming it's the most recently added or updated
-              const lastItem = cart.items[cart.items.length - 1];
-              if (lastItem && lastItem.productVariant && lastItem.productVariant.attributes && lastItem.productVariant.attributes.length > 0) {
-                console.log('[cartSlice] addItemToCart.fulfilled - Last item attributes[0].attribute:', JSON.stringify(lastItem.productVariant.attributes[0].attribute, null, 2));
-                console.log('[cartSlice] addItemToCart.fulfilled - typeof lastItem.productVariant.attributes[0].attribute:', typeof lastItem.productVariant.attributes[0].attribute);
-              } else {
-                console.log('[cartSlice] addItemToCart.fulfilled - Last item or its attributes/attribute not found as expected.');
-              }
-            } else {
-              console.log('[cartSlice] addItemToCart.fulfilled - action.payload.items is empty or not structured as expected.');
-            }
+          // If the payload is a valid cart object, update the state
+          if (cart && typeof cart === 'object') {
+            state.items = cart.items || [];
+            state.totalAmount = cart.totalAmount || 0;
+            state.totalQuantity = state.items.reduce(
+              (total, item) => total + item.quantity,
+              0
+            );
+          } else {
+            // Otherwise, reset to a clean empty state. This handles null/undefined payloads.
+            state.items = [];
+            state.totalAmount = 0;
+            state.totalQuantity = 0;
           }
-          
-          // The backend cart has 'items' and 'totalAmount'
-          state.items = cart.items || [];
-          state.totalAmount = cart.totalAmount || 0;
-          
-          // Recalculate total quantity based on the items received from the backend
-          state.totalQuantity = state.items.reduce(
-            (total, item) => total + item.quantity,
-            0
-          );
         }
       )
       // Centralized handler for rejected states

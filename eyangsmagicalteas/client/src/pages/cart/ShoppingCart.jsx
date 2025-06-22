@@ -50,8 +50,8 @@ export const ShoppingCart = () => {
     if (items.length === 0) {
       return (
         <div className="empty-cart">
-          <h2>Your cart is empty</h2>
-          <p>Looks like you haven't added any magical teas to your cart yet.</p>
+          <h2>Shopping cart empty.</h2>
+          <p>Shop for more items to fill it up!</p>
           <button onClick={handleContinueShopping} className="continue-shopping">
             Continue Shopping
           </button>

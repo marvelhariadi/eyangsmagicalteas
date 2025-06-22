@@ -202,6 +202,17 @@ router.put('/:sessionId/items/:productVariantId', async (req, res) => {
       return res.status(404).json({ message: 'Item not found in cart' });
     }
     
+    // Find the product variant to check its stock
+    const productVariant = await ProductVariant.findById(productVariantId);
+    if (!productVariant) {
+      return res.status(404).json({ message: 'Product variant not found' });
+    }
+
+    // Check if there is enough stock for the new quantity
+    if (quantity > 0 && productVariant.stock < quantity) {
+      return res.status(400).json({ message: 'Not enough stock available for the requested quantity.' });
+    }
+
     if (quantity === 0) {
       // Remove item if quantity is 0
       cart.items.splice(itemIndex, 1);
