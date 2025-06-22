@@ -29,7 +29,7 @@ export const ProductCard = ({ products }) => {
         <div className="img">
           <img src={getProductTeaImagePath(products.cover || products.image)} alt={products.name} />
         </div>
-        <div className="text">
+        <div className="text" style={{ margin: "0 4px" }}>
           <h3>{products.name}</h3>
           <p>{description.length > 80 ? `${description.slice(0, 80)}...` : description}</p>
           <h3 className="price-tag">${getPrice()}</h3>
