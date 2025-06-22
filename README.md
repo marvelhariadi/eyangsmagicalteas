@@ -12,20 +12,17 @@ I just finished reading a book, "a Magic Steeped in Poison" where tea is used as
 - Also fixed some UI issues related to incrementing orders. 
 
 ## Extra Feature(s)
-- Admin can make a product stock 0. when this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart.
+A product stock can be 0. When this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart. When orders are taken, it also decrements the product stock in the database. 
 
 # How to Run the application on Docker
-## Navigate to the project directory
-cd .../eyangsmagicalteas
+0. Make sure that Marvel has MongoDB with the collection running on their machine on Atlas.
+1. Navigate to the project directory: `cd .../eyangsmagicalteas`
+2. Build the Docker image: ` docker-compose up -d --build`
 
-## Build the Docker images
-docker compose build --no-cache
-
-## Start all services
-docker compose up -d
+Note that I am using Node.js Version 24. So you may need to install run `conda install -n cpsc455 nodejs=24 -y` or the npm equivalent in order to bring Node.js to the version 24. 
 
 ## Access
-You can access the application through the browser preview at http://localhost:80
+Open your web browser and go to: http://localhost:3000
 
 ## To stop the service
-docker compose down
+`docker-compose down`
