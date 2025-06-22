@@ -1,15 +1,11 @@
-# Identity Information
-Marvel Hariadi (SN28537025)
 
-# Assignment 3: Eyang's Magic Teas
+# Eyang's Magical Teas
+For my grandmother, Pertamaningsih, the most magical woman around. 
 
-## About
-I just finished reading a book, "a Magic Steeped in Poison" where tea is used as a form of enacting magic. I was inspired by that book to create a e-commerce website selling magic teas that have spiritual properties to help you manifest your goals. I decided to call it "Eyang's Magic Teas," as "Eyang" means grandmother in my language.
+This was an exercise in web development and design. As a UX-er, this was really fun (and also very painful)! I  liked seeing the design come together slowly and trying to make everything responsive. Connecting the backend API endpoints was very painful, but valuable to learn as a designer. 
 
-## What I created
-- Used Postman and MongoDB to host the data. I created data tables for Orders, Products, ShoppingCarts, and Usera and conneced them all where necessary.
-- checkout page and bestseller category pages
-- Also fixed some UI issues related to incrementing orders. 
+# Build Tour
+[Web tour youtube video link](https://youtu.be/hvuWiTS8ehs)
 
 ## Extra Feature(s)
 A product stock can be 0. When this happens and the user tries to add a item to their cart, the front end shows a popup that says "item sold out" and won't let the user add it to the cart. When orders are taken, it also decrements the product stock in the database. 
