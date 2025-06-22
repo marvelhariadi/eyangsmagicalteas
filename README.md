@@ -17,7 +17,7 @@ A product stock can be 0. When this happens and the user tries to add a item to 
 # How to Run the application on Docker
 0. Make sure that Marvel has MongoDB with the collection running on their machine on Atlas.
 1. Navigate to the project directory: `cd .../eyangsmagicalteas`
-2. Build the Docker image: ` docker-compose up -d --build.`
+2. Build the Docker image: ` docker-compose up -d --build`
 
 Note that I am using Node.js Version 24. So you may need to install run `conda install -n cpsc455 nodejs=24 -y` or the npm equivalent in order to bring Node.js to the version 24. 
 
