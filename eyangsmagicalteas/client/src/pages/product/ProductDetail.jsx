@@ -77,7 +77,11 @@ export const ProductDetail = () => {
   }, [productId, navigate]);
 
   const increaseQuantity = () => {
-    setQuantity(prev => prev + 1);
+    if (quantity < currentStock) {
+      setQuantity(prev => prev + 1);
+    } else {
+      showNotification(`Only ${currentStock} items available`, 'error');
+    }
   };
 
   const decreaseQuantity = () => {
@@ -119,6 +123,11 @@ export const ProductDetail = () => {
   const addToCart = () => {
     if (currentStock === 0) {
       showNotification("item sold out :(", "error");
+      return;
+    }
+
+    if (quantity > currentStock) {
+      showNotification(`Only ${currentStock} items available. Please adjust the quantity.`, 'error');
       return;
     }
 

@@ -4,7 +4,6 @@
   padding: 40px 0; // Base padding, includes padding-top: 40px
   margin-bottom: -60px; 
   scroll-margin-top: 100px; 
-  // background-color: #f9f9f9; // Optional: uncomment if you want a light background for this section
 
   .container {
     max-width: 90%;          // Match the general page container's width behavior
@@ -144,6 +143,7 @@
         height: 280px; // Can be taller in single column
       }
       .item .text {
+
         padding: 15px;
         h3 { font-size: 1.15rem; }
         p { font-size: 0.85rem; min-height: 50px; }
