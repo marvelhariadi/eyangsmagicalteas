@@ -18,7 +18,7 @@ A product stock can be 0. When this happens and the user tries to add a item to 
 1. Navigate to the project directory: `cd .../eyangsmagicalteas`
 2. Build the Docker image: ` docker-compose up -d --build`
 
-Note that I am using Node.js Version 24. So you may need to install run `conda install -n cpsc455 nodejs=24 -y` or the npm equivalent in order to bring Node.js to the version 24. Additionally, you will not be able to access the database without the .env file. Please contact Marvel if you would like the .env file. 
+Note that I am using Node.js Version 24. So you may need to install run `conda install -n nodejs=24 -y` or the npm equivalent in order to bring Node.js to the version 24. Additionally, you will not be able to access the database without the .env file. Please contact Marvel if you would like the .env file. 
 
 ## Access
 Open your web browser and go to: http://localhost:3000
