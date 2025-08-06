@@ -1,6 +1,6 @@
 
 # Eyang's Magical Teas
-For my grandmother, Pertamaningsih, the most magical woman around. 
+For my grandmother, Pertamaningsih, the most magical woman around. 'Eyang' means 'Grandmother' in Javanese.
 
 This was an exercise in web development and design. As a UX-er, this was really fun (and also very painful)! I  liked seeing the design come together slowly and trying to make everything responsive. Connecting the backend API endpoints was very painful, but valuable to learn as a designer. 
 
